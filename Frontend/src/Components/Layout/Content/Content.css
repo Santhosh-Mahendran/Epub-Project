@@ -1,0 +1,53 @@
+.main-container .sidebar {
+  padding: 30px 20px 20px 20px;
+  width: 0;
+}
+
+.main-container {
+  display: flex;
+  height: 100%;
+  z-index: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.layout {
+  margin-left: 0;
+  padding: 20px;
+  flex: 1;
+  box-sizing: border-box;
+  height: 100%;
+  max-width: 100%;
+  width: 100%;
+}
+
+h4 {
+  font-size: 26px;
+  color: #4b4363;
+  font-weight: bold;
+}
+
+/* User */
+.userlayout {
+  margin-top: 3rem;
+}
+
+.cardBox {
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.175);
+  border-radius: 10px;
+  user-select: "none";
+}
+
+h4,
+h5,
+p,
+div {
+  user-select: "none";
+}
+
+@media screen and (max-width: 320px) {
+  .layout {
+    padding: 10px;
+  }
+}

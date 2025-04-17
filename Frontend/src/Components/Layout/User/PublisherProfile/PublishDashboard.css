@@ -1,0 +1,126 @@
+.publisher-dashboard {
+  /* margin-top: 10px; */
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
+  justify-content: center;
+  align-items: center;
+}
+
+.publisher-dashboard .banner {
+  width: 95%;
+  background-image: radial-gradient(#372267, #321d62, #0e0b36);
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
+  color: #fbf6f6;
+  object-fit: cover;
+  height: 200px;
+  padding: 20px;
+  z-index: 0;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.banner-content {
+  z-index: 1;
+  width: 50%;
+  margin: 25px auto;
+  text-align: center;
+  position: relative;
+}
+
+.banner-content h4 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.publisher-dashboard .about-us {
+  max-width: 95%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  column-gap: 45px;
+}
+
+.publisher-dashboard .about-us .about-img {
+  width: 550px;
+  flex: 1;
+  visibility: visible;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  /* animation: fadeInRight 2s ease-in-out;  */
+}
+
+.publisher-dashboard .about-us .about-dis {
+  padding: 10px;
+  flex: 1;
+}
+
+.publisher-dashboard .about-us .about-dis p {
+  text-align: justify;
+  letter-spacing: 0.6px;
+  font-weight: 400;
+  line-height: 25px;
+}
+
+.publish-card {
+  padding: 20px;
+}
+
+.publish-card.animate-visible.animated {
+  visibility: visible;
+}
+
+.publish-card .card-header {
+  background-color: #321d62c1;
+  color: #fbf6f6;
+  padding: 15px;
+  height: 86px;
+}
+
+.publish-card .card-content {
+  padding: 20px 15px;
+}
+
+.publish-card .card-content img {
+  width: 50%;
+  float: right;
+  margin-bottom: 20px;
+  margin-left: auto;
+  height: 50%;
+}
+
+.Report-card {
+  max-width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: #321d62c1;
+  padding: 20px;
+  color: #fbf6f6;
+  border-radius: 10px;
+}
+
+.Report-card .totalBooks {
+  flex: 1;
+  display: flex;
+  padding: 10px;
+  column-gap: 20px;
+  align-self: center;
+}
+
+.Report-card .totalusers {
+  flex: 1;
+  display: flex;
+  padding: 10px;
+  column-gap: 20px;
+  align-self: center;
+}
+
+.count {
+  font-weight: bold;
+}

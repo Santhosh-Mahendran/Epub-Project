@@ -1,0 +1,57 @@
+.Book-list {
+  row-gap: 35px;
+}
+
+.books .title {
+  color: #4b4363;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.books .author-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: #5e5e5e;
+}
+
+.books h5 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #5e5e5e;
+}
+.books .book-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 180px;
+  height: auto;
+  object-fit: cover;
+  margin: 0 auto;
+  z-index: 0;
+}
+
+.tag {
+  background-color: #388e3c;
+  color: #fbf6f6;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 13px;
+  border-radius: 5px;
+}
+
+svg.like-icon {
+  color: grey;
+}
+svg.like-icon:hover {
+  color: #ca2929;
+}
+
+svg.like-icon.active {
+  color: #ca2929 !important;
+}
+
+@media screen and (max-width: 430px) {
+  .library-container .Book-list {
+    margin-top: 10px;
+  }
+}

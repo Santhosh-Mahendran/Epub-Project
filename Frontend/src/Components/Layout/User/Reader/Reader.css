@@ -1,0 +1,77 @@
+.header-content {
+  position: absolute;
+  top: 10;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  column-gap: 30px;
+  padding-top: 6px;
+  padding-right: 20px;
+  margin-right: 0;
+  transition: margin-right 225ms ease-in-out;
+}
+
+.header-content .active {
+  color: #0382ff;
+  /* color: #fff;
+  background-color: #101010; */
+}
+
+.drawer-open .header-content {
+  margin-right: 380px;
+}
+
+.linktoHl {
+  color: #0382ff;
+  cursor: pointer;
+  margin-top: -10px;
+  font-size: 14px;
+}
+
+.linktoHl:hover {
+  text-decoration: underline;
+}
+
+.highlight-color {
+  border: 1px solid rgb(247, 245, 245);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
+.text-container {
+  padding: 5px 15px;
+  border-radius: 20px;
+  max-width: 80%;
+  /* width: 80%; */
+  display: flex;
+  align-items: center;
+  white-space: normal;
+}
+.typing-text {
+  display: inline-block;
+  white-space: nowrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  max-width: 0;
+  animation: typing 2s steps(30, end) forwards;
+}
+
+@keyframes typing {
+  from {
+    max-width: 0;
+  }
+  to {
+    max-width: 100%;
+    white-space: normal;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .header-content{
+    column-gap: 15px;
+  }
+}

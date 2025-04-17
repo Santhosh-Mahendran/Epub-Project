@@ -1,0 +1,34 @@
+.addnew-btn {
+  background-color: #19701d;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.addnew-btn:hover {
+  background-color: #19701d;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.publisher-report .scale-report {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.publisher-report .scale-report h5 {
+  font-size: 20px;
+  color: #4b4363;
+  font-weight: bold;
+}
+
+.report-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  row-gap: 30px;
+  column-gap: 50px;
+}

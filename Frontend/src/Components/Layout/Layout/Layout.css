@@ -1,0 +1,8 @@
+.epub-reader-wrapper {
+  box-sizing: inherit;
+  position: relative;
+  margin: 0;
+  min-height: 100%;
+  padding: 3.4rem 0 2.7rem 0;
+  max-width: 100%;
+}

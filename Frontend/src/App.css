@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+body {
+  font-family: "poppins", sans-serif;
+  background-color: rgb(242, 242, 242) !important;
+  height: 100%;
+}
+#root {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.custom-toast {
+  z-index: 999999 !important; /* Increase z-index */
+}
+
+body .Toastify__toast-container {
+  z-index: 999999 !important;
+}
+
+:root {
+  --blue-500: #4caf50; /* Green */
+  --pink-500: #ff9800; /* Orange */
+  --violet-500: #7451dc;
+  --skyblue-500: #ae9de2;
+}
