@@ -1,0 +1,14 @@
+.review span {
+    background-color: #388e3c;
+    color: #fbf6f6;
+    font-size: 18px;
+    text-align: center;
+    /* width: 15%; */
+    padding: 3px 6px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 4px;
+    border-radius: 3px;
+  }

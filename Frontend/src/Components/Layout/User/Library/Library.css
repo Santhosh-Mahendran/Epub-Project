@@ -1,0 +1,58 @@
+/* order-successfull */
+.order-success {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, -100%, 0);
+  animation: fadeInRight 5s ease-out forwards;
+}
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    visibility: visible;
+    transform: translate3d(0, -100%, 0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateZ(0);
+  }
+}
+
+/* Wishlist */
+
+.user-wishlist {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  padding: 20px;
+}
+.wishbook-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.Order-summary {
+  padding: 20px;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.Order-summary-list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: 20px;
+}

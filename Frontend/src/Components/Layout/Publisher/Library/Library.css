@@ -1,0 +1,120 @@
+.library-container {
+  padding: 0 15px 15px 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.library-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* bookDetail */
+.bookDetail {
+  padding: 20px;
+  /* width: 70%; */
+  height: auto;
+  background-color: #fff;
+  border-radius: 10px;
+}
+.earning-detail {
+  /* padding: 20px; */
+  background-color: #fff;
+}
+.bookDetail img {
+  width: 38.2%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.book-content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  margin-top: 10px;
+}
+
+.book-content h2 {
+  color: #4b4363;
+  font-weight: bold;
+  margin: 0;
+}
+
+.book-content .author-name {
+  font-size: 28px;
+  font-weight: 600;
+  color: #5e5e5e;
+}
+.value-dis {
+  font-size: 18px;
+  color: #5e5e5e;
+}
+.value {
+  font-size: 20px;
+  color: #494848;
+  font-weight: 600;
+}
+.sub-title {
+  font-size: 20px;
+  color: #5d5d5d;
+  font-weight: 500;
+}
+
+.book-content .icons {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+}
+
+.earning-detail .card-body div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.earning-detail .card-body div p {
+  font-size: 18px;
+  font-weight: 500;
+  color: #5e5e5e;
+}
+
+
+
+.category:hover {
+  background-color: aliceblue;
+  user-select: none;
+  cursor: pointer;
+}
+
+.category-container {
+  border: 1px solid #eeecec;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.book-list-container{
+  padding-left: 2.5rem;
+}
+
+
+@media screen and (max-width: 430px) {
+  .input {
+    width: 100% !important;
+    max-width: 400px !important; 
+  }
+  .library-header {
+    flex-direction: column;
+    row-gap: 10px;
+    padding: 0;
+  }
+  .library-container {
+    padding: 0;
+  }
+  .book-list-container{
+    padding-left: 0;
+  }
+}

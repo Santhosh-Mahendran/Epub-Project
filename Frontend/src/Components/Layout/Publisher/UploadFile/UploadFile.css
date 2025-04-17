@@ -1,0 +1,95 @@
+.upload-container {
+  padding: 20px;
+  width: 70%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.upload-container h3 {
+  font-size: 26px;
+  color: #4b4363;
+  font-weight: bold;
+  text-align: center;
+}
+
+.picker {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.picker .preview {
+  width: 10rem;
+  height: 10rem;
+  border: 2px solid #a4abb9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #a4abb9;
+  position: relative;
+}
+
+.picker .button {
+  border: 0;
+  padding: 0.5rem 1.5rem;
+  background: #a4abb9;
+  border-radius: 2px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.picker .button:hover,
+.picker .button:focus {
+  background: #b3b9c6;
+}
+
+.preview p {
+  margin: 0;
+  padding: 1rem;
+}
+
+.picker .input {
+  display: none;
+}
+.upload-form {
+  padding: 15px;
+  row-gap: 25px;
+}
+
+@media screen and (max-width: 430px) {
+  .upload-container {
+    padding: 10px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+  }
+  .upload-container h3 {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 320px) {
+  .picker .button {
+    width: 150px;
+  }
+  .upload-form {
+    padding: 10px;
+    row-gap: 20px;
+  }
+  .picker .preview {
+    width: 8rem;
+    height: 7rem;
+  }
+  .picker {
+    margin-bottom: 0;
+  }
+}
+@media screen and (max-width: 769px) {
+  .upload-container {
+    width: 100%;
+  }
+}

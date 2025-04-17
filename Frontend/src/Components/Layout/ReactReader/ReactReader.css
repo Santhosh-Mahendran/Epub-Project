@@ -1,0 +1,10 @@
+.reader-container {
+  height: 100vh;
+  position: relative;
+  width: 100%;
+  transition: width 225ms ease-in;
+}
+
+
+
+
