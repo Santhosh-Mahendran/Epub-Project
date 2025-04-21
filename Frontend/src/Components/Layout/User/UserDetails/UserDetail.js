@@ -9,7 +9,7 @@ function UserDetail() {
     <>
       <div className="user-details shadow">
         <Link
-          to="/user/dashboard"
+          to="/reader/dashboard"
           style={{
             textDecoration: "none",
             fontSize: "17px",

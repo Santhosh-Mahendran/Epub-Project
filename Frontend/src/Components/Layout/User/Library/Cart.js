@@ -53,7 +53,7 @@ function Cart() {
               padding: "6px 12px",
               fontSize: "14px",
             }}
-            onClick={() => navigate("/user/dash/detail/order/summary")}
+            onClick={() => navigate("/reader/dashboard/detail/order/summary")}
           >
             Place Order
           </CustomButton>
@@ -88,7 +88,7 @@ function Cart() {
                   padding: "6px 12px",
                   fontSize: "14px",
                 }}
-                onClick={() => navigate("/user/dash/detail/order/summary")}
+                onClick={() => navigate("/reader/dashboard/detail/order/summary")}
               >
                 Buy Now
               </CustomButton>
@@ -97,7 +97,7 @@ function Cart() {
                   padding: "6px 12px",
                   fontSize: "14px",
                 }}
-                onClick={() => navigate("/user/dash/detail/order/summary")}
+                onClick={() => navigate("/reader/dashboard/detail/order/summary")}
               >
                 Rent Now
               </CustomButton>

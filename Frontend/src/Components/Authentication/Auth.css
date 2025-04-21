@@ -97,6 +97,11 @@
   width: 50%;
   z-index: 1;
   opacity: 0;
+  overflow-y: auto;
+}
+
+.register::-webkit-scrollbar {
+  display: none;
 }
 
 .content-container.animateAuth .register {

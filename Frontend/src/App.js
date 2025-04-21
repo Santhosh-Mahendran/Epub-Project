@@ -44,14 +44,14 @@ function App() {
             <Route path="/auth/publisher" element={<PublisherAuth />} />
           </Route>
           <Route path="/resetpassword" element={<Forgotpswd />} />
-          {PubLoginStatus ? (
+          {PubLoginStatus || true ? (
             <Route element={<PublisherLayout />}>
               {/* publisher */}
+              <Route path="/publisher/dashboard/" element={<Report />} />
               <Route
                 path="/publisher/dashboard/library"
                 element={<Library />}
               />
-              <Route path="/publisher/dashboard/" element={<Report />} />
               <Route
                 path="/publisher/dashboard/upload/"
                 element={<UploadFile />}
@@ -74,31 +74,31 @@ function App() {
 
           {UserLoginStatus || true ? (
             <Route element={<UserLayout />}>
-              <Route path="/user/dashboard/" element={<UserDashboard />} />
-              <Route path="/user/dash/explore" element={<ExploreBook />} />
+              <Route path="/reader/dashboard/" element={<UserDashboard />} />
+              <Route path="/reader/dashboard/explore" element={<ExploreBook />} />
               <Route
-                path="/user/dash/explore/book"
+                path="/reader/dashboard/explore/book"
                 element={<ExploreBookDetail />}
               />
-              <Route path="/user/dash/detail/*" element={<UserDetail />}>
+              <Route path="/reader/dashboard/detail/*" element={<UserDetail />}>
                 <Route path="wishlist" element={<Wishlist />} />
                 <Route path="library" element={<UserLibrary />} />
                 <Route path="order" element={<Cart />} />
               </Route>
               <Route
-                path="/user/dash/detail/order/summary"
+                path="/reader/dashboard/detail/order/summary"
                 element={<OrderSummary />}
               />
               <Route
-                path="/user/dash/detail/order/summary/orderplaced"
+                path="/reader/dashboard/detail/order/summary/orderplaced"
                 element={<OrderPlaced />}
               />
               <Route
-                path="/user/publisherDetails"
+                path="/reader/publisherDetails"
                 element={<PublisherBook />}
               />
               <Route
-                path="/user/publisher/Profile/"
+                path="/reader/publisher/Profile/"
                 element={<PublishDashboard />}
               />
             </Route>
@@ -106,7 +106,7 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           )}
           {UserLoginStatus || true ? (
-            <Route path="/user/bookpreview" element={<UserEpubReader />} />
+            <Route path="/reader/bookpreview" element={<UserEpubReader />} />
           ) : (
             <Route path="*" element={<Navigate to="/" replace />} />
           )}

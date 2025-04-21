@@ -25,12 +25,12 @@ function ExploreBookDetail() {
   );
 
   const hanldePublisherDetailsOpen = () => {
-    // navigate("/user/publisherDetails");
-    navigate("/user/publisher/profile");
+    // navigate("/reader/publisherDetails");
+    navigate("/reader/publisher/profile");
   };
 
   const handlePreviewOpen = () => {
-    navigate("/user/bookpreview");
+    navigate("/reader/bookpreview");
   };
 
   const handleAddWishlist = (BookId) => {
@@ -48,7 +48,7 @@ function ExploreBookDetail() {
       <div className="userbookDetail row shadow cardBox">
         <div className="d-flex justify-content-between p-0">
           <Link
-            to="/user/dashboard"
+            to="/reader/dashboard"
             className="mb-2"
             style={{ textDecoration: "none", fontSize: "19px" }}
           >
@@ -60,7 +60,7 @@ function ExploreBookDetail() {
               <ImCross
                 size={"10px"}
                 style={{ color: "rgb(149 149 149)" }}
-                onClick={() => navigate("/user/dash/explore")}
+                onClick={() => navigate("")}
               />
             </IconButton>
           </Tooltip>
@@ -111,7 +111,7 @@ function ExploreBookDetail() {
                 }}
                 onClick={() =>
                   navigate(
-                    `/user/dash/detail/order/summary?bookId=${BookDetails.book_id}`
+                    `/reader/dashboard/detail/order/summary?bookId=${BookDetails.book_id}`
                   )
                 }
               >
@@ -124,7 +124,7 @@ function ExploreBookDetail() {
                   padding: "6px 12px",
                   fontSize: "14px",
                 }}
-                onClick={() => navigate("/user/dash/detail/order/summary")}
+                onClick={() => navigate("/reader/dashboard/detail/order/summary")}
               >
                 Rent Now
               </CustomButton>

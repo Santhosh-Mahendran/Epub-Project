@@ -37,7 +37,7 @@ function Login({ title, registerNav, handleLogin }) {
     if (PublisherLogin) {
       navigate("/publisher/dashboard");
     } else if (UserLoginStatus) {
-      navigate("/user/dashboard");
+      navigate("/reader/dashboard");
     }
   }, [PublisherLogin, UserLoginStatus]);
 

@@ -32,7 +32,7 @@ function OrderSummary() {
             <ImCross
               size={"10px"}
               style={{ color: "rgb(149 149 149)" }}
-              onClick={() => navigate("/user/dash/explore")}
+              onClick={() => navigate("/reader/dashboard/explore")}
             />
           </IconButton>
         </Tooltip>
@@ -147,7 +147,7 @@ function OrderSummary() {
               sx={{ backgroundColor: "green" }}
               onClick={
                 () => handleOrderConfirm()
-                // navigate("/user/dash/detail/order/summary/orderplaced")
+                // navigate("/reader/dashboard/detail/order/summary/orderplaced")
               }
             >
               Confirm Order

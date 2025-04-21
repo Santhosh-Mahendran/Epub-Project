@@ -28,7 +28,7 @@ function OrderPlaced() {
         </p>
         <CustomButton
           type="button"
-          onClick={() => navigate("/user/dash/explore")}
+          onClick={() => navigate("/reader/dashboard/explore")}
           sx={{ backgroundColor: "green" }}
         >
           Continue Shopping

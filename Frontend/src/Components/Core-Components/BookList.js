@@ -32,7 +32,7 @@ function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
     return <BookListLoading />;
   }
   const handleStartReadingSubBook = (BookId) => {
-    navigate(`/user/bookpreview?BookId=${BookId}`);
+    navigate(`/reader/bookpreview?BookId=${BookId}`);
   };
 
   return (

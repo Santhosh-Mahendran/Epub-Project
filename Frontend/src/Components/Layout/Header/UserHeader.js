@@ -17,6 +17,7 @@ import { Get_readerSub_Request } from "../../../Redux/Action/UserAction/Subscrip
 import { GetUserBookbyCat_Request } from "../../../Redux/Action/UserAction/UserBookAction";
 import { IoMdMenu } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
+import { RiBookShelfFill  } from "react-icons/ri";
 import SideNavBar from "./SideNavBar";
 
 function UserHeader() {
@@ -92,7 +93,7 @@ function UserHeader() {
   };
 
   useEffect(() => {
-    if (window.location.pathname === "/user/dash/explore") {
+    if (window.location.pathname === "/reader/dashboard/explore") {
       return;
     }
     setSearchQuery(""); // Clear search query when component mounts
@@ -102,8 +103,8 @@ function UserHeader() {
     if (newValue) {
       setSearchQuery(newValue);
       setShowSearchOption(false);
-      if (window.location.pathname !== "/user/dash/explore") {
-        navigate(`/user/dash/explore?search=${newValue}`);
+      if (window.location.pathname !== "/reader/dashboard/explore") {
+        navigate(`/reader/dashboard/explore?search=${newValue}`);
       }
     }
   };
@@ -115,7 +116,7 @@ function UserHeader() {
       setSelectedSub(newValue?.id);
       dispatch(GetUserBookbyCat_Request(newValue?.id));
     }
-    navigate("/user/dash/explore", { state: newValue });
+    navigate("/reader/dashboard/explore", { state: newValue });
   };
 
   const handleMenuOpen = () => {
@@ -137,7 +138,7 @@ function UserHeader() {
           <h3
             role="button"
             className="title"
-            onClick={() => navigate("/user/dashboard")}
+            onClick={() => navigate("/reader/dashboard")}
           >
             HALO PAD READER
           </h3>
@@ -248,9 +249,21 @@ function UserHeader() {
               ""
             )}
             <div
+              className="explore"
+              style={{ cursor: "pointer", userSelect: "none" }}
+              onClick={() => navigate("/reader/dashboard/explore")}
+            >
+              <RiBookShelfFill 
+                className="me-2 mb-1"
+                size={16}
+                style={{ color: "#f6f6f6" }}
+              />
+              <span>Explore</span>
+            </div>
+            <div
               className="wishlist"
               style={{ cursor: "pointer", userSelect: "none" }}
-              onClick={() => navigate("/user/dash/detail/wishlist")}
+              onClick={() => navigate("/reader/dashboard/detail/wishlist")}
             >
               <FaHeart
                 className="me-2 mb-1"
@@ -263,7 +276,7 @@ function UserHeader() {
               className="profile"
               style={{ cursor: "pointer", userSelect: "none" }}
               role="button"
-              onClick={() => navigate("/user/dash/detail/library")}
+              onClick={() => navigate("/reader/dashboard/detail/library")}
             >
               <MdLibraryBooks
                 className="me-2 mb-1"
@@ -301,7 +314,7 @@ function UserHeader() {
             <div
               className="cart"
               style={{ cursor: "pointer", userSelect: "none" }}
-              onClick={() => navigate("/user/dash/detail/order")}
+              onClick={() => navigate("/reader/dashboard/detail/order")}
             >
               <Badge
                 badgeContent={cart_Count}
@@ -337,22 +350,22 @@ function UserHeader() {
           setOpenSideNav={setOpenSideNav}
           menu={[
             {
-              path: "/user/dashboard",
+              path: "/reader/dashboard",
               icon: <FaHome size={15} className="mx-3 mb-1" />,
               label: "Home",
             },
             {
-              path: "/user/dash/detail/wishlist",
+              path: "/reader/dashboard/detail/wishlist",
               icon: <FaHeart size={15} className="mx-3 mb-1" />,
               label: "wishlist",
             },
             {
-              path: "/user/dash/detail/library",
+              path: "/reader/dashboard/detail/library",
               icon: <MdLibraryBooks size={15} className="mx-3 mb-1" />,
               label: "My Library",
             },
             {
-              path: "/user/dash/detail/order",
+              path: "/reader/dashboard/detail/order",
               icon: <IoCartOutline size={15} className="mx-3 mb-1" />,
               label: "Cart",
             },

@@ -35,6 +35,7 @@ function ReactEpubReader({
             allowSameOrigin: true,
           }}
           epubInitOptions={epubInitOptions && epubInitOptions}
+
           getRendition={(rendition) => {
             if (rendition && getRendition) getRendition(rendition);
           }}

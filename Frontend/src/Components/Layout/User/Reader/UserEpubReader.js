@@ -46,7 +46,7 @@ function UserEpubReader() {
   const File = location?.state;
   const navigate = useNavigate();
   const handleNav = () => {
-    navigate("/user/dash/explore");
+    navigate("/reader/dashboard/explore");
   };
   const dispatch = useDispatch();
   const { Highlights, Notes, Progress } = useSelector(

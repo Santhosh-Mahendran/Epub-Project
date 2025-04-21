@@ -35,9 +35,9 @@ function SideNav() {
         {toggleStaff && (
           <div className={`acc-link ${toggleStaff ? "open" : "closed"}`}>
             <Link
-              to="/user/dash/detail/order"
+              to="/reader/dashboard/detail/order"
               className={`${
-                location.pathname === "/user/dash/detail/order"
+                location.pathname === "/reader/dashboard/detail/order"
                   ? "Linkactive"
                   : ""
               }`}
@@ -45,9 +45,9 @@ function SideNav() {
               My cart
             </Link>
             <Link
-              to="/user/dash/detail/wishlist"
+              to="/reader/dashboard/detail/wishlist"
               className={`${
-                location.pathname === "/user/dash/detail/wishlist"
+                location.pathname === "/reader/dashboard/detail/wishlist"
                   ? "Linkactive"
                   : ""
               }`}
@@ -55,9 +55,9 @@ function SideNav() {
               My wishlist
             </Link>
             <Link
-              to="/user/dash/detail/library"
+              to="/reader/dashboard/detail/library"
               className={`${
-                location.pathname === "/user/dash/detail/library"
+                location.pathname === "/reader/dashboard/detail/library"
                   ? "Linkactive"
                   : ""
               }`}

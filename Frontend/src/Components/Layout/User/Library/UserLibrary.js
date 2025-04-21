@@ -12,7 +12,7 @@ function UserLibrary() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handlePreviewOpen = (Book) => {
-    navigate(`/user/bookpreview`, { state: Book });
+    navigate(`/reader/bookpreview`, { state: Book });
   };
   const { purchasedBook } = useSelector((state) => state.PurchasedBook);
   useEffect(() => {

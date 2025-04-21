@@ -60,7 +60,7 @@ function ExploreBook() {
       return;
     } else {
       dispatch(GetUserBookbyId_Request(bookData.book_id));
-      navigate(`/user/dash/explore/book`);
+      navigate(`/reader/dashboard/explore/book`);
     }
   };
 
@@ -68,7 +68,7 @@ function ExploreBook() {
     <>
       <div className="allBooks row shadow ">
         <Link
-          to="/user/dashboard"
+          to="/reader/dashboard"
           style={{
             textDecoration: "none",
             fontSize: "17px",
