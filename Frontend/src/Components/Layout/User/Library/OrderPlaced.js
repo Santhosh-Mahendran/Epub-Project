@@ -9,7 +9,6 @@ function OrderPlaced() {
   return (
     <div
       className="order-success d-flex flex-column justify-content-center mx-auto"
-      style={{ width: "25%", height: "70vh" }}
     >
       <div className="card shadow" style={{ padding: "0px 20px 20px 20px" }}>
         <img src={placed} width="200px" alt="gif" className="mx-auto" />

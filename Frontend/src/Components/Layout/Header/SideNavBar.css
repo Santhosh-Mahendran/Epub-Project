@@ -3,12 +3,14 @@
   background-color: #655a88f2;
   color: #fbf6f6;
   font-size: 16px;
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
   position: fixed;
   z-index: 1000;
   width: 100%;
+}
+.sidenavbar div {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
 }
 
 .sidenavbar .link {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactEpubReader from "../../ReactReader/ReactReader";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Base_Url } from "../../../../Environment/Base_Url";
 // import Reader from "../../ReactReader/Reader";
 
 function PubEpubReader() {
@@ -15,7 +16,7 @@ function PubEpubReader() {
   useEffect(() => {
     const fetchEpubUrl = async () => {
       try {
-        const streamUrl = `http://127.0.0.1:5000/book/stream/${FileName}`;
+        const streamUrl = `${Base_Url}/book/stream/${FileName}`;
         setEpubUrl(streamUrl);
       } catch (error) {
         console.error("Error fetching EPUB URL:", error);
@@ -28,8 +29,8 @@ function PubEpubReader() {
   return (
     <ReactEpubReader
       // epubFile="https://react-reader.metabits.no/files/alice.epub"
-       epubFile="/alice.epub"
-      // epubFile={epubUrl}
+      //  epubFile="/alice.epub"
+      epubFile={epubUrl}
       handleNav={handleNav}
       role="publisher"
       epubInitOptions={{

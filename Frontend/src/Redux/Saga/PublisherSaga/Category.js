@@ -5,6 +5,7 @@ import {
   Add_Cat_Failure,
   Add_Cat_Success,
   Get_Cat_Failure,
+  Get_Cat_Request,
   Get_Cat_Success,
 } from "../../Action/PublisherAction/CategoryAction";
 import { toast } from "react-toastify";
@@ -14,6 +15,7 @@ function* Add_CategorySaga({ payload }) {
     const Response = yield call(Add_Category, payload);
     yield put(Add_Cat_Success(Response.data));
     toast.success(Response?.data?.message)
+    yield put(Get_Cat_Request())
   } catch (error) {
     yield put(Add_Cat_Failure(error));
     toast.error(error?.response?.data?.error);

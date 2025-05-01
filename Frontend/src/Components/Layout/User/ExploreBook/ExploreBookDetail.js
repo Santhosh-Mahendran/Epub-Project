@@ -12,17 +12,28 @@ import { IoChevronBack } from "react-icons/io5";
 import { CiShop } from "react-icons/ci";
 import { AddtoWishlist_Request } from "../../../../Redux/Action/UserAction/WishlistBookAction";
 import { useDispatch, useSelector } from "react-redux";
-import { AddtoCart_Request } from "../../../../Redux/Action/UserAction/CartBookAction";
+import {
+  AddtoCart_Request,
+  RemoveCartitem_Request,
+} from "../../../../Redux/Action/UserAction/CartBookAction";
 import coverImg from "../../../Assets/book_cover4.jpg";
 import { BookDetailPubLoading } from "../../../Core-Components/Loading";
+import { Base_Url } from "../../../../Environment/Base_Url";
 
 function ExploreBookDetail() {
   const location = useLocation();
+  const IsPurchased = location?.state;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { BookDetails, loading: BookDetailLoading } = useSelector(
     (state) => state.UserBook
   );
+  const { cartItems } = useSelector((state) => state.CartBook);
+  const AlreadyInCart = cartItems?.find(
+    (cartItem) => cartItem?.book_id === BookDetails?.book_id
+  );
+  console.log(AlreadyInCart);
+
 
   const hanldePublisherDetailsOpen = () => {
     // navigate("/reader/publisherDetails");
@@ -38,7 +49,11 @@ function ExploreBookDetail() {
   };
 
   const handleAddItemToCart = (BookId) => {
-    dispatch(AddtoCart_Request({ book_id: BookId }));
+    if (AlreadyInCart) {      
+      dispatch(RemoveCartitem_Request(AlreadyInCart?.cart_id));
+    } else {
+      dispatch(AddtoCart_Request({ book_id: BookId }));
+    }
   };
   if (BookDetailLoading) {
     return <BookDetailPubLoading role="user" />;
@@ -48,9 +63,9 @@ function ExploreBookDetail() {
       <div className="userbookDetail row shadow cardBox">
         <div className="d-flex justify-content-between p-0">
           <Link
-            to="/reader/dashboard"
             className="mb-2"
             style={{ textDecoration: "none", fontSize: "19px" }}
+            onClick={()=>window.history.back()}
           >
             <IoChevronBack className="mb-1" />
             Back
@@ -67,7 +82,7 @@ function ExploreBookDetail() {
         </div>
         <div className="col-lg-6 col-md-12 col-sm-12 justify-content-center left-container">
           <img
-            src={BookDetails?.Book_cover ? coverImg : coverImg}
+            src={`${Base_Url}/files/cover_image/${BookDetails?.cover_image}`}
             alt="image"
           />
           <div
@@ -91,43 +106,73 @@ function ExploreBookDetail() {
               </div>
             </div> */}
             <div className="action-btn mt-2 ms-auto" style={{ zIndex: 0 }}>
-              <CustomButton
-                className="mx-1"
-                sx={{
-                  backgroundColor: "#1c6eb2",
-                  padding: "6px 12px",
-                  fontSize: "14px",
-                }}
-                onClick={() => handleAddItemToCart(BookDetails.book_id)}
-              >
-                ADD TO CART
-              </CustomButton>
-              <CustomButton
-                className="mx-1"
-                sx={{
-                  backgroundColor: "#098446",
-                  padding: "6px 12px",
-                  fontSize: "14px",
-                }}
-                onClick={() =>
-                  navigate(
-                    `/reader/dashboard/detail/order/summary?bookId=${BookDetails.book_id}`
-                  )
-                }
-              >
-                Buy Now
-              </CustomButton>
-              <CustomButton
-                className="mx-1"
-                sx={{
-                  backgroundColor: "#63af27",
-                  padding: "6px 12px",
-                  fontSize: "14px",
-                }}
-                onClick={() => navigate("/reader/dashboard/detail/order/summary")}
-              >
-                Rent Now
-              </CustomButton>
+              {IsPurchased ? (
+                <div>
+                  <CustomButton
+                    sx={{
+                      backgroundColor: "rgb(34 177 106)",
+                      padding: "0.5rem 1rem",
+                    }}
+                    className="my-1"
+                    disable
+                  >
+                    PURCHASED
+                  </CustomButton>
+                  <CustomButton
+                    sx={{ backgroundColor: "#0d6efd", padding: "0.5rem 1rem" }}
+                    className="my-1"
+                    onClick={() => navigate("/reader/dashboard/detail/library")}
+                  >
+                    Go to Library
+                  </CustomButton>
+                </div>
+              ) : (
+                <>
+                  <CustomButton
+                    className="m-1"
+                    sx={{
+                      backgroundColor: "#1c6eb2",
+                      padding: "6px 12px",
+                      fontSize: "14px",
+                    }}
+                    onClick={() => handleAddItemToCart(BookDetails.book_id)}
+                  >
+                    {AlreadyInCart
+                      ? "Remove from Cart"
+                      : " ADD TO CART"}
+                  </CustomButton>
+                  <CustomButton
+                    className="m-1"
+                    sx={{
+                      backgroundColor: "#098446",
+                      padding: "6px 12px",
+                      fontSize: "14px",
+                    }}
+                    onClick={() =>
+                      navigate("/reader/dashboard/detail/order/summary", {
+                        state: BookDetails,
+                      })
+                    }
+                  >
+                    Buy Now
+                  </CustomButton>
+                  <CustomButton
+                    className="m-1"
+                    sx={{
+                      backgroundColor: "#63af27",
+                      padding: "6px 12px",
+                      fontSize: "14px",
+                    }}
+                    onClick={() =>
+                      navigate("/reader/dashboard/detail/order/summary", {
+                        state: BookDetails,
+                      })
+                    }
+                  >
+                    Rent Now
+                  </CustomButton>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -153,22 +198,34 @@ function ExploreBookDetail() {
           <Review />
           <p className="mb-0">
             <span className="sub-title">Price</span> -
-            <span className="value">
-              {" "}
-              <LuIndianRupee
-                size={16}
-                className="mb-1"
-                style={{ fontWeight: "bold" }}
-              />
-              <del>{BookDetails?.price}</del>
-              &nbsp;{" "}
-              <LuIndianRupee
-                size={16}
-                className="mb-1"
-                style={{ fontWeight: "bold" }}
-              />
-              100
-            </span>
+            {BookDetails?.offer_price ? (
+              <span className="value">
+                {" "}
+                <LuIndianRupee
+                  size={16}
+                  className="mb-1"
+                  style={{ fontWeight: "bold" }}
+                />
+                <del>{BookDetails?.price}</del>
+                &nbsp;{" "}
+                <LuIndianRupee
+                  size={16}
+                  className="mb-1"
+                  style={{ fontWeight: "bold" }}
+                />
+                {BookDetails?.offer_price}
+              </span>
+            ) : (
+              <span className="value">
+                {" "}
+                <LuIndianRupee
+                  size={16}
+                  className="mb-1"
+                  style={{ fontWeight: "bold" }}
+                />
+                {BookDetails?.price}
+              </span>
+            )}
           </p>
           <p className="mb-0">
             <span className="sub-title">Rent</span> -{" "}

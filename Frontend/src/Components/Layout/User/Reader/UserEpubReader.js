@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactEpubReader from "../../ReactReader/ReactReader";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Get_highlight_Request,
@@ -20,6 +20,7 @@ import ReaderHeader from "./ReaderHeader";
 import BookHighlights from "./BookHighlight";
 import BookNotes from "./BookNotes";
 import "./Reader.css";
+import { Base_Url } from "../../../../Environment/Base_Url";
 
 function UserEpubReader() {
   const [rendition, setRendition] = useState(undefined);
@@ -43,7 +44,9 @@ function UserEpubReader() {
   const [NotesContent, setNotesContent] = useState("");
   const [epubUrl, setEpubUrl] = useState(null);
   const token = localStorage.getItem("User_Auth_Token");
-  const File = location?.state;
+  const GetLoactionState = useLocation();
+  const File = GetLoactionState?.state;
+
   const navigate = useNavigate();
   const handleNav = () => {
     navigate("/reader/dashboard/explore");
@@ -56,8 +59,10 @@ function UserEpubReader() {
   useEffect(() => {
     const fetchEpubUrl = async () => {
       try {
-        const streamUrl = `http://127.0.0.1:5000/book/stream/${File?.epub_file}`;
-        setEpubUrl(streamUrl);
+        if (File) {
+          const streamUrl = `${Base_Url}/book/stream/${File?.file_path}`;
+          setEpubUrl(streamUrl);
+        }
       } catch (error) {
         console.error("Error fetching EPUB URL:", error);
       }
@@ -522,17 +527,17 @@ function UserEpubReader() {
   return (
     <ReactEpubReader
       // epubFile="https://react-reader.metabits.no/files/alice.epub"
-      epubFile="/alice.epub"
-      // epubFile={epubUrl}
+      // epubFile="/alice.epub"
+      epubFile={epubUrl}
       location={location}
       locationChanged={handlelocationChange}
       getRendition={(rendition) => getRendition(rendition)}
-      epubInitOptions={{
-        openAs: "epub",
-        requestHeaders: {
-          Authorization: ` Bearer ${token}`,
-        },
-      }}
+      // epubInitOptions={{
+      //   openAs: "epub",
+      //   requestHeaders: {
+      //     Authorization: ` Bearer ${token}`,
+      //   },
+      // }}
       hLSlideOpen={hLSlideOpen}
       notesSlideOpen={notesSlideOpen}
       header={header}
@@ -543,7 +548,7 @@ function UserEpubReader() {
       CustomMenu={CustomMenu}
       HighlightDrawer={HighlightDrawer}
       NotesDrawer={NotesDrawer}
-      Chatbot={<ChatBot />}
+      Chatbot={<ChatBot bookId={File?.book_id}/>}
     />
   );
 }

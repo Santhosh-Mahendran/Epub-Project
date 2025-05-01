@@ -44,7 +44,7 @@ function App() {
             <Route path="/auth/publisher" element={<PublisherAuth />} />
           </Route>
           <Route path="/resetpassword" element={<Forgotpswd />} />
-          {PubLoginStatus || true ? (
+          {PubLoginStatus ? (
             <Route element={<PublisherLayout />}>
               {/* publisher */}
               <Route path="/publisher/dashboard/" element={<Report />} />
@@ -64,7 +64,7 @@ function App() {
           ) : (
             <Route path="*" element={<Navigate to="/" replace />} />
           )}
-          {PubLoginStatus || true ? (
+          {PubLoginStatus ? (
             <Route path="/publisher/bookpreview" element={<PubEpubReader />} />
           ) : (
             <Route path="*" element={<Navigate to="/" replace />} />
@@ -72,7 +72,7 @@ function App() {
 
           {/* User */}
 
-          {UserLoginStatus || true ? (
+          {UserLoginStatus ? (
             <Route element={<UserLayout />}>
               <Route path="/reader/dashboard/" element={<UserDashboard />} />
               <Route path="/reader/dashboard/explore" element={<ExploreBook />} />
@@ -105,7 +105,7 @@ function App() {
           ) : (
             <Route path="*" element={<Navigate to="/" replace />} />
           )}
-          {UserLoginStatus || true ? (
+          {UserLoginStatus ? (
             <Route path="/reader/bookpreview" element={<UserEpubReader />} />
           ) : (
             <Route path="*" element={<Navigate to="/" replace />} />

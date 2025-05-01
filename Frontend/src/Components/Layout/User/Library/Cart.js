@@ -17,7 +17,7 @@ function Cart() {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.CartBook);
   const [DelDialogOpen, setDelDialogOpen] = useState(false);
-  const [bookId, setBookId] = useState(null);
+  const [cartId, setCartId] = useState(null);
   const [BookName, setBookname] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
@@ -25,7 +25,7 @@ function Cart() {
   }, [dispatch]);
 
   const handleDeleteCartItem = (Book) => {
-    setBookId(Book?.cart_id);
+    setCartId(Book?.cart_id);
     setBookname(Book?.title);
     setDelDialogOpen(true);
   };
@@ -33,34 +33,45 @@ function Cart() {
     setDelDialogOpen(false);
   };
   const handleDeleteItem = () => {
-    dispatch(RemoveCartitem_Request(bookId));
+    dispatch(RemoveCartitem_Request(cartId));
   };
+  const handlepurchase = () => {
+    navigate(`/reader/dashboard/detail/order/summary`, {
+      state: { cartItems },
+    });
+  };
+  const TotalAmount = cartItems.reduce(
+    (sum, book) => sum + (Number(book?.price) || 0),
+    0
+  );
 
-  const OrderFooter = (
-    <div className="total-price">
-      <div className="d-flex justify-content-between align-items-center p-2">
-        <h6 className="mb-0">Total Price</h6>
-        <h6 className="mb-0">
-          <LuIndianRupee size={16} className="mb-1" />
-          1000
-        </h6>
-      </div>
-      <div className="mt-2" style={{ position: "relative", bottom: "0" }}>
-        <div className="d-flex justify-content-end align-items-center p-2">
-          <CustomButton
-            sx={{
-              backgroundColor: "#19701D",
-              padding: "6px 12px",
-              fontSize: "14px",
-            }}
-            onClick={() => navigate("/reader/dashboard/detail/order/summary")}
-          >
-            Place Order
-          </CustomButton>
+  const OrderFooter = () => {
+    return (
+      <div className="total-price">
+        <div className="d-flex justify-content-between align-items-center p-2">
+          <h6 className="mb-0">Total Price</h6>
+          <h6 className="mb-0">
+            <LuIndianRupee size={16} className="mb-1" />
+            {TotalAmount}
+          </h6>
+        </div>
+        <div className="mt-2" style={{ position: "relative", bottom: "0" }}>
+          <div className="d-flex justify-content-end align-items-center p-2">
+            <CustomButton
+              sx={{
+                backgroundColor: "#19701D",
+                padding: "6px 12px",
+                fontSize: "14px",
+              }}
+              onClick={handlepurchase}
+            >
+              Place Order
+            </CustomButton>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <>
@@ -88,7 +99,11 @@ function Cart() {
                   padding: "6px 12px",
                   fontSize: "14px",
                 }}
-                onClick={() => navigate("/reader/dashboard/detail/order/summary")}
+                onClick={() =>
+                  navigate(`/reader/dashboard/detail/order/summary`, {
+                    state: Cart,
+                  })
+                }
               >
                 Buy Now
               </CustomButton>
@@ -97,7 +112,11 @@ function Cart() {
                   padding: "6px 12px",
                   fontSize: "14px",
                 }}
-                onClick={() => navigate("/reader/dashboard/detail/order/summary")}
+                onClick={() =>
+                  navigate(`/reader/dashboard/detail/order/summary`, {
+                    state: Cart,
+                  })
+                }
               >
                 Rent Now
               </CustomButton>
@@ -110,8 +129,8 @@ function Cart() {
         onClose={handleDialogClose}
         handleDeleteItem={handleDeleteItem}
         title={`Remove Item from Cart`}
-        discription={`Are you sure you want to delete <strong>${BookName}</strong> from
-          your Cart?`}
+        BookName={BookName}
+        discription="Cart"
       />
     </>
   );

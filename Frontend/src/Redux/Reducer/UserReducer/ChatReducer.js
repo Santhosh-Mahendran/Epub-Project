@@ -16,7 +16,7 @@ function ChatReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        Response: action.payload,
+        Response: action.payload?.response,
       };
     case Type.POST_USERQUES_FAILURE:
       return {

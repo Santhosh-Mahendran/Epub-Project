@@ -70,7 +70,10 @@ function Register({ redirectTologin, handleReg }) {
   const formik = useFormik({
     initialValues: initialState,
     validationSchema: validation,
-    onSubmit: (values) => handleRegister(values),
+    onSubmit: (values, { resetForm }) => {
+      handleRegister(values);
+      resetForm();
+    },
   });
 
   useEffect(() => {
@@ -331,7 +334,9 @@ function Register({ redirectTologin, handleReg }) {
           </p>
           <p>
             Already have an Account?
-            <span className="navigationLink" onClick={redirectTologin}>Login</span>
+            <span className="navigationLink" onClick={redirectTologin}>
+              Login
+            </span>
           </p>
         </div>
       </div>

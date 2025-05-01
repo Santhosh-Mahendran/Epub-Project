@@ -12,6 +12,7 @@ function UserLibrary() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handlePreviewOpen = (Book) => {
+    
     navigate(`/reader/bookpreview`, { state: Book });
   };
   const { purchasedBook } = useSelector((state) => state.PurchasedBook);
@@ -42,7 +43,7 @@ function UserLibrary() {
                 className="mx-2"
                 sx={{
                   backgroundColor: "#22B16A",
-                  padding: "2px 8px",
+                  padding: {xs:"2px 20px",md:"2px 8px"},
                   fontSize: "12px",
                 }}
               >

@@ -180,15 +180,15 @@ function UserHeader() {
               padding: "0px",
               backgroundColor: "white",
               borderRadius: "5px",
-              width: "300px",
+              width: "400px",
               height: "38px",
               "& .MuiTextField-root": {
                 padding: "0px",
-                width: "300px",
+                width: "400px",
                 height: "38px",
               },
               "& .MuiOutlinedInput-root": {
-                width: "300px",
+                width: "400px",
                 height: "38px",
                 borderRadius: "10px",
                 "& fieldset": { border: "none" }, // Remove border

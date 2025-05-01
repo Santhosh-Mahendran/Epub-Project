@@ -6,6 +6,7 @@ import "./Library.css";
 import { UserLibraryLoading } from "../../../Core-Components/Loading";
 import { useSelector } from "react-redux";
 import Main_Api from "../../../../Auth_Interceptor/Main_Api";
+import { Base_Url } from "../../../../Environment/Base_Url";
 
 function ProductList({ title, Book_list, children, Footer }) {
   const { loading: WishlistLoading } = useSelector(
@@ -32,14 +33,14 @@ function ProductList({ title, Book_list, children, Footer }) {
               key={index}
             >
               <div className="row justify-content-center">
-                <div className="col-2">
+                <div className="col-lg-2 col-md-2 col-sm-12">
                   <img
-                    src={`${Main_Api}/files/cover_image/${book?.cover_image}`}
+                    src={`${Base_Url}/files/cover_image/${book?.cover_image}`}
                     width="100px"
                   />
                 </div>
                 <div
-                  className="col-5 d-flex flex-column"
+                  className="col-lg-5 col-md-5 col-sm-12 d-flex flex-column"
                   style={{ rowGap: "10px" }}
                 >
                   <div className="d-flex align-items-center">
@@ -48,11 +49,13 @@ function ProductList({ title, Book_list, children, Footer }) {
                       - {book?.author}
                     </h5>
                   </div>
-                  <div>
-                    <h6 className="mb-0" style={{ color: "#5e5e5e" }}>
-                      {book?.genre}
-                    </h6>
-                  </div>
+                  {book?.genre && (
+                    <div>
+                      <h6 className="mb-0" style={{ color: "#5e5e5e" }}>
+                        {book?.genre}
+                      </h6>
+                    </div>
+                  )}
                   <Review />
                   {book?.price && (
                     <h5 className="mb-0">
@@ -65,7 +68,9 @@ function ProductList({ title, Book_list, children, Footer }) {
                     </h5>
                   )}
                 </div>
-                <div className="col-5">{children && children(book)}</div>
+                <div className="col-lg-5 col-md-5  col-sm-12">
+                  {children && children(book)}
+                </div>
               </div>
             </div>
           ))
@@ -75,7 +80,7 @@ function ProductList({ title, Book_list, children, Footer }) {
           </div>
         )}
       </div>
-      {Footer && Footer}
+      {Footer && Footer(Book_list)}
     </div>
   );
 }

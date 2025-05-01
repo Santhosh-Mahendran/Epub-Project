@@ -46,8 +46,11 @@ div {
   user-select: "none";
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 430px) {
   .layout {
     padding: 10px;
+  }
+  .main-container{
+    margin-bottom: 2rem;
   }
 }

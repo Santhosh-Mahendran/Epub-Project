@@ -7,14 +7,18 @@ import "./Reader.css";
 import { useDispatch, useSelector } from "react-redux";
 import { PostUserQues_Request } from "../../../../Redux/Action/UserAction/ChatAction";
 
-function ChatBot() {
+function ChatBot({ bookId }) {
   const [chatBotOpen, setchatBotOpen] = useState(true);
   const [userQuestion, setUserQuestion] = useState("");
   const [QusAsked, setQusAsked] = useState(false);
   const dispatch = useDispatch();
-  const { Response } = useSelector((state) => state.ChatBot_Res);
+  const { Response, loading } = useSelector((state) => state.ChatBot_Res);
   const [messages, setMessages] = useState([
-    { text: "Hello! How may I assist you?", sender: "bot" },
+    {
+      text: "Hello! How may I assist you?",
+      sender: "bot",
+      timestamp: new Date().toISOString(),
+    },
   ]);
   const handleChatOpen = () => {
     setchatBotOpen(!chatBotOpen);
@@ -22,75 +26,80 @@ function ChatBot() {
   const handleSendQuestion = () => {
     if (userQuestion) {
       setQusAsked(true);
-      setMessages([...messages, { text: userQuestion, sender: "user" }]);
-      dispatch(PostUserQues_Request(userQuestion));
+      const timenow = new Date();
+      setMessages([
+        ...messages,
+        {
+          text: userQuestion,
+          sender: "user",
+          timestamp: timenow.toISOString(),
+        },
+      ]);
+      dispatch(
+        PostUserQues_Request({ book_id: bookId, question: userQuestion })
+      );
       setUserQuestion("");
     }
   };
   useEffect(() => {
     if (Response && Object.keys(Response).length && QusAsked) {
-      setMessages([...messages, Response]);
+      setMessages([
+        ...messages,
+        { text: Response, sender: "bot", timestamp: new Date().toISOString() },
+      ]);
       setQusAsked(false);
     } else {
       return;
     }
   }, [Response]);
+  const messagesEndRef = useRef(null);
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
-  const [position, setPosition] = useState({ x: 50, y: 40 });
+  // const isDragging = useRef(false);
+  // const offset = useRef({ x: 0, y: 0 });
 
-  const isDragging = useRef(false);
-  const offset = useRef({ x: 0, y: 0 });
+  // const handleMouseDown = (e) => {
+  //   isDragging.current = true;
+  //   offset.current = {
+  //     x: e.clientX - position.x,
+  //     y: window.innerHeight - e.clientY - position.y,
+  //   };
+  //   document.addEventListener("mousemove", handleMouseMove);
+  //   document.addEventListener("mouseup", handleMouseUp);
+  // };
 
-  const handleMouseDown = (e) => {
-    isDragging.current = true;
-    offset.current = {
-      x: e.clientX - position.x,
-      y: window.innerHeight - e.clientY - position.y,
-    };
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-  };
+  // const handleMouseMove = (e) => {
+  //   if (!isDragging.current) return;
 
-  const handleMouseMove = (e) => {
-    if (!isDragging.current) return;
+  //   const newX = window.innerWidth - e.clientX - offset.current.x;
+  //   const newY = window.innerHeight - e.clientY - offset.current.y;
 
-    const newX = window.innerWidth - e.clientX - offset.current.x;
-    const newY = window.innerHeight - e.clientY - offset.current.y;
+  //   setPosition({ x: newX, y: newY });
+  // };
 
-    setPosition({ x: newX, y: newY });
-  };
-
-  const handleMouseUp = () => {
-    isDragging.current = false;
-    document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
-  };
+  // const handleMouseUp = () => {
+  //   isDragging.current = false;
+  //   document.removeEventListener("mousemove", handleMouseMove);
+  //   document.removeEventListener("mouseup", handleMouseUp);
+  // };
 
   return (
     <>
       {chatBotOpen && (
-        <div
-          style={{
-            position: "fixed",
-            zIndex: "999999",
-            right: "70px",
-            bottom: "100px",
-          }}
-        >
-          <Card
-            sx={{
-              width: "500px",
-              height: "400px",
-              overflow: "auto",
-              backgroundColor: "#f6f6f6",
-            }}
-          >
+        <div className="chat-bot">
+          <Card className="chat-container" sx={{ padding: 0 }}>
             <CardContent
               sx={{
                 width: "100%",
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
+                padding: "0",
+                paddingBottom: "0",
               }}
             >
               <div className="chatbot-header d-flex justify-content-between align-items-center">
@@ -111,36 +120,40 @@ function ChatBot() {
               </div>
 
               <div
-                className="chats my-3"
+                className="chats my-2"
                 style={{ flexGrow: 1, overflowY: "auto" }}
               >
                 {messages.map((msg, index) => (
-                  <div
-                    key={index}
-                    className={`d-flex ${
-                      msg.sender === "user"
-                        ? "justify-content-end"
-                        : "justify-content-start"
-                    } mb-2`}
-                  >
-                    <div
-                      className="text-container"
-                      style={{
-                        backgroundColor:
-                          msg.sender === "user" ? "white" : "#b570ce",
-                        color: msg.sender === "user" ? "#000" : "white",
-                      }}
-                    >
+                  <div className="row" key={index}>
+                    <div className="col-12 mt-2">
                       <div
-                        className={`${
-                          msg.sender === "bot" ? "typing-text" : ""
-                        }`}
+                        className={`d-inline-block px-2 py-2 ${
+                          msg.sender === "user"
+                            ? "float-right user-chat-bubble"
+                            : "bot-chat-bubble"
+                        } `}
                       >
-                        {msg.text}
+                        <p className="mb-0">{msg.text}</p>
                       </div>
                     </div>
+                    <small
+                      className="text-muted d-block text-end"
+                      style={{ fontSize: "0.75rem" }}
+                    >
+                      {new Date(msg.timestamp).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </small>
                   </div>
                 ))}
+                {loading && (
+                  <div className="d-inline-block px-2 py-2 bot-chat-bubble">
+                    {" "}
+                    <p className="mb-0 typing-text">Typing<span></span></p>
+                  </div>
+                )}
+                <div ref={messagesEndRef}></div>
               </div>
               <div className="notes-field" style={{ marginTop: "auto" }}>
                 <TextField
@@ -151,12 +164,18 @@ function ChatBot() {
                   value={userQuestion}
                   onChange={(e) => setUserQuestion(e.target.value)}
                   multiline
-                  rows={2}
-                  variant="standard"
-                  onKeyDown={(e) => {                    
+                  size="small"
+                  rows={1}
+                  variant="outlined"
+                  onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       handleSendQuestion();
                     }
+                  }}
+                  sx={{
+                    marginBottom: "7px",
+                    marginTop: "7px",
+                    backgroundColor: "#fff",
                   }}
                   slotProps={{
                     input: {
@@ -181,17 +200,12 @@ function ChatBot() {
           </Card>
         </div>
       )}
+
       <div
-        style={{
-          position: "fixed",
-          bottom: `${position.y}px`,
-          right: `${position.x}px`,
-          zIndex: 999999,
-          cursor: "grab",
-        }}
+        className="chat-icon"
         role="button"
         onClick={handleChatOpen}
-        onMouseDown={handleMouseDown}
+        // onMouseDown={handleMouseDown}
       >
         <div
           style={{
