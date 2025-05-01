@@ -15,12 +15,14 @@ import {
   RemoveWishlistitem_Failure,
   RemoveWishlistitem_Success,
 } from "../../Action/UserAction/WishlistBookAction";
+import { GetUserBook_Request } from "../../Action/UserAction/UserBookAction";
 
 function* AddItemToWishlist({ payload }) {
   try {
     const Response = yield call(Add_to_Wishlist, payload);
     toast.success(Response?.data?.message);
     yield put(AddtoWishlist_Success(Response.data));
+    yield put(GetUserBook_Request());
   } catch (error) {
     toast.error(error?.response?.data?.error);
     yield put(AddtoWishlist_Failure(error));
@@ -38,12 +40,13 @@ function* GetWishlistItem() {
   }
 }
 
-function* RemoveWishlistItem({ payload }) {
+function* RemoveWishlistItem({ payload }) {  
   try {
     const Response = yield call(Remove_from_Wishlist, payload);
     toast.success(Response?.data?.message);
     yield put(RemoveWishlistitem_Success(Response.data));
     yield put(GetWishlistItem_Request());
+    yield put(GetUserBook_Request());
   } catch (error) {
     toast.error(error?.response?.data?.error);
     yield put(RemoveWishlistitem_Failure(error));

@@ -4,6 +4,8 @@
   visibility: hidden;
   transform: translate3d(0, -100%, 0);
   animation: fadeInRight 5s ease-out forwards;
+  width: 30%;
+  height: 70vh;
 }
 
 @keyframes fadeInRight {
@@ -55,4 +57,19 @@
   justify-content: center;
   flex-direction: column;
   row-gap: 20px;
+}
+
+@media screen and (max-width: 770px) {
+  .Order-summary {
+    width: 100%;
+  }
+  .order-success {
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .order-success {
+    width: 90%;
+  }
 }

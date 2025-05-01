@@ -9,18 +9,13 @@ function UserDetail() {
     <>
       <div className="user-details shadow">
         <Link
-          to="/user/dashboard"
           style={{
             textDecoration: "none",
             fontSize: "17px",
-            width: "fit-content",
-            marginLeft: "12px",
-            borderRadius: "5px",
-            backgroundColor: "#f2f2f2",
-            textAlign: "center",
             padding: "1px 12px",
           }}
-          className="shadow my-3"
+          className=" my-3"
+          onClick={()=>window.history.back()}
         >
           <IoChevronBack className="mb-1" />
           Back

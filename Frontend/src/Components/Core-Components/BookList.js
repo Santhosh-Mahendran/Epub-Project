@@ -6,7 +6,7 @@ import "./BookList.css";
 import coverImg from "../Assets/cover1.avif";
 import { FaHeart } from "react-icons/fa6";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   AddtoWishlist_Request,
   RemoveWishlistitem_Request,
@@ -14,15 +14,20 @@ import {
 import { BookListLoading } from "./Loading.js";
 import CustomButton from "./Button.js";
 import Main_Api from "../../Auth_Interceptor/Main_Api.js";
+import { Base_Url } from "../../Environment/Base_Url.js";
 
 function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { wishlistItems } = useSelector((state) => state?.WishlistBook);
 
   const handleAddWishlist = (Book) => {
-    if (Book.wishlist) {
-      dispatch(RemoveWishlistitem_Request({ book_id: Book.book_id }));
+    if (Book?.wishlist) {
+      const RemoveLikedItem = wishlistItems?.find(
+        (item) => item.book_id === Book.book_id
+      );
+      dispatch(RemoveWishlistitem_Request(RemoveLikedItem?.wishlist_id));
     } else {
       dispatch(AddtoWishlist_Request({ book_id: Book.book_id }));
     }
@@ -32,7 +37,7 @@ function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
     return <BookListLoading />;
   }
   const handleStartReadingSubBook = (BookId) => {
-    navigate(`/user/bookpreview?BookId=${BookId}`);
+    navigate(`/reader/bookpreview?BookId=${BookId}`);
   };
 
   return (
@@ -52,7 +57,7 @@ function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
                     ""
                   )}
                 </div>
-                {location.pathname.startsWith("/user") && !SubBook ? (
+                {location.pathname.startsWith("/reader") && !SubBook ? (
                   <div role="button">
                     <FaHeart
                       size={18}
@@ -84,7 +89,7 @@ function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
               </div>
               <div role="button" onClick={() => handleBookOpen(book)}>
                 <img
-                  src={`${Main_Api}/files/cover_image/${book?.cover_image}`}
+                  src={`${Base_Url}/files/cover_image/${book?.cover_image}`}
                   className="book-img"
                 />
                 <h5 className="mt-2 title">{book?.title}</h5>

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
+import {TextField , FormControlLabel ,Switch , InputAdornment } from "@mui/material";
 import "./UploadFile.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import NewCategory from "./NewCategory";
@@ -24,6 +23,8 @@ function UploadFile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { Category } = useSelector((state) => state.category);
+  const { loading } = useSelector((state) => state.BookData);
+
   const location = useLocation();
   const bookData = location.state?.BookData;
 
@@ -33,6 +34,7 @@ function UploadFile() {
     selectedCategory: bookData?.category_id || null,
     isbn: bookData?.isbn || "",
     price: bookData?.price || "",
+    OfferPrice: bookData?.OfferPrice || "",
     rental_price: bookData?.rental_price || "",
     selectedLang: bookData?.language || null,
     Genre: bookData?.genre || "",
@@ -55,6 +57,7 @@ function UploadFile() {
       .required("*this field is required"),
     price: Yup.string().required("*this field is required"),
     rental_price: Yup.string().required("*this field is required"),
+    // OfferPrice: Yup.string().required("*this field is required"),
     selectedLang: Yup.string().required("*this field is required"),
     // epubFile: Yup.string().required("*this field is required"),
     Genre: Yup.string().required("*this field is required"),
@@ -89,6 +92,8 @@ function UploadFile() {
     setOpenAddCategory(false);
   };
   const handleUploadFile = (value) => {
+    console.log(value);
+
     const payload = {
       title: value.title,
       author: value.author,
@@ -122,7 +127,11 @@ function UploadFile() {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validation,
-    onSubmit: (values) => handleUploadFile(values),
+    onSubmit: (values) => {
+      console.log(values);
+
+      handleUploadFile(values);
+    },
   });
 
   const category =
@@ -166,14 +175,11 @@ function UploadFile() {
     <>
       <div className="upload-container shadow">
         <h3>UPLOAD YOUR BOOK</h3>
-        <form
-          className="form upload-form row"   
-          onSubmit={formik.handleSubmit}
-        >
+        <form className="form upload-form row" onSubmit={formik.handleSubmit}>
           <div className="col-lg-6 col-sm-12 col-md-6">
             <TextField
               fullWidth
-              label="Title of the Book"
+              label="Title of the Book*"
               variant="outlined"
               className={`input mb-0 ${
                 formik.errors.title && formik.touched.title
@@ -205,7 +211,7 @@ function UploadFile() {
           <div className="col-lg-6 col-sm-12 col-md-6">
             <TextField
               fullWidth
-              label="Author Name"
+              label="Author Name*"
               name="author"
               variant="outlined"
               className={`input mb-0 ${
@@ -251,7 +257,7 @@ function UploadFile() {
                 <TextField
                   {...params}
                   fullWidth
-                  label="Book Category"
+                  label="Book Category*"
                   name="selectedCategory"
                   error={
                     formik.touched.selectedCategory &&
@@ -281,7 +287,7 @@ function UploadFile() {
           <div className="col-lg-6 col-sm-12 col-md-6">
             <TextField
               fullWidth
-              label="Book IBSN Number"
+              label="Book IBSN Number*"
               name="isbn"
               variant="outlined"
               className={`input mb-0 ${
@@ -313,7 +319,7 @@ function UploadFile() {
           <div className="col-lg-6 col-sm-12 col-md-6">
             <TextField
               fullWidth
-              label="Original Price"
+              label="Original Price*"
               name="price"
               variant="outlined"
               className={`input mb-0 ${
@@ -354,16 +360,16 @@ function UploadFile() {
             <TextField
               fullWidth
               label="Offer Price"
-              name="price"
+              name="Offer Price"
               variant="outlined"
               className={`input mb-0 ${
-                formik.errors.title && formik.touched.title
+                formik.errors.OfferPrice && formik.touched.OfferPrice
                   ? "is-invalid"
-                  : formik.touched.title && !formik.errors.title
+                  : formik.touched.OfferPrice && !formik.errors.OfferPrice
                   ? "is-valid"
                   : ""
               }`}
-              value={formik.values.price}
+              value={formik.values.OfferPrice}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               slotProps={{
@@ -386,8 +392,10 @@ function UploadFile() {
                   ),
                 },
               }}
-              error={formik.touched.price && Boolean(formik.errors.price)}
-              helperText={formik.touched.price && formik.errors.price}
+              error={
+                formik.touched.OfferPrice && Boolean(formik.errors.OfferPrice)
+              }
+              helperText={formik.touched.OfferPrice && formik.errors.OfferPrice}
             />
           </div>
           <div className="col-lg-6 col-sm-12 col-md-6">
@@ -466,7 +474,7 @@ function UploadFile() {
                 <TextField
                   {...params}
                   fullWidth
-                  label="Language"
+                  label="Language*"
                   name="selectedLang"
                   error={
                     formik.touched.selectedLang &&
@@ -482,7 +490,7 @@ function UploadFile() {
           <div className="col-lg-6 col-sm-12 col-md-6">
             <TextField
               fullWidth
-              label="Genre"
+              label="Genre*"
               name="Genre"
               variant="outlined"
               className={`input mb-0 ${
@@ -514,7 +522,7 @@ function UploadFile() {
           <div className="col-lg-6 col-sm-12 col-md-6">
             <TextField
               fullWidth
-              label="Upload Book"
+              label="Upload Book*"
               name="Upload Book"
               className={`input mb-0 ${
                 formik.errors.epubFile && formik.touched.epubFile
@@ -566,6 +574,14 @@ function UploadFile() {
               error={formik.touched.epubFile && Boolean(formik.errors.epubFile)}
               helperText={formik.touched.epubFile && formik.errors.epubFile}
             />
+            <div>
+              <FormControlLabel
+                value="end"
+                control={<Switch color="primary" />}
+                label="Add AI Chatbot"
+                labelPlacement="end"
+              />
+            </div>
           </div>
           <div className="col-12">
             <TextField
@@ -627,10 +643,19 @@ function UploadFile() {
             >
               Cancel
             </CustomButton>
+            {/* <CustomButton
+              type="submit"
+              className="shadow"
+              style={{ backgroundColor: "green", color: "#fff" }}
+              loading={loading ? "true" : "false"}
+            >
+              {bookData ? "Update" : "Submit"}
+            </CustomButton> */}
             <CustomButton
               type="submit"
               className="shadow"
               style={{ backgroundColor: "green" }}
+              loading={loading ? true : false}
             >
               {bookData ? "Update" : "Submit"}
             </CustomButton>

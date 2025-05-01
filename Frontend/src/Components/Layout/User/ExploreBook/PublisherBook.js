@@ -10,7 +10,7 @@ import { IoChevronBack } from "react-icons/io5";
 function PublisherBook() {
   const navigate = useNavigate();
   const handleBookOpen = (bookData) => {
-    navigate(`/user/dash/explore/book/${bookData.id}`, {
+    navigate(`/reader/dashboard/explore/book/${bookData.id}`, {
       state: bookData,
     });
   };
@@ -21,7 +21,7 @@ function PublisherBook() {
     <>
       <Link
         role="button"
-        // to="/user/dashboard"
+        // to="/reader/dashboard"
         onClick={handleGoBack}
         className="mb-2"
         style={{ textDecoration: "none", fontSize: "19px" }}

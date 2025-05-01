@@ -18,6 +18,7 @@ import cover from "../../../Assets/cover3.avif";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteBook_Request } from "../../../../Redux/Action/PublisherAction/BookAction";
 import { BookDetailPubLoading } from "../../../Core-Components/Loading";
+import { Base_Url } from "../../../../Environment/Base_Url";
 
 function BookDetail() {
   const navigate = useNavigate();
@@ -62,9 +63,9 @@ function BookDetail() {
         padding: "20px 0 30px 0",
       }}
     >
-      <div className="bookDetail row shadow col-9">
+      <div className="bookDetail row shadow col-lg-9 col-md-7 col-sm-12">
         <img
-          src={BookData?.Book_cover ? BookData?.Book_cover : cover}
+          src={`${Base_Url}/files/cover_image/${BookData?.cover_image}`}
           alt="image"
           className="col-lg-6 col-md-12 col-sm-12"
         />
@@ -144,7 +145,7 @@ function BookDetail() {
           </div>
         </div>
       </div>
-      <div className="card earning-detail col-3 p-0 shadow">
+      <div className="card earning-detail col-lg-3 col-md-5 col-sm-12 p-0 shadow">
         <div className="card-header">
           <h4 style={{ fontSize: "22px" }} className="mb-0">
             Sales & Popularity Report

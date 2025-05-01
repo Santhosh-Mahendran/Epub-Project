@@ -57,7 +57,11 @@ function Wishlist() {
                   padding: "6px 12px",
                   fontSize: "14px",
                 }}
-                onClick={() => navigate("/user/dash/detail/order/summary")}
+                onClick={() =>
+                  navigate("/reader/dashboard/detail/order/summary", {
+                    state: wishlist,
+                  })
+                }
               >
                 Buy Now
               </CustomButton>
@@ -67,7 +71,11 @@ function Wishlist() {
                   padding: "6px 12px",
                   fontSize: "14px",
                 }}
-                onClick={() => navigate("/user/dash/detail/order/summary")}
+                onClick={() =>
+                  navigate("/reader/dashboard/detail/order/summary",{
+                    state: wishlist,
+                  })
+                }
               >
                 Rent Now
               </CustomButton>
@@ -80,8 +88,8 @@ function Wishlist() {
         onClose={handleDialogClose}
         handleDeleteItem={handleDeleteItem}
         title={`Remove Item from Wishlist`}
-        discription={`Are you sure you want to delete <strong>${BookName}</strong> from
-          your wishlist?`}
+        BookName={BookName}
+        discription="Wishlist"
       />
     </>
   );

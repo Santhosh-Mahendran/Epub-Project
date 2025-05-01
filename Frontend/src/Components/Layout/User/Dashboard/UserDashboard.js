@@ -10,6 +10,7 @@ import {
   GetUserBookbyId_Request,
 } from "../../../../Redux/Action/UserAction/UserBookAction.js";
 import { GetWishlistItem_Request } from "../../../../Redux/Action/UserAction/WishlistBookAction";
+import ExploreBook from "../ExploreBook/ExploreBook.js";
 
 function UserDashboard() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ function UserDashboard() {
 
   const handleBookOpen = (bookData) => {
     dispatch(GetUserBookbyId_Request(bookData.book_id));
-    navigate(`/user/dash/explore/book`);
+    navigate(`/reader/dashboard/explore/book`);
   };
   return (
     <>
@@ -41,10 +42,10 @@ function UserDashboard() {
         <div className="user-banner">
           <img src={Userbanner} width="100%" />
         </div>
-        <div className="explore-book shadow row">
-          <div className="d-flex justify-content-between">
+        <ExploreBook />
+        {/* <div className="d-flex justify-content-between">
             <h4>Explore Books</h4>
-            <Link to="/user/dash/explore" style={{ textDecoration: "none",whiteSpace:"nowrap" }}>
+            <Link to="/reader/dashboard/explore" style={{ textDecoration: "none",whiteSpace:"nowrap" }}>
               View All
               <FaArrowRight size={16} className="ms-1 mb-1" />
             </Link>
@@ -53,8 +54,7 @@ function UserDashboard() {
             FilteredBook={FilteredBook.length > 0 && FilteredBook?.slice(0, 4)}
             handleBookOpen={handleBookOpen}
             BookLoading={BookLoading}
-          />
-        </div>
+          /> */}
       </div>
     </>
   );

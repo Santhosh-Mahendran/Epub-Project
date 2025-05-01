@@ -15,8 +15,14 @@ const style = {
   pb: 3,
 };
 
-function DeleteCard({ open, onClose,handleDeleteItem }) {
-    
+function DeleteCard({
+  open,
+  onClose,
+  handleDeleteItem,
+  discription,
+  title,
+  BookName,
+}) {
   return (
     <Modal
       open={open}
@@ -25,9 +31,10 @@ function DeleteCard({ open, onClose,handleDeleteItem }) {
       aria-describedby="parent-modal-description"
     >
       <Box sx={{ ...style, width: 400 }}>
-        <h4 id="parent-modal-title"></h4>
+        <h4 id="parent-modal-title">{title}</h4>
         <p id="parent-modal-description" style={{ fontSize: "17px" }}>
-          
+          Are you sure you want to delete <strong>{BookName}</strong> from your{" "}
+          {discription}?
         </p>
         <div className="d-flex justify-content-end align-items-center gap-3">
           <CustomButton

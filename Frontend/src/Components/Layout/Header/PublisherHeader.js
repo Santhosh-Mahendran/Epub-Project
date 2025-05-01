@@ -34,7 +34,7 @@ function PublisherHeader() {
   const handleLogout = () => {
     setOpenProfileMenu(null);
     dispatch(Publisher_Logout());
-    navigate("/publisher/login");
+    navigate("/auth/publisher");
   };
 
   const handleClose = () => {

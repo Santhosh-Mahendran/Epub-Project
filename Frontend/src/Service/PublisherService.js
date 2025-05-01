@@ -9,7 +9,7 @@ export const PublisherRegister = (request) => {
 };
 
 export const Upload_book = (request) => {
-  return Main_Api.post("files/pub/upload_book", request, {
+  return Main_Api.post("files/pub/upload_book3", request, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };

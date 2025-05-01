@@ -8,7 +8,7 @@ import { LuIndianRupee } from "react-icons/lu";
 import CustomButton from "../../../Core-Components/Button";
 import { useNavigate } from "react-router-dom";
 import { MdModeEdit } from "react-icons/md";
-// import ebook from "../../../Assets/ebook-card.jpg";
+import ebook from "../../../Assets/ebookReport.jpg";
 
 function Report() {
   const navigate = useNavigate();
@@ -62,8 +62,9 @@ function Report() {
             }}
           >
             <div
-              className="d-flex align-items-center justify-content-between"
-              // style={{ backgroundImage: `url(${ebook})` }}
+              className="report-count"
+              // style={{ backgroundImage: `url(${ebook})`,backgroundRepeat:"no-repeat" , backgroundSize:"100% 100%" , width:"100%" , height:"100%" }}
+              style={{ width: "100%", height: "100%" }}
             >
               <div>
                 <h5>{book?.title}</h5>
@@ -76,7 +77,8 @@ function Report() {
                   <h2>{book?.count}</h2>
                 </div>
               </div>
-              <img src={BookImg} alt="img" width="100px" />
+              {/* <img src={BookImg} alt="img" width="100px" /> */}
+              
             </div>
           </CardComponent>
         ))}

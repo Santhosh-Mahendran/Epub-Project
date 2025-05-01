@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { InputAdornment, TextField } from "@mui/material";
-import { CiSearch } from "react-icons/ci";
+import { FaArrowRight } from "react-icons/fa6";
 import {
   Link,
   useLocation,
@@ -28,7 +27,7 @@ function ExploreBook() {
   const searchQuery = searchParams.get("search");
   const location = useLocation();
   const publisher = location.state;
-
+  const Dashboard = location.pathname === "/reader/dashboard" ? true : false;
   const {
     UserBooks,
     loading: BookLoading,
@@ -60,57 +59,57 @@ function ExploreBook() {
       return;
     } else {
       dispatch(GetUserBookbyId_Request(bookData.book_id));
-      navigate(`/user/dash/explore/book`);
+      navigate(`/reader/dashboard/explore/book`, {
+        state: bookData?.already_purchased,
+      });
     }
   };
 
   return (
     <>
-      <div className="allBooks row shadow ">
-        <Link
-          to="/user/dashboard"
-          style={{
-            textDecoration: "none",
-            fontSize: "17px",
-            width: "fit-content",
-            marginLeft: "12px",
-            borderRadius: "5px",
-            backgroundColor: "#f2f2f2",
-            textAlign: "center",
-          }}
-          className="shadow my-2"
-        >
-          <IoChevronBack className="mb-1" />
-          Back
-        </Link>
+      <div className="allBooks row shadow">
+        {Dashboard ? (
+          ""
+        ) : (
+          <Link
+            style={{
+              textDecoration: "none",
+              fontSize: "17px",
+            }}
+            className="mb-2"
+            onClick={()=>window.history.back()}
+          >
+            <IoChevronBack className="mb-1" />
+            Back
+          </Link>
+        )}
         <div
           className="d-flex justify-content-between flex-column"
           style={{ rowGap: "20px" }}
         >
-          <h4>{FilterBook.length > 0 ? publisher?.label : "Explore Books"}</h4>
-          {/* <TextField
-            placeholder="Search by Title , Author , Genre and more..."
-            className="input"
-            value={searchBook}
-            onChange={(e) => setSearchBook(e.target.value)}
-            size="small"
-            sx={{ width: "500px" }}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position="end" style={{ cursor: "pointer" }}>
-                    <CiSearch size={22} />
-                  </InputAdornment>
-                ),
-              },
-            }}
-          /> */}
-
+          {Dashboard ? (
+            <div className="d-flex justify-content-between align-items-center">
+              <h4>Explore Books</h4>
+              <Link
+                to="/reader/dashboard/explore"
+                style={{ textDecoration: "none", whiteSpace: "nowrap" }}
+              >
+                View All
+                <FaArrowRight size={16} className="ms-1 mb-1" />
+              </Link>
+            </div>
+          ) : (
+            <h4>
+              {FilterBook.length > 0 ? publisher?.label : "Explore Books"}
+            </h4>
+          )}
           {false ? (
             <BookListLoading />
           ) : (
             <BookList
-              FilteredBook={FilteredBook}
+              FilteredBook={
+                Dashboard ? FilteredBook?.slice(0, 4) : FilteredBook
+              }
               handleBookOpen={handleBookOpen}
               BookLoading={BookLoading}
               SubBook={FilterBook.length > 0 && publisher?.value !== "all"}

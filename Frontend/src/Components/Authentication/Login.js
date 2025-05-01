@@ -29,15 +29,18 @@ function Login({ title, registerNav, handleLogin }) {
 
   const handleSubmit = () => {
     handleLogin(payload);
-    setEmail("");
-    setPassword("");
+   
   };
 
   useEffect(() => {
     if (PublisherLogin) {
+      setEmail("");
+      setPassword("");
       navigate("/publisher/dashboard");
     } else if (UserLoginStatus) {
-      navigate("/user/dashboard");
+      setEmail("");
+      setPassword("");
+      navigate("/reader/dashboard");
     }
   }, [PublisherLogin, UserLoginStatus]);
 

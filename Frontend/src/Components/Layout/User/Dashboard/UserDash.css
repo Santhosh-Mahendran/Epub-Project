@@ -15,7 +15,7 @@
 .allBooks {
   width: 95%;
   /* row-gap: 25px; */
-  padding: 5px 20px;
+  padding: 15px 20px ;
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
@@ -65,4 +65,12 @@
   padding: 10px;
  }
 
+ .userbookDetail {
+  margin-left: 0;
+  margin-right: 0;
+  width: 100% !important;
+  padding: 10px ;
 }
+
+}
+
