@@ -9,13 +9,24 @@ export const PublisherRegister = (request) => {
 };
 
 export const Upload_book = (request) => {
-  return Main_Api.post("files/pub/upload_book3", request, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+  if (request?.aiChat) {
+    return Main_Api.post("files/pub/upload_book3", request, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  } else {
+    return Main_Api.post("files/pub/upload_book", request, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  }
 };
 
 export const Get_Books = () => {
   return Main_Api.get("book/pub/get_all_books");
+};
+export const Update_book = (request) => {
+  return Main_Api.put("files/pub/update_book/" + request?.book_id, request, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 };
 
 export const Add_Category = (request) => {

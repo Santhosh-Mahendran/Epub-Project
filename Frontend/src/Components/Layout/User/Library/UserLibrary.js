@@ -12,7 +12,6 @@ function UserLibrary() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handlePreviewOpen = (Book) => {
-    
     navigate(`/reader/bookpreview`, { state: Book });
   };
   const { purchasedBook } = useSelector((state) => state.PurchasedBook);
@@ -33,7 +32,7 @@ function UserLibrary() {
                   width={100}
                   height={100}
                   value={Book?.percentage}
-                  text={({ value }) => `${value}%`}
+                  text={({ value }) => `${value || 0}%`}
                   sx={{ float: "right" }}
                 />
               </Box>
@@ -43,7 +42,7 @@ function UserLibrary() {
                 className="mx-2"
                 sx={{
                   backgroundColor: "#22B16A",
-                  padding: {xs:"2px 20px",md:"2px 8px"},
+                  padding: { xs: "2px 20px", md: "2px 8px" },
                   fontSize: "12px",
                 }}
               >

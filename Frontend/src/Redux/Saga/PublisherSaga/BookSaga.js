@@ -5,6 +5,7 @@ import {
   Get_Books,
   GetBook_by_Category,
   GetBook_by_id,
+  Update_book,
   Upload_book,
 } from "../../../Service/PublisherService";
 import {
@@ -16,6 +17,8 @@ import {
   Get_bookbycat_Success,
   Get_bookbyId_Failure,
   Get_bookbyId_Success,
+  Update_book_Failure,
+  Update_book_Success,
   Upload_book_Failure,
   Upload_book_Success,
 } from "../../Action/PublisherAction/BookAction";
@@ -38,6 +41,17 @@ function* GetAllBook() {
     yield put(Get_book_Success(Response.data));
   } catch (error) {
     yield put(Get_book_Failure(error));
+  }
+}
+
+function* UpdateBookSaga({ payload }) {
+  try {
+    const Response = yield call(Update_book, payload);
+    yield put(Update_book_Success(Response.data));
+    toast.success(Response.data.message);
+  } catch (error) {
+    yield put(Update_book_Failure(error));
+    toast.error(error?.response?.data?.error);
   }
 }
 
@@ -72,6 +86,7 @@ function* DeleteBook({ payload }) {
 function* watchPubBook() {
   yield takeLatest(Type.UPLOAD_FILE_REQUEST, UploadBookSaga);
   yield takeLatest(Type.GET_BOOK_REQUEST, GetAllBook);
+   yield takeLatest(Type.UPDATE_BOOK_REQUEST, UpdateBookSaga);
   yield takeLatest(Type.GET_BOOK_ID_REQUEST, GetBookByidSaga);
   yield takeLatest(Type.GET_BOOK_CAT_REQUEST, GetBookBycatSaga);
   yield takeLatest(Type.DEL_BOOK_REQUEST, DeleteBook);

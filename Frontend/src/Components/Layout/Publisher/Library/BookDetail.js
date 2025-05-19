@@ -110,7 +110,7 @@ function BookDetail() {
           </p>
           <p className="mb-0">
             <span className="sub-title"> Discription</span> -{" "}
-            <span className="value-dis">{BookData?.discription}</span>
+            <span className="value-dis">{BookData?.description}</span>
           </p>
           <div className="icons">
             <Tooltip title="Preview">

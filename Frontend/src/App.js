@@ -105,7 +105,7 @@ function App() {
           ) : (
             <Route path="*" element={<Navigate to="/" replace />} />
           )}
-          {UserLoginStatus ? (
+          {UserLoginStatus || true ? (
             <Route path="/reader/bookpreview" element={<UserEpubReader />} />
           ) : (
             <Route path="*" element={<Navigate to="/" replace />} />

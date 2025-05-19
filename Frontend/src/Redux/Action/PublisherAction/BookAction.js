@@ -29,6 +29,21 @@ export const Get_book_Failure = (resErr) => ({
   payload: resErr,
 });
 
+export const Update_book_Request = (payload) => ({
+  type: Type.UPDATE_BOOK_REQUEST,
+  payload: payload,
+});
+
+export const Update_book_Success = (resData) => ({
+  type: Type.UPDATE_BOOK_SUCCESS,
+  payload: resData,
+});
+
+export const Update_book_Failure = (resErr) => ({
+  type: Type.UPDATE_BOOK_FAILURE,
+  payload: resErr,
+});
+
 export const Get_bookbyId_Request = (id) => ({
   type: Type.GET_BOOK_ID_REQUEST,
   payload: id,

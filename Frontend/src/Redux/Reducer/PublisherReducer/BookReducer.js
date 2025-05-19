@@ -46,6 +46,24 @@ function BookReducer(state = initialState, action) {
         loading: false,
         error: action.payload,
       };
+    case Type.UPDATE_BOOK_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case Type.UPDATE_BOOK_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        // BookDataList: action.payload,
+        BookDeleted: false,
+      };
+    case Type.UPDATE_BOOK_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     case Type.GET_BOOK_ID_REQUEST:
       return {
         ...state,
@@ -87,7 +105,7 @@ function BookReducer(state = initialState, action) {
         BookDeleted: true,
       };
     case Type.DEL_BOOK_FAILURE:
-      return { ...state, error: action.payload };
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }

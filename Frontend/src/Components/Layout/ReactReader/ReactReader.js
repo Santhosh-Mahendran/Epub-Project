@@ -1,6 +1,7 @@
 import React from "react";
 import "./ReactReader.css";
 import { ReactReader } from "react-reader";
+import RestrictScreenshot from "./RestrictScreenshot";
 
 function ReactEpubReader({
   epubFile,
@@ -16,6 +17,8 @@ function ReactEpubReader({
   epubInitOptions,
   Chatbot,
 }) {
+  
+  // RestrictScreenshot();
   return (
     <>
       <div
@@ -26,6 +29,7 @@ function ReactEpubReader({
         {header && header}
         <ReactReader
           url={epubFile}
+          // url="/alice.epub"
           location={location}
           locationChanged={locationChanged}
           epubOptions={{
@@ -35,7 +39,6 @@ function ReactEpubReader({
             allowSameOrigin: true,
           }}
           epubInitOptions={epubInitOptions && epubInitOptions}
-
           getRendition={(rendition) => {
             if (rendition && getRendition) getRendition(rendition);
           }}

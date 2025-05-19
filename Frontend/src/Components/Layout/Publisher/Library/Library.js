@@ -63,11 +63,6 @@ function Library() {
     );
     setBookToShow(FilteredBook);
   }, [searchBook]);
-  useEffect(() => {
-    if (selectedCategory) {
-      dispatch(Get_bookbycat_Request(selectedCategory));
-    }
-  }, [selectedCategory]);
 
   const handleBookOpen = (bookData) => {
     navigate(`/publisher/dashboard/library/book`);
@@ -105,7 +100,7 @@ function Library() {
           <div className="d-flex align-items-center gap-3">
             {selectedCategory && filterBook ? (
               <>
-                <div>
+                {/* <div>
                   <CustomButton
                     sx={{
                       padding: "5px 10px",
@@ -115,7 +110,7 @@ function Library() {
                   >
                     Add reader
                   </CustomButton>
-                </div>
+                </div> */}
                 {/* <div>
                   <CustomButton
                     sx={{
@@ -182,7 +177,10 @@ function Library() {
           >
             <CategoryDrawer setSelectedCategory={setSelectedCategory} />
           </div>
-          <div className="col-lg-10 mt-2 book-list-container" style={{ paddingLeft: "2.5rem" }}>
+          <div
+            className="col-lg-10 mt-2 book-list-container"
+            style={{ paddingLeft: "2.5rem" }}
+          >
             <BookList
               FilteredBook={bookToShow}
               handleBookOpen={handleBookOpen}

@@ -107,12 +107,15 @@ function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
                 ) : (
                   <>
                     {book?.offer_price !== "None" ? (
+                      <>
                       <h5>
                         <LuIndianRupee />
                         <del>{book?.price}</del>&nbsp;
                         <LuIndianRupee size={16} className="mb-1" />
                         <span>{book.offer_price}</span>
                       </h5>
+                      {/* <span>{(book.offer_price / book?.price)*100}% offer</span> */}
+                      </>
                     ) : (
                       <>
                         <h5>
