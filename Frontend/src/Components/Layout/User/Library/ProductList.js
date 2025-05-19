@@ -5,7 +5,6 @@ import { LuIndianRupee } from "react-icons/lu";
 import "./Library.css";
 import { UserLibraryLoading } from "../../../Core-Components/Loading";
 import { useSelector } from "react-redux";
-import Main_Api from "../../../../Auth_Interceptor/Main_Api";
 import { Base_Url } from "../../../../Environment/Base_Url";
 
 function ProductList({ title, Book_list, children, Footer }) {
@@ -76,7 +75,11 @@ function ProductList({ title, Book_list, children, Footer }) {
           ))
         ) : (
           <div>
-            <p>Items Not Available</p>
+            <p>
+              {title === "My Cart" && "Cart Empty"}
+              {title === "My Wishlist" && "Wishlist Empty"}
+              {title === "My Library" && "Library Empty"}
+            </p>
           </div>
         )}
       </div>

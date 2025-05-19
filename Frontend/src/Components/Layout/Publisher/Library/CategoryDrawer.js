@@ -2,12 +2,18 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Skeleton, Typography } from "@mui/material";
 import "./Library.css";
+import { Get_book_Request } from "../../../../Redux/Action/PublisherAction/BookAction";
 
 function CategoryDrawer({ setSelectedCategory }) {
   const { Category, loading: catLoad } = useSelector((state) => state.category);
   const dispatch = useDispatch();
   const handleCatSelect = (id) => {
     setSelectedCategory(id);
+  };
+
+  const handleAllBooks = () => {
+    dispatch(Get_book_Request());
+    setSelectedCategory(null);
   };
 
   return (
@@ -41,7 +47,7 @@ function CategoryDrawer({ setSelectedCategory }) {
               role="button"
               className="category p-1"
               style={{ borderBottom: "1px solid #f0e9e9" }}
-              onClick={() => setSelectedCategory(null)}
+              onClick={handleAllBooks}
             >
               <Typography
                 className="ps-2"

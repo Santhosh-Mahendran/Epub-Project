@@ -9,6 +9,7 @@ import CustomButton from "../../../Core-Components/Button";
 import { useNavigate } from "react-router-dom";
 import { MdModeEdit } from "react-icons/md";
 import ebook from "../../../Assets/ebookReport.jpg";
+import soldBook from "../../../Assets/book-sold.jpg";
 
 function Report() {
   const navigate = useNavigate();
@@ -59,13 +60,17 @@ function Report() {
             style={{
               width: "280px",
               height: "150px",
+              position: "relative",
             }}
           >
             <div
               className="report-count"
-              // style={{ backgroundImage: `url(${ebook})`,backgroundRepeat:"no-repeat" , backgroundSize:"100% 100%" , width:"100%" , height:"100%" }}
               style={{ width: "100%", height: "100%" }}
             >
+              <div style={{ position: "absolute", width:"20%" , marginTop:"-40px" }}>
+                
+                {/* <img src={soldBook} alt="book" width="20%" /> */}
+              </div>
               <div>
                 <h5>{book?.title}</h5>
                 <div className="d-flex align-items-center">
@@ -76,9 +81,8 @@ function Report() {
                   )}
                   <h2>{book?.count}</h2>
                 </div>
+                <div></div>
               </div>
-              {/* <img src={BookImg} alt="img" width="100px" /> */}
-              
             </div>
           </CardComponent>
         ))}

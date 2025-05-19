@@ -28,25 +28,35 @@ export function Loading() {
 
 export function BookListLoading() {
   return (
-    <div className="row g-3 mt-0" style={{ width: "100%",rowGap: "15px" }}>
+    <div className="row g-3 mt-0" style={{ width: "100%", rowGap: "15px" }}>
       {Array.from(new Array(4)).map((index) => (
         <div
           key={index}
           className="col-lg-3 col-md-6 col-sm-12 mt-0"
-          sx={{ padding: "10px", width: "230px !important" }}
+          sx={{ padding: "5px", width: "240px !important" }}
         >
           <CardComponent>
             <div
               className="d-flex flex-column"
-              style={{ rowGap: "15px", width: "auto", height: "420px",textAlign:"center" }}
+              style={{
+                rowGap: "15px",
+                width: "auto",
+                height: "350px",
+                textAlign: "center",
+              }}
             >
-              <div style={{ width: "100%" }}>
+              <div
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  width: "130px",
+                  height: "200px",
+                }}
+              >
                 <Skeleton
                   variant="rectangular"
-                  width={180}
-                  height={270}
                   className="d-block justify-content-center"
-                  sx={{ marginLeft: "auto", marginRight: "auto" }}
+                  sx={{ width: "130px", height: "200px" }}
                 />
               </div>
               <Skeleton animation="wave" height={20} width="80%" />

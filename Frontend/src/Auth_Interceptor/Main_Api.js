@@ -13,7 +13,7 @@ const AuthHeader = (config) => {
     : publisher_token
     ? publisher_token
     : "";
-    
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -21,5 +21,23 @@ const AuthHeader = (config) => {
 };
 
 Main_Api.interceptors.request.use(AuthHeader);
+
+// ✅ Response Interceptor to catch 401 errors
+Main_Api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.log(error);
+
+    if (error.response.status === 401 || error.response.status === 422) {
+      // Clear tokens if needed
+      localStorage.removeItem("User_Auth_Token");
+      localStorage.removeItem("Publisher_Auth_Token");
+
+      // Redirect to login
+      window.location.href = "/"; // Change this path to your login route
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default Main_Api;

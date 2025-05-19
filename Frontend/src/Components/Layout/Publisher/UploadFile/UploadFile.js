@@ -1,12 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import {TextField , FormControlLabel ,Switch , InputAdornment } from "@mui/material";
+import {
+  TextField,
+  FormControlLabel,
+  Switch,
+  InputAdornment,
+} from "@mui/material";
 import "./UploadFile.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import NewCategory from "./NewCategory";
 import { useDispatch, useSelector } from "react-redux";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { Autocomplete } from "@mui/material";
-import { Upload_book_Request } from "../../../../Redux/Action/PublisherAction/BookAction";
+import {
+  Update_book_Request,
+  Upload_book_Request,
+} from "../../../../Redux/Action/PublisherAction/BookAction";
 import { Get_Cat_Request } from "../../../../Redux/Action/PublisherAction/CategoryAction";
 import CustomButton from "../../../Core-Components/Button";
 import { languages } from "../../../../Environment/Language";
@@ -16,8 +24,6 @@ import ePub from "epubjs";
 
 function UploadFile() {
   const [openAddCategory, setOpenAddCategory] = useState(false);
-  const [langChar, setLangChar] = useState("");
-  const [coverSrc, setCoverSrc] = useState(null);
   const [pickedImage, setPickedImage] = useState();
   const Imageinput = useRef();
   const navigate = useNavigate();
@@ -27,21 +33,25 @@ function UploadFile() {
 
   const location = useLocation();
   const bookData = location.state?.BookData;
+  console.log(bookData);
 
+  const [aiChatbotEnabled, setAiChatbotEnabled] = useState(false);
+  const handleToggle = (event) => {
+    setAiChatbotEnabled(event.target.checked);
+  };
   const initialValues = {
     title: bookData?.title || "",
     author: bookData?.author || "",
     selectedCategory: bookData?.category_id || null,
     isbn: bookData?.isbn || "",
     price: bookData?.price || "",
-    OfferPrice: bookData?.OfferPrice || "",
+    OfferPrice: bookData?.offer_price === "None" ? "" : bookData?.offer_price,
     rental_price: bookData?.rental_price || "",
     selectedLang: bookData?.language || null,
     Genre: bookData?.genre || "",
-    epubFile: null,
-    bookDis: bookData?.bookDis || "",
-    coverImage: null,
-    ImageFile: null,
+    epubFile: bookData?.epub_file || "",
+    bookDis: bookData?.description || "",
+    coverImage: bookData?.cover_image || "",
   };
 
   const validation = Yup.object().shape({
@@ -57,9 +67,8 @@ function UploadFile() {
       .required("*this field is required"),
     price: Yup.string().required("*this field is required"),
     rental_price: Yup.string().required("*this field is required"),
-    // OfferPrice: Yup.string().required("*this field is required"),
     selectedLang: Yup.string().required("*this field is required"),
-    // epubFile: Yup.string().required("*this field is required"),
+    epubFile: Yup.string().required("*this field is required"),
     Genre: Yup.string().required("*this field is required"),
   });
 
@@ -92,29 +101,25 @@ function UploadFile() {
     setOpenAddCategory(false);
   };
   const handleUploadFile = (value) => {
-    console.log(value);
-
     const payload = {
       title: value.title,
       author: value.author,
       isbn: value.isbn,
       category_id: value.selectedCategory,
-
-      cover_image: value.ImageFile
-        ? value.ImageFile
-        : value.coverImage
-        ? value.coverImage
-        : "",
+      cover_image: value.coverImage && value.coverImage,
+      offer_price: value.OfferPrice && value.OfferPrice,
       language: value.selectedLang,
       genre: value.Genre,
       e_book_type: ".epub",
       price: value.price,
       rental_price: value.rental_price,
       file: value.epubFile,
+      description: value.bookDis,
+      aiChat: aiChatbotEnabled,
     };
 
     if (bookData) {
-      dispatch(Upload_book_Request(bookData.id, payload));
+      dispatch(Update_book_Request({ ...payload, book_id: bookData.book_id }));
     } else {
       dispatch(Upload_book_Request(payload));
     }
@@ -127,10 +132,9 @@ function UploadFile() {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validation,
-    onSubmit: (values) => {
-      console.log(values);
-
+    onSubmit: (values, { resetForm }) => {
       handleUploadFile(values);
+      resetForm();
     },
   });
 
@@ -360,15 +364,9 @@ function UploadFile() {
             <TextField
               fullWidth
               label="Offer Price"
-              name="Offer Price"
+              name="OfferPrice"
               variant="outlined"
-              className={`input mb-0 ${
-                formik.errors.OfferPrice && formik.touched.OfferPrice
-                  ? "is-invalid"
-                  : formik.touched.OfferPrice && !formik.errors.OfferPrice
-                  ? "is-valid"
-                  : ""
-              }`}
+              className={`input mb-0`}
               value={formik.values.OfferPrice}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -392,10 +390,6 @@ function UploadFile() {
                   ),
                 },
               }}
-              error={
-                formik.touched.OfferPrice && Boolean(formik.errors.OfferPrice)
-              }
-              helperText={formik.touched.OfferPrice && formik.errors.OfferPrice}
             />
           </div>
           <div className="col-lg-6 col-sm-12 col-md-6">
@@ -543,7 +537,7 @@ function UploadFile() {
                     >
                       <CustomButton
                         component="label"
-                        role={undefined}
+                        // role={undefined}
                         variant="contained"
                         tabIndex={-1}
                         sx={{
@@ -577,7 +571,13 @@ function UploadFile() {
             <div>
               <FormControlLabel
                 value="end"
-                control={<Switch color="primary" />}
+                control={
+                  <Switch
+                    color="primary"
+                    checked={aiChatbotEnabled}
+                    onChange={handleToggle}
+                  />
+                }
                 label="Add AI Chatbot"
                 labelPlacement="end"
               />
@@ -588,7 +588,7 @@ function UploadFile() {
               fullWidth
               multiline
               rows={2}
-              label="Book Discription"
+              label="Book Description"
               name="bookDis"
               variant="outlined"
               className="input"

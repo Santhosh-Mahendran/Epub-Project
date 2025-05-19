@@ -23,10 +23,13 @@ import "./Reader.css";
 import { Base_Url } from "../../../../Environment/Base_Url";
 
 function UserEpubReader() {
-  const [rendition, setRendition] = useState(undefined);
+  const { Highlights, Notes, Progress } = useSelector(
+    (state) => state.PreViewData
+  );
+  const [rendition, setRendition] = useState(null);
   const [firstRenderDone, setFirstRenderDone] = useState(false);
   const [currentProgress, setCurrentProgress] = useState();
-  const [location, setLocation] = useState();
+  const [location, setLocation] = useState(Progress || 0);
   const [BookMarkActive, setBookMarkActive] = useState(false);
   const [percentage, setPercentage] = useState("");
   const [isReading, setIsReading] = useState(false);
@@ -52,9 +55,6 @@ function UserEpubReader() {
     navigate("/reader/dashboard/explore");
   };
   const dispatch = useDispatch();
-  const { Highlights, Notes, Progress } = useSelector(
-    (state) => state.PreViewData
-  );
 
   useEffect(() => {
     const fetchEpubUrl = async () => {
@@ -87,26 +87,26 @@ function UserEpubReader() {
 
   // Load saved location on first render
 
-  useEffect(() => {
-    if (currentProgress) {
-      setLocation(currentProgress);
-      setBookMarkActive(true);
-      setCurrentPage(currentProgress);
-    }
-    setFirstRenderDone(true);
-  }, [currentProgress, Progress]);
+  // useEffect(() => {
+  //   if (currentProgress) {
+  //     setLocation(currentProgress);
+  //     setBookMarkActive(true);
+  //     setCurrentPage(currentProgress);
+  //   }
+  //   setFirstRenderDone(true);
+  // }, [currentProgress, Progress]);
 
-  useEffect(() => {
-    if (currentProgress === currentPage) {
-      setBookMarkActive(true);
-    } else {
-      setBookMarkActive(false);
-    }
-  }, [location, currentProgress]);
+  // useEffect(() => {
+  //   if (currentProgress === currentPage) {
+  //     setBookMarkActive(true);
+  //   } else {
+  //     setBookMarkActive(false);
+  //   }
+  // }, [location, currentProgress]);
 
   // Handle location change while reading
   const handlelocationChange = (epubcfi) => {
-    if (!firstRenderDone) return;
+    // if (!firstRenderDone) return;
     setLocation(epubcfi);
     setCurrentPage(epubcfi);
   };
@@ -526,18 +526,16 @@ function UserEpubReader() {
 
   return (
     <ReactEpubReader
-      // epubFile="https://react-reader.metabits.no/files/alice.epub"
-      // epubFile="/alice.epub"
       epubFile={epubUrl}
       location={location}
       locationChanged={handlelocationChange}
       getRendition={(rendition) => getRendition(rendition)}
-      // epubInitOptions={{
-      //   openAs: "epub",
-      //   requestHeaders: {
-      //     Authorization: ` Bearer ${token}`,
-      //   },
-      // }}
+      epubInitOptions={{
+        openAs: "epub",
+        requestHeaders: {
+          Authorization: ` Bearer ${token}`,
+        },
+      }}
       hLSlideOpen={hLSlideOpen}
       notesSlideOpen={notesSlideOpen}
       header={header}
@@ -548,7 +546,7 @@ function UserEpubReader() {
       CustomMenu={CustomMenu}
       HighlightDrawer={HighlightDrawer}
       NotesDrawer={NotesDrawer}
-      Chatbot={<ChatBot bookId={File?.book_id}/>}
+      Chatbot={<ChatBot bookId={File?.book_id} />}
     />
   );
 }

@@ -15,7 +15,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import "./Library.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PurchaseBook_Request } from "../../../../Redux/Action/UserAction/PurchaseBookAction";
 import { Base_Url } from "../../../../Environment/Base_Url";
 import { IoChevronBack } from "react-icons/io5";
@@ -27,6 +27,7 @@ function OrderSummary() {
   const BookDetails = location?.state;
   const BookList = location?.state?.cartItems;
   const [bookList, setBookList] = useState([]);
+  const { purchasedBook } = useSelector((state) => state?.PurchasedBook);
   useEffect(() => {
     if (BookList) {
       setBookList(BookList);
@@ -39,8 +40,13 @@ function OrderSummary() {
 
   const handleOrderConfirm = () => {
     dispatch(PurchaseBook_Request({ book_id: BookDetails?.book_id }));
-    navigate("/reader/dashboard/detail/order/summary/orderplaced");
   };
+
+  useEffect(() => {
+    if (purchasedBook) {
+      navigate("/reader/dashboard/detail/order/summary/orderplaced");
+    }
+  }, [purchasedBook]);
 
   const handleCancelItem = (BookId) => {
     if (BookDetails && !BookList) {

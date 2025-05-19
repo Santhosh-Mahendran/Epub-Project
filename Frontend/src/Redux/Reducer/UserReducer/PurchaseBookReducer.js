@@ -16,7 +16,7 @@ function PurchaseBookReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        // purchasedBook: action.payload,
+        purchasedBook: action.payload,
       };
     case Type.PURCHASEBOOK_FAILURE:
       return {
