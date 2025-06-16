@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
+import { FormControlLabel, Switch } from "@mui/material";
 import { FcGoogle } from "react-icons/fc";
 import InputAdornment from "@mui/material/InputAdornment";
 import { FaEye } from "react-icons/fa";
@@ -25,12 +26,15 @@ function Register({ redirectTologin, handleReg }) {
   const { UserRegStatus, loading: UserRegLoad } = useSelector(
     (state) => state.ReaderReg
   );
+  const [is_Institution, setIs_Institution] = useState(false);
+  const handleToggle = (event) => {
+    setIs_Institution(event.target.checked);
+  };
   const initialState = {
     userName: "",
     email: "",
     phoneNum: "",
     city: "",
-    role: "",
     password: "",
     repassword: "",
   };
@@ -43,7 +47,6 @@ function Register({ redirectTologin, handleReg }) {
     email: Yup.string()
       .email("Invalid email")
       .required("this field is required"),
-    role: Yup.string().required("this field is required"),
     password: Yup.string()
       .min(6, "password must have atleast 6 characters")
       .matches(passwordsyntax, "create a strong password")
@@ -64,11 +67,11 @@ function Register({ redirectTologin, handleReg }) {
     const payload = {
       name: value.userName,
       email: value.email,
-      role: value?.role,
       password: value.password,
       phone: Number(value.phoneNum),
       address: value.city,
       geo_location: "Thanjavur",
+      is_institution: is_Institution,
     };
     handleReg(payload);
   };
@@ -97,7 +100,7 @@ function Register({ redirectTologin, handleReg }) {
 
   return (
     <>
-      <h3 className="auth-title my-3">CREATE AN ACCOUNT</h3>
+      <h3 className="auth-title mt-3 mb-1">CREATE AN ACCOUNT</h3>
       <div className="login-form">
         <form className="form" onSubmit={formik.handleSubmit}>
           <div className="row">
@@ -239,41 +242,6 @@ function Register({ redirectTologin, handleReg }) {
               <p className="invalid-feedback m-0">{formik.errors.city}</p>
             )}
           </div>
-          {location.pathname.startsWith("/auth/publisher") && (
-            <div className="my-2" style={{ width: "100%" }}>
-              <Autocomplete
-                fullWidth
-                options={role}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    name="Role"
-                    label="Role"
-                    className={`input mb-0 ${
-                      formik.errors.role && formik.touched.role
-                        ? "is-invalid"
-                        : formik.touched.role && !formik.errors.role
-                        ? "is-valid"
-                        : ""
-                    }`}
-                  />
-                )}
-                value={
-                  role?.find((option) => option.value === formik.values.role) ||
-                  null
-                }
-                onChange={(event, newValue) => {
-                  formik.setFieldValue("role", newValue ? newValue.value : "");
-                }}
-                onBlur={formik.handleBlur}
-                size="small"
-              />
-              {formik.errors.role && formik.touched.role && (
-                <p className="invalid-feedback m-0">{formik.errors.role}</p>
-              )}
-            </div>
-          )}
           <div className="my-2" style={{ width: "100%" }}>
             <TextField
               fullWidth
@@ -356,10 +324,26 @@ function Register({ redirectTologin, handleReg }) {
               <p className="invalid-feedback m-0">{formik.errors.repassword}</p>
             )}
           </div>
+          {location.pathname.startsWith("/auth/publisher") && (
+            <div style={{width:"100%"}}>
+              <FormControlLabel
+                value="end"
+                control={
+                  <Switch
+                    color="primary"
+                    checked={is_Institution}
+                    onChange={handleToggle}
+                  />
+                }
+                label="Institude"
+                labelPlacement="end"
+              />
+            </div>
+          )}
 
           <CustomButton
             type="submit"
-            className="w-100 button my-2"
+            className="w-100 button my-1"
             loading={pubRegLoad || UserRegLoad ? true : false}
           >
             SIGN UP
