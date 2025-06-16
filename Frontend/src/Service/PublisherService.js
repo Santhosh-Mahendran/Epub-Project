@@ -8,9 +8,13 @@ export const PublisherRegister = (request) => {
   return Main_Api.post("auth/pub/register", request);
 };
 
+export const GetPubDetail = () => {
+  return Main_Api.get("files/pub/details");
+};
+
 export const Upload_book = (request) => {
   if (request?.aiChat) {
-    return Main_Api.post("files/pub/upload_book3", request, {
+    return Main_Api.post("files/pub/upload_book2", request, {
       headers: { "Content-Type": "multipart/form-data" },
     });
   } else {

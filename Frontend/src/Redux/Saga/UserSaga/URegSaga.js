@@ -14,7 +14,7 @@ function* UserRegisterSaga({ payload }) {
     yield put(User_Register_Success(Response.data));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(User_Register_Failure(error));
+    yield put(User_Register_Failure(error?.response?.data?.error));
   }
 }
 

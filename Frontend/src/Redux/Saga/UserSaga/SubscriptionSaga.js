@@ -13,7 +13,7 @@ function* GetReaderSub() {
     const Response = yield call(Get_ReaderSub);
     yield put(Get_readerSub_Success(Response.data));
   } catch (error) {
-    yield put(Get_readerSub_Failure(error));
+    yield put(Get_readerSub_Failure(error?.response?.data?.error));
   }
 }
 
@@ -22,7 +22,7 @@ function* AddReaderSub({ payload }) {
     const Response = yield call(Add_sub_book, payload);
     yield put(Add_readerSub_Success(Response.data));
   } catch (error) {
-    yield put(Add_readerSub_Failure(error));
+    yield put(Add_readerSub_Failure(error?.response?.data?.error));
   }
 }
 

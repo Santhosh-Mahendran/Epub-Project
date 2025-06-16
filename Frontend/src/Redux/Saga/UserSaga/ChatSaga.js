@@ -11,7 +11,7 @@ function* UserQuesSaga({ payload }) {
     const Response = yield call(Chat_with_Ai, payload);   
     yield put(PostUserQues_Success(Response.data));
   } catch (error) {
-    yield put(PostUserQues_Failure(error));
+    yield put(PostUserQues_Failure(error?.response?.data?.error));
   }
 }
 

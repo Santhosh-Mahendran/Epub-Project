@@ -5,14 +5,14 @@ const initialState = {
   UserBooks: [],
   error: null,
   BookDetails: {},
-  FilteredBook:[]
+  FilteredBook: [],
 };
 function UserBookReducer(state = initialState, action) {
   switch (action.type) {
     case Type.GET_USERBOOKSUG_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: action?.payload?.silent ? false : true,
       };
     case Type.GET_USERBOOKSUG_SUCCESS:
       return {

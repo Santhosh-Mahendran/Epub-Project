@@ -23,20 +23,13 @@ import "./Reader.css";
 import { Base_Url } from "../../../../Environment/Base_Url";
 
 function UserEpubReader() {
-  const { Highlights, Notes, Progress } = useSelector(
-    (state) => state.PreViewData
-  );
   const [rendition, setRendition] = useState(null);
-  const [firstRenderDone, setFirstRenderDone] = useState(false);
-  const [currentProgress, setCurrentProgress] = useState();
-  const [location, setLocation] = useState(Progress || 0);
+  const [location, setLocation] = useState(0);
   const [BookMarkActive, setBookMarkActive] = useState(false);
-  const [percentage, setPercentage] = useState("");
   const [isReading, setIsReading] = useState(false);
   const [textToconvert, setTextToConvert] = useState(null);
   const [hLSlideOpen, setHLSlideOpen] = useState(false);
   const [notesSlideOpen, setNotesSlideOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(null);
   let speechSynthesis = window.speechSynthesis;
   const [anchorEl, setAnchorEl] = useState(null);
   const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
@@ -50,8 +43,54 @@ function UserEpubReader() {
   const GetLoactionState = useLocation();
   const File = GetLoactionState?.state;
 
+  const { Highlights, Notes, Progress } = useSelector(
+    (state) => state.PreViewData
+  );
+
+  useEffect(() => {
+    dispatch(Get_highlight_Request(File?.book_id));
+    dispatch(Get_Notes_Request(File?.book_id));
+    dispatch(Get_progress_Request(File?.book_id));
+  }, []);
+
+  //setLocation TO Persist Location
+
+  useEffect(() => {
+    if (Progress) {
+      setLocation(Progress);
+    }
+  }, [Progress]);
+
   const navigate = useNavigate();
   const handleNav = () => {
+    if (location && rendition.location) {
+      const currentIndex = rendition.location.start.percentage;
+      const percentage = Math.ceil((currentIndex * 100).toFixed(2));
+      dispatch(
+        Update_progress_Request({
+          book_id: File?.book_id,
+          bookmark: location,
+          percentage: percentage,
+        })
+      );
+    }
+    if (rendition) {
+      try {
+        rendition.destroy?.();
+      } catch (error) {
+        console.error("Error destroying rendition:", error);
+      }
+    }
+    setTimeout(() => {
+      setRendition(null);
+    }, 100);
+    setRendition(null);
+    setSelectedText(null);
+    setSelectedCFI(null);
+    setIsReading(false);
+    setAnchorEl(null);
+    setHLSlideOpen(false);
+    setNotesSlideOpen(false);
     navigate("/reader/dashboard/explore");
   };
   const dispatch = useDispatch();
@@ -75,40 +114,9 @@ function UserEpubReader() {
     setAllHighLights(Highlights);
   }, [Highlights]);
 
-  useEffect(() => {
-    setCurrentProgress(Progress);
-  }, [Progress]);
-
-  useEffect(() => {
-    dispatch(Get_highlight_Request(File?.book_id));
-    dispatch(Get_Notes_Request(File?.book_id));
-    dispatch(Get_progress_Request(File?.book_id));
-  }, []);
-
-  // Load saved location on first render
-
-  // useEffect(() => {
-  //   if (currentProgress) {
-  //     setLocation(currentProgress);
-  //     setBookMarkActive(true);
-  //     setCurrentPage(currentProgress);
-  //   }
-  //   setFirstRenderDone(true);
-  // }, [currentProgress, Progress]);
-
-  // useEffect(() => {
-  //   if (currentProgress === currentPage) {
-  //     setBookMarkActive(true);
-  //   } else {
-  //     setBookMarkActive(false);
-  //   }
-  // }, [location, currentProgress]);
-
   // Handle location change while reading
   const handlelocationChange = (epubcfi) => {
-    // if (!firstRenderDone) return;
     setLocation(epubcfi);
-    setCurrentPage(epubcfi);
   };
 
   //Restrict CustomMenu
@@ -192,19 +200,18 @@ function UserEpubReader() {
       setBookMarkActive(false);
       // localStorage.removeItem("persist-location");
     } else {
-      if (currentPage && rendition.location) {
+      if (location && rendition.location) {
         // Get current position index
         const currentIndex = rendition.location.start.percentage;
         const percentage = Math.ceil((currentIndex * 100).toFixed(2));
-        setPercentage(percentage);
         setBookMarkActive(true);
-        dispatch(
-          Update_progress_Request({
-            book_id: File?.book_id,
-            bookmark: currentPage,
-            percentage: percentage,
-          })
-        );
+        // dispatch(
+        //   Update_progress_Request({
+        //     book_id: File?.book_id,
+        //     bookmark: location,
+        //     percentage: percentage,
+        //   })
+        // );
       }
     }
   };
@@ -286,7 +293,7 @@ function UserEpubReader() {
     if (!rendition) return;
 
     rendition
-      .display(currentProgress || 0)
+      .display(location || 0)
       .then(() => rendition.book?.ready)
       .then(() => {
         if (rendition.book?.locations) {

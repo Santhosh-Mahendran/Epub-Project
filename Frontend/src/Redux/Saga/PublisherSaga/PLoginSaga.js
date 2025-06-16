@@ -17,7 +17,7 @@ function* PublisherLoginSaga({ payload }) {
   } catch (error) {
     toast.error(error?.response?.data?.error);
 
-    yield put(Publisher_Login_Failure(error));
+    yield put(Publisher_Login_Failure(error?.response?.data?.error));
   }
 }
 

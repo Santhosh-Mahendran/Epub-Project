@@ -22,7 +22,7 @@ function* GetUserBook() {
     yield put(GetUserBook_Success(Response.data));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(GetUserBook_Failure(error));
+    yield put(GetUserBook_Failure(error?.response?.data?.error));
   }
 }
 
@@ -33,7 +33,7 @@ function* GetUserBookById({ payload }) {
     yield put(GetUserBookbyId_Success(Response.data));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(GetUserBookbyId_Failure(error));
+    yield put(GetUserBookbyId_Failure(error?.response?.data?.error));
   }
 }
 
@@ -44,7 +44,7 @@ function* GetUserBookByCat({ payload }) {
     yield put(GetUserBookbyCat_Success(Response.data));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(GetUserBookbyCat_Failure(error));
+    yield put(GetUserBookbyCat_Failure(error?.response?.data?.error));
   }
 }
 

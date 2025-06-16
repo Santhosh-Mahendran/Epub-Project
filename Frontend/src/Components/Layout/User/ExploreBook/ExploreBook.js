@@ -19,7 +19,6 @@ import { GetCartItem_Request } from "../../../../Redux/Action/UserAction/CartBoo
 import { GetWishlistItem_Request } from "../../../../Redux/Action/UserAction/WishlistBookAction.js";
 
 function ExploreBook() {
-  const [searchBook, setSearchBook] = useState("");
   const [Book_list, setBook_List] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -77,7 +76,7 @@ function ExploreBook() {
               fontSize: "17px",
             }}
             className="mb-2"
-            onClick={()=>window.history.back()}
+            onClick={() => window.history.back()}
           >
             <IoChevronBack className="mb-1" />
             Back

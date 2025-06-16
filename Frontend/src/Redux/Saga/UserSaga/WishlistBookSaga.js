@@ -22,10 +22,10 @@ function* AddItemToWishlist({ payload }) {
     const Response = yield call(Add_to_Wishlist, payload);
     toast.success(Response?.data?.message);
     yield put(AddtoWishlist_Success(Response.data));
-    yield put(GetUserBook_Request());
+    yield put(GetUserBook_Request({ silent: true }));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(AddtoWishlist_Failure(error));
+    yield put(AddtoWishlist_Failure(error?.response?.data?.error));
   }
 }
 
@@ -36,20 +36,20 @@ function* GetWishlistItem() {
     yield put(GetWishlistItem_Success(Response.data));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(GetWishlistItem_Failure(error));
+    yield put(GetWishlistItem_Failure(error?.response?.data?.error));
   }
 }
 
-function* RemoveWishlistItem({ payload }) {  
+function* RemoveWishlistItem({ payload }) {
   try {
     const Response = yield call(Remove_from_Wishlist, payload);
     toast.success(Response?.data?.message);
     yield put(RemoveWishlistitem_Success(Response.data));
     yield put(GetWishlistItem_Request());
-    yield put(GetUserBook_Request());
+    yield put(GetUserBook_Request({ silent: true }));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(RemoveWishlistitem_Failure(error));
+    yield put(RemoveWishlistitem_Failure(error?.response?.data?.error));
   }
 }
 

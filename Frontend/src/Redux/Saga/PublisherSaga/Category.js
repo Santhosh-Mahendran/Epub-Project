@@ -17,7 +17,7 @@ function* Add_CategorySaga({ payload }) {
     toast.success(Response?.data?.message)
     yield put(Get_Cat_Request())
   } catch (error) {
-    yield put(Add_Cat_Failure(error));
+    yield put(Add_Cat_Failure(error?.response?.data?.error));
     toast.error(error?.response?.data?.error);
   }
 }
@@ -27,7 +27,7 @@ function* Get_CategorySaga({ payload }) {
     const Response = yield call(Get_Category, payload);
     yield put(Get_Cat_Success(Response.data));
   } catch (error) {
-    yield put(Get_Cat_Failure(error));
+    yield put(Get_Cat_Failure(error?.response?.data?.error));
   }
 }
 

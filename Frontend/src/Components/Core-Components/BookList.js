@@ -1,9 +1,7 @@
-import React from "react";
 import { LuIndianRupee } from "react-icons/lu";
 import CardComponent from "./Card.js";
 import { Review } from "./Highlight.js";
 import "./BookList.css";
-import coverImg from "../Assets/cover1.avif";
 import { FaHeart } from "react-icons/fa6";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +11,6 @@ import {
 } from "../../Redux/Action/UserAction/WishlistBookAction.js";
 import { BookListLoading } from "./Loading.js";
 import CustomButton from "./Button.js";
-import Main_Api from "../../Auth_Interceptor/Main_Api.js";
 import { Base_Url } from "../../Environment/Base_Url.js";
 
 function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
@@ -36,9 +33,9 @@ function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
   if (BookLoading) {
     return <BookListLoading />;
   }
-  const handleStartReadingSubBook = (BookId) => {
-    navigate(`/reader/bookpreview?BookId=${BookId}`);
-  };
+  // const handleStartReadingSubBook = (BookId) => {
+  //   navigate(`/reader/bookpreview?BookId=${BookId}`);
+  // };
 
   return (
     <div className="Book-list row">
@@ -57,7 +54,8 @@ function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
                     ""
                   )}
                 </div>
-                {location.pathname.startsWith("/reader") && !SubBook ? (
+                {/* {location.pathname.startsWith("/reader") && !SubBook ? ( */}
+                {location.pathname.startsWith("/reader") ? (
                   <div role="button">
                     <FaHeart
                       size={18}
@@ -94,7 +92,7 @@ function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
                 />
                 <h5 className="mt-2 title">{book?.title}</h5>
                 <h6 className="author-name">{book?.author}</h6>
-                {SubBook ? (
+                {/* {SubBook ? (
                   <>
                     <CustomButton
                       sx={{ backgroundColor: "green", padding: "3px 10px" }}
@@ -104,10 +102,10 @@ function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
                       Start Reading
                     </CustomButton>
                   </>
-                ) : (
-                  <>
-                    {book?.offer_price !== "None" ? (
-                      <>
+                ) : ( */}
+                <>
+                  {book?.offer_price !== "None" ? (
+                    <>
                       <h5>
                         <LuIndianRupee />
                         <del>{book?.price}</del>&nbsp;
@@ -115,18 +113,18 @@ function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
                         <span>{book.offer_price}</span>
                       </h5>
                       {/* <span>{(book.offer_price / book?.price)*100}% offer</span> */}
-                      </>
-                    ) : (
-                      <>
-                        <h5>
-                          <LuIndianRupee size={16} className="mb-1" />
-                          <span>{book.price}</span>
-                        </h5>
-                      </>
-                    )}
-                    <Review />
-                  </>
-                )}
+                    </>
+                  ) : (
+                    <>
+                      <h5>
+                        <LuIndianRupee size={16} className="mb-1" />
+                        <span>{book.price}</span>
+                      </h5>
+                    </>
+                  )}
+                  <Review />
+                </>
+                {/* )} */}
               </div>
             </CardComponent>
           </div>

@@ -13,6 +13,7 @@ import watchPreviewBook from "./UserSaga/PreviewBookSaga";
 import watchSubscibeBook from "./UserSaga/SubscriptionSaga";
 import watchAddSubsciber from "./PublisherSaga/SubscriberSaga";
 import watchChatRequest from "./UserSaga/ChatSaga";
+import watchPubDetails from "./PublisherSaga/PubDetailSaga";
 
 function* RootSaga() {
   yield all([
@@ -21,6 +22,7 @@ function* RootSaga() {
     watchPubBook(),
     watchCategory(),
     watchAddSubsciber(),
+    watchPubDetails(),
 
     watchUserLogin(),
     watchUserRegister(),

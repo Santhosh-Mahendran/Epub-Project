@@ -25,8 +25,6 @@ import {
 } from "../../Action/UserAction/PreviewBookAction";
 
 function* AddHighlight({ payload }) {
-  console.log(payload);
-
   try {
     const Response = yield call(Add_hightlight, payload);
     toast.success(Response?.data?.message);
@@ -34,7 +32,7 @@ function* AddHighlight({ payload }) {
   } catch (error) {
     toast.error(error?.response?.data?.error);
 
-    yield put(Add_highlight_Failure(error));
+    yield put(Add_highlight_Failure(error?.response?.data?.error));
   }
 }
 
@@ -45,7 +43,7 @@ function* GetHighlight({ payload }) {
     yield put(Get_highlight_Success(Response.data));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(Get_highlight_Failure(error));
+    yield put(Get_highlight_Failure(error?.response?.data?.error));
   }
 }
 
@@ -57,7 +55,7 @@ function* AddNotes({ payload }) {
     yield put(Get_Notes_Request(payload?.book_id));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(Add_Notes_Success(error));
+    yield put(Add_Notes_Success(error?.response?.data?.error));
   }
 }
 
@@ -68,18 +66,17 @@ function* GetNotes({ payload }) {
     yield put(Get_Notes_Success(Response.data));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(Get_Notes_Failure(error));
+    yield put(Get_Notes_Failure(error?.response?.data?.error));
   }
 }
 
 function* UpdateProgress({ payload }) {
   try {
     const Response = yield call(Upload_progress, payload);
-    toast.success(Response?.data?.message);
+    // toast.success(Response?.data?.message);
     yield put(Update_progress_Success(Response.data));
   } catch (error) {
-    toast.error(error?.response?.data?.error);
-    yield put(Update_progress_Failure(error));
+    yield put(Update_progress_Failure(error?.response?.data?.error));
   }
 }
 
@@ -88,7 +85,7 @@ function* GetProgress({ payload }) {
     const Response = yield call(Get_progress, payload);
     yield put(Get_progress_Success(Response.data));
   } catch (error) {
-    yield put(Get_progress_Failure(error));
+    yield put(Get_progress_Failure(error?.response?.data?.error));
   }
 }
 

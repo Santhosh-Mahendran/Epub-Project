@@ -30,7 +30,7 @@ function* UploadBookSaga({ payload }) {
     yield put(Upload_book_Success(Response.data));
     toast.success(Response.data.message);
   } catch (error) {
-    yield put(Upload_book_Failure(error));
+    yield put(Upload_book_Failure(error?.response?.data?.error));
     toast.error(error?.response?.data?.error);
   }
 }
@@ -40,7 +40,7 @@ function* GetAllBook() {
     const Response = yield call(Get_Books);
     yield put(Get_book_Success(Response.data));
   } catch (error) {
-    yield put(Get_book_Failure(error));
+    yield put(Get_book_Failure(error?.response?.data?.error));
   }
 }
 
@@ -50,7 +50,7 @@ function* UpdateBookSaga({ payload }) {
     yield put(Update_book_Success(Response.data));
     toast.success(Response.data.message);
   } catch (error) {
-    yield put(Update_book_Failure(error));
+    yield put(Update_book_Failure(error?.response?.data?.error));
     toast.error(error?.response?.data?.error);
   }
 }
@@ -60,7 +60,7 @@ function* GetBookByidSaga({ payload }) {
     const Response = yield call(GetBook_by_id, payload);
     yield put(Get_bookbyId_Success(Response.data));
   } catch (error) {
-    yield put(Get_bookbyId_Failure(error));
+    yield put(Get_bookbyId_Failure(error?.response?.data?.error));
   }
 }
 
@@ -79,7 +79,7 @@ function* DeleteBook({ payload }) {
     yield put(DeleteBook_Success(Response.data));
     toast.success(Response.data.message);
   } catch (error) {
-    yield put(DeleteBook_Failure(error));
+    yield put(DeleteBook_Failure(error?.response?.data?.error));
   }
 }
 

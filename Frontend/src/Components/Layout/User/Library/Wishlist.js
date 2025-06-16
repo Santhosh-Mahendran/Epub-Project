@@ -10,7 +10,7 @@ import {
   GetWishlistItem_Request,
   RemoveWishlistitem_Request,
 } from "../../../../Redux/Action/UserAction/WishlistBookAction";
-import DeleteCard from "./DeleteCard";
+import DeleteCard from "../../../Core-Components/DeleteCard";
 
 function Wishlist() {
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ function Wishlist() {
                   fontSize: "14px",
                 }}
                 onClick={() =>
-                  navigate("/reader/dashboard/detail/order/summary",{
+                  navigate("/reader/dashboard/detail/order/summary", {
                     state: wishlist,
                   })
                 }

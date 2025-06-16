@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Book_list } from "../../../Datas";
 import { Review } from "../../../Core-Components/Highlight";
 import { LuIndianRupee } from "react-icons/lu";
 import CustomButton from "../../../Core-Components/Button";
 import { Tooltip, IconButton } from "@mui/material";
 import { ImCross } from "react-icons/im";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -27,7 +21,9 @@ function OrderSummary() {
   const BookDetails = location?.state;
   const BookList = location?.state?.cartItems;
   const [bookList, setBookList] = useState([]);
-  const { purchasedBook } = useSelector((state) => state?.PurchasedBook);
+  const { PurchasedTrue: purchasedBook } = useSelector(
+    (state) => state?.PurchasedBook
+  );
   useEffect(() => {
     if (BookList) {
       setBookList(BookList);
@@ -53,8 +49,6 @@ function OrderSummary() {
       window.history.back();
     }
     if (BookList) {
-      console.log(BookId);
-
       setBookList(bookList?.filter((book) => book?.book_id !== BookId));
     }
   };

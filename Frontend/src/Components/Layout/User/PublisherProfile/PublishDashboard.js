@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./PublishDashboard.css";
 import aboutImg from "../../../Assets/about.jpg";
 import BookList from "../../../Core-Components/BookList";
-import { Book_list } from "../../../Datas";
+import { useSelector } from "react-redux";
 
 function PublishDashboard() {
+   const {
+      BookDataList,
+    } = useSelector((state) => state.BookData);
   const [contentIndex, setContentIndex] = useState(0);
   const Bannercontent = [
     "The company’s goals include providing support and assistance to deprived communities and showcasing a commitment to social responsibility and community development.",
@@ -65,7 +68,7 @@ function PublishDashboard() {
             </div>
           </CardComponent>
         ))} */}
-          <BookList FilteredBook={Book_list} />
+          <BookList FilteredBook={BookDataList} />
         </div>
       </div>
       <div className="Report-card">

@@ -66,28 +66,7 @@ function ReaderHeader({
         </IconButton>
       </Tooltip>
       <Tooltip title="Exit">
-        <IconButton
-          onClick={() => {
-            if (rendition) {
-              try {
-                rendition.destroy?.();
-              } catch (error) {
-                console.error("Error destroying rendition:", error);
-              }
-            }
-            setTimeout(() => {
-              setRendition(null);
-            }, 100);
-            setRendition(null);
-            setSelectedText(null);
-            setSelectedCFI(null);
-            setIsReading(false);
-            setAnchorEl(null);
-            setHLSlideOpen(false);
-            setNotesSlideOpen(false);
-            handleNav();
-          }}
-        >
+        <IconButton onClick={handleNav}>
           <IoExitOutline size={25} />
         </IconButton>
       </Tooltip>

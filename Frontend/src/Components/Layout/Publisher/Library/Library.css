@@ -15,10 +15,10 @@
 /* bookDetail */
 .bookDetail {
   padding: 20px;
-  /* width: 70%; */
+  width: 70%;
   height: auto;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 .earning-detail {
   /* padding: 20px; */

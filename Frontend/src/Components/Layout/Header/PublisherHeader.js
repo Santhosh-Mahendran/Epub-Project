@@ -81,7 +81,7 @@ function PublisherHeader() {
                 : ""
             }`}
           >
-            Upload File
+            Upload Book
           </Link>
           <Link
             to="/publisher/dashboard/library"
@@ -112,7 +112,6 @@ function PublisherHeader() {
           onClose={handleClose}
           listdata={[
             { label: "Profile", handleClick: handleProfileOpen },
-            { label: "My account", handleClick: handleClose },
             { label: "Logout", handleClick: handleLogout },
           ]}
         />
@@ -133,7 +132,7 @@ function PublisherHeader() {
             {
               path: "/publisher/dashboard/upload",
               icon: <FaCloudUploadAlt size={15} className="mx-3 mb-1" />,
-              label: "Upload File",
+              label: "Upload Book",
             },
             {
               path: "/publisher/dashboard/library",

@@ -1,33 +1,75 @@
-import React from "react";
 import { IoAddOutline } from "react-icons/io5";
 import Graph from "./Graph";
 import "./Report.css";
 import CardComponent from "../../../Core-Components/Card";
-import BookImg from "../../../Assets/bookImg.jpg";
 import { LuIndianRupee } from "react-icons/lu";
 import CustomButton from "../../../Core-Components/Button";
 import { useNavigate } from "react-router-dom";
 import { MdModeEdit } from "react-icons/md";
-import ebook from "../../../Assets/ebookReport.jpg";
-import soldBook from "../../../Assets/book-sold.jpg";
+import Renevue from "../../../Assets/book-rent.png";
+import soldRent from "../../../Assets/rent.png";
+import publish from "../../../Assets/publish.webp";
+import soldBook from "../../../Assets/sell.webp";
+import { FaCalendar } from "react-icons/fa";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getPubDetailRequest } from "../../../../Redux/Action/PublisherAction/PubDetail";
+import { ProgressSpinner } from "primereact/progressspinner";
 
 function Report() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { loading, Details } = useSelector((state) => state?.PubDetail);
+
+  useEffect(() => {
+    dispatch(getPubDetailRequest());
+  }, []);
+
   const BookReport_List = [
-    { title: "Book published", count: "500" },
-    { title: "Book Sold", count: "400" },
-    { title: "Book Rented", count: "500" },
-    { title: "Total Revenue", count: "50000" },
+    {
+      title: "Book published",
+      count: loading ? (
+        <ProgressSpinner style={{ width: "20px", height: "20px" }} />
+      ) : (
+        Details?.Book_published || 0
+      ),
+      image: publish,
+      Des: "Number of Book Published",
+    },
+    {
+      title: "Book Sold",
+      count: loading ? (
+        <ProgressSpinner style={{ width: "20px", height: "20px" }} />
+      ) : (
+        Details?.purchased_book_count || 0
+      ),
+      image: soldBook,
+      Des: "Number of Book Sold",
+    },
+    {
+      title: "Book Rented",
+      count: "500",
+      image: soldRent,
+      width: "50px",
+      Des: "Number of Book Rented",
+    },
+    {
+      title: "Total Revenue",
+      count: "50000",
+      image: Renevue,
+      Des: "Revenue on sell",
+    },
   ];
 
   return (
     <div className="publisher-report">
       <div className="publish-header row gap-3 justify-content-between">
-        <h4 className="mb-0 col-lg-4 col-md-6 col-sm-12">REPORT</h4>
+        <h5 className="mb-0 col-lg-4 col-md-6 col-sm-12">REPORT</h5>
         <div className="d-flex col-lg-6 col-md-6 col-sm-12 justify-content-end">
           <CustomButton
             type="button"
-            className="addnew-btn me-3"
+            className="addnew-btn me-1"
             style={{
               backgroundColor: "green",
               fontSize: "14px",
@@ -35,10 +77,10 @@ function Report() {
             }}
             onClick={() => navigate("/publisher/dashboard/upload")}
           >
-            <IoAddOutline className="me-1" style={{ fontSize: "20px" }} />
+            <IoAddOutline className="me-1" style={{ fontSize: "18px" }} />
             Add Book
           </CustomButton>
-          <CustomButton
+          {/* <CustomButton
             type="button"
             className="addnew-btn"
             style={{
@@ -48,9 +90,9 @@ function Report() {
             }}
             onClick={() => navigate("/publisher/dashboard/library")}
           >
-            <MdModeEdit className="me-1" style={{ fontSize: "17px" }} />
+            <MdModeEdit className="me-1" style={{ fontSize: "14px" }} />
             Edit Book
-          </CustomButton>
+          </CustomButton> */}
         </div>
       </div>
       <div className="report-card row mt-4">
@@ -60,20 +102,31 @@ function Report() {
             style={{
               width: "280px",
               height: "150px",
-              position: "relative",
+              padding: "10px 0",
             }}
           >
             <div
-              className="report-count"
-              style={{ width: "100%", height: "100%" }}
+              className="report-count row align-items-center"
+              style={{ width: "100%", height: "100%", margin: "0 auto" }}
             >
-              <div style={{ position: "absolute", width:"20%" , marginTop:"-40px" }}>
-                
-                {/* <img src={soldBook} alt="book" width="20%" /> */}
+              <div className="col-3">
+                <img
+                  src={book?.image}
+                  alt="book"
+                  width={book?.width ? book?.width : "60px"}
+                />
               </div>
-              <div>
-                <h5>{book?.title}</h5>
-                <div className="d-flex align-items-center">
+              <div className="col-9">
+                <h6
+                  className="ms-2"
+                  style={{ textTransform: "uppercase", color: "#8d969d" }}
+                >
+                  {book?.title}
+                </h6>
+                <div
+                  className="d-flex align-items-center ms-2"
+                  style={{ color: "#212529" }}
+                >
                   {book?.title === "Total Revenue" ? (
                     <LuIndianRupee size={25} className="mb-1" />
                   ) : (
@@ -81,18 +134,29 @@ function Report() {
                   )}
                   <h2>{book?.count}</h2>
                 </div>
-                <div></div>
+              </div>
+              <div
+                className="col-12"
+                style={{ borderTop: "1px solid #e2e2e3" }}
+              >
+                <p
+                  className="d-flex align-items-center gap-2 mb-0 mt-2"
+                  style={{ color: "rgb(182 182 182)" }}
+                >
+                  <FaCalendar />
+                  <span>{book?.Des}</span>
+                </p>
               </div>
             </div>
           </CardComponent>
         ))}
       </div>
-      <div className="scale-report row mt-5 justify-content-center">
-        <div>
-          <h5 className="mb-3">BOOK SELL REPORT</h5>
-        </div>
-        <div className="col-10">
-          <Graph />
+      <div className=" mt-5">
+        <h5 className="mb-3">BOOK SELL REPORT</h5>
+        <div className="scale-report">
+          <div className="col-8">
+            <Graph />
+          </div>
         </div>
         {/* <div className="col-sm-12 col-lg-6 col-md-6">
           <Chart />

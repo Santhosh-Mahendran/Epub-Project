@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Library.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LuIndianRupee } from "react-icons/lu";
 import { MdStar } from "react-icons/md";
 import { FiEye } from "react-icons/fi";
@@ -14,20 +14,25 @@ import { ImBooks } from "react-icons/im";
 import { MdLibraryBooks } from "react-icons/md";
 import { Review } from "../../../Core-Components/Highlight";
 import CustomButton from "../../../Core-Components/Button";
-import cover from "../../../Assets/cover3.avif";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteBook_Request } from "../../../../Redux/Action/PublisherAction/BookAction";
 import { BookDetailPubLoading } from "../../../Core-Components/Loading";
 import { Base_Url } from "../../../../Environment/Base_Url";
+import DeleteCard from "../../../Core-Components/DeleteCard";
 
 function BookDetail() {
   const navigate = useNavigate();
+  const [DelDialogOpen, setDelDialogOpen] = useState(false);
+  const [bookId, setBookId] = useState(null);
+  const [bookName, setBookName] = useState("");
   const {
     BookDetail: BookData,
     BookDeleted,
     loading,
   } = useSelector((state) => state.BookData);
+
   const dispatch = useDispatch();
+
   const handlePreviewOpen = () => {
     navigate("/publisher/bookpreview", { state: BookData?.epub_file });
   };
@@ -36,14 +41,20 @@ function BookDetail() {
     navigate("/publisher/dashboard/upload", { state: { BookData } });
   };
 
-  const handleDeleteBook = (id) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this book?"
-    );
-    if (isConfirmed) {
-      dispatch(DeleteBook_Request(id));
-    }
+  const handleDeleteBook = (Book) => {
+    setBookId(Book?.book_id);
+    setBookName(Book?.title);
+    setDelDialogOpen(true);
   };
+
+  const handleDialogClose = () => {
+    setDelDialogOpen(false);
+  };
+
+  const handleDeleteItem = () => {
+    dispatch(DeleteBook_Request(bookId));
+  };
+
   useEffect(() => {
     if (BookDeleted) {
       navigate("/publisher/dashboard/library");
@@ -57,7 +68,7 @@ function BookDetail() {
     <div
       className="row justify-content-center gap-4"
       style={{
-        width: "95%",
+        width: "80%",
         marginLeft: "auto",
         marginRight: "auto",
         padding: "20px 0 30px 0",
@@ -95,7 +106,7 @@ function BookDetail() {
                 className="mb-1"
                 style={{ fontWeight: "bold" }}
               />
-              100
+              {BookData?.offer_price}
             </span>
           </p>
           <p className="mb-0">
@@ -124,7 +135,7 @@ function BookDetail() {
               </IconButton>
             </Tooltip>
             <Tooltip title="Delete">
-              <IconButton onClick={() => handleDeleteBook(BookData?.book_id)}>
+              <IconButton onClick={() => handleDeleteBook(BookData)}>
                 <RiDeleteBinLine size={19} style={{ color: "#5e5e5e" }} />
               </IconButton>
             </Tooltip>
@@ -247,6 +258,14 @@ function BookDetail() {
           </div>
         </div>
       </div>
+      <DeleteCard
+        open={DelDialogOpen}
+        onClose={handleDialogClose}
+        handleDeleteItem={handleDeleteItem}
+        title={`Remove Book`}
+        BookName={bookName}
+        discription="Library"
+      />
     </div>
   );
 }
