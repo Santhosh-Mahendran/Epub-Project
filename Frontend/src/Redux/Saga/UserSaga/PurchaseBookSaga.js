@@ -16,7 +16,7 @@ function* PurchaseBook({ payload }) {
     yield put(PurchaseBook_Success(Response.data));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(PurchaseBook_Failure(error));
+    yield put(PurchaseBook_Failure(error?.response?.data?.error));
   }
 }
 
@@ -27,7 +27,7 @@ function* GetPurchasedBook() {
     yield put(Get_PurchasedBook_Success(Response.data));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(Get_PurchasedBook_Failure(error));
+    yield put(Get_PurchasedBook_Failure(error?.response?.data?.error));
   }
 }
 

@@ -1,10 +1,8 @@
 import * as Type from "../../ActionType";
 
-export const Get_readerSub_Request = () => {    
-  return {
-    type: Type.GET_READERSUB_REQUEST,
-  };
-};
+export const Get_readerSub_Request = () => ({
+  type: Type.GET_READERSUB_REQUEST,
+});
 
 export const Get_readerSub_Success = (payload) => ({
   type: Type.GET_READERSUB_SUCCESS,

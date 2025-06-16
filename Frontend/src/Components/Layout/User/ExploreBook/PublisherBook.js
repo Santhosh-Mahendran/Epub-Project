@@ -1,13 +1,12 @@
-import React from "react";
 import BookList from "../../../Core-Components/BookList";
-import { Book_list } from "../../../Datas.js";
 import { Link, useNavigate } from "react-router-dom";
 import "../Dashboard/UserDash.css";
 import { CiShop } from "react-icons/ci";
-import offers from "../../../Assets/banner.jpg";
 import { IoChevronBack } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 function PublisherBook() {
+  const { BookDataList } = useSelector((state) => state.BookData);
   const navigate = useNavigate();
   const handleBookOpen = (bookData) => {
     navigate(`/reader/dashboard/explore/book/${bookData.id}`, {
@@ -47,7 +46,7 @@ function PublisherBook() {
         {/* <div className="offers">
           <img src={offers} alt="offers" width="100%" height="100%" />
         </div> */}
-        <BookList FilteredBook={Book_list} handleBookOpen={handleBookOpen} />
+        <BookList FilteredBook={BookDataList} handleBookOpen={handleBookOpen} />
       </div>
     </>
   );

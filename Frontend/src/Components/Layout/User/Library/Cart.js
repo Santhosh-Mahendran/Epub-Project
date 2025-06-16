@@ -11,7 +11,7 @@ import {
   GetCartItem_Request,
   RemoveCartitem_Request,
 } from "../../../../Redux/Action/UserAction/CartBookAction";
-import DeleteCard from "./DeleteCard";
+import DeleteCard from "../../../Core-Components/DeleteCard";
 
 function Cart() {
   const dispatch = useDispatch();

@@ -12,15 +12,15 @@ import { User_Logout } from "../../../Redux/Action/UserAction/UserAuthAction";
 import { MdLibraryBooks } from "react-icons/md";
 import UserFilterMenu from "./UserFilterMenu";
 import Profile from "../Profile/Profile";
-import { Book_list } from "../../Datas";
 import { Get_readerSub_Request } from "../../../Redux/Action/UserAction/SubscriptionAction";
 import { GetUserBookbyCat_Request } from "../../../Redux/Action/UserAction/UserBookAction";
 import { IoMdMenu } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
-import { RiBookShelfFill  } from "react-icons/ri";
+import { RiBookShelfFill } from "react-icons/ri";
 import SideNavBar from "./SideNavBar";
 
 function UserHeader() {
+  const { BookDataList } = useSelector((state) => state.BookData);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSub, setSelectedSub] = useState();
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
@@ -33,13 +33,14 @@ function UserHeader() {
   const handleAccountMenuOpen = (event) => {
     setOpenProfileMenu(event.currentTarget);
   };
+
   const [openProfileDetails, setProfileDetails] = useState(false);
   const { cartCount } = useSelector((state) => state.CartBook);
   const { SubScribedBooks } = useSelector((state) => state.SubscribeBook);
 
-  useEffect(() => {
-    dispatch(Get_readerSub_Request());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(Get_readerSub_Request());
+  // }, []);
 
   const handleProfileDetailClose = () => {
     setProfileDetails(false);
@@ -75,7 +76,7 @@ function UserHeader() {
 
   const uniqueOptions = [
     ...new Set(
-      Book_list.flatMap((book) => [book.author, book.title, book.genre])
+      BookDataList.flatMap((book) => [book?.author, book?.title, book?.genre])
     ),
   ];
   const handleProfileOpen = () => {
@@ -204,7 +205,7 @@ function UserHeader() {
             className="d-flex justify-content-center align-items-center"
             style={{ columnGap: "50px" }}
           >
-            {subscribed?.length > 0 ? (
+            {/* {subscribed?.length > 0 ? (
               <div className="subscribe-field d-none d-lg-block">
                 <Autocomplete
                   options={SubOption}
@@ -247,13 +248,13 @@ function UserHeader() {
               </div>
             ) : (
               ""
-            )}
+            )} */}
             <div
               className="explore"
               style={{ cursor: "pointer", userSelect: "none" }}
               onClick={() => navigate("/reader/dashboard/explore")}
             >
-              <RiBookShelfFill 
+              <RiBookShelfFill
                 className="me-2 mb-1"
                 size={16}
                 style={{ color: "#f6f6f6" }}
@@ -307,7 +308,7 @@ function UserHeader() {
               onClose={handleClose}
               listdata={[
                 { label: "Profile", handleClick: handleProfileOpen },
-                { label: "My account", handleClick: handleClose },
+                // { label: "My account", handleClick: handleClose },
                 { label: "Logout", handleClick: handleLogout },
               ]}
             />

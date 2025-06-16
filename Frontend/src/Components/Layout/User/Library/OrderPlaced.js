@@ -1,5 +1,4 @@
-import React from "react";
-import placed from "../../../Assets/7efs.gif";
+import placed from "../../../Assets/placed.gif";
 import CustomButton from "../../../Core-Components/Button";
 import { useNavigate } from "react-router-dom";
 import "./Library.css";

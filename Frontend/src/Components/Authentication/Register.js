@@ -12,8 +12,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import CustomButton from "../Core-Components/Button";
+import { Autocomplete } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 function Register({ redirectTologin, handleReg }) {
+  const location = useLocation();
   const [passwordVisible, setPasswordVisibile] = useState(false);
   const [passwordCVisible, setPasswordCVisibile] = useState(false);
   const { RegStatus, loading: pubRegLoad } = useSelector(
@@ -27,6 +30,7 @@ function Register({ redirectTologin, handleReg }) {
     email: "",
     phoneNum: "",
     city: "",
+    role: "",
     password: "",
     repassword: "",
   };
@@ -39,6 +43,7 @@ function Register({ redirectTologin, handleReg }) {
     email: Yup.string()
       .email("Invalid email")
       .required("this field is required"),
+    role: Yup.string().required("this field is required"),
     password: Yup.string()
       .min(6, "password must have atleast 6 characters")
       .matches(passwordsyntax, "create a strong password")
@@ -59,6 +64,7 @@ function Register({ redirectTologin, handleReg }) {
     const payload = {
       name: value.userName,
       email: value.email,
+      role: value?.role,
       password: value.password,
       phone: Number(value.phoneNum),
       address: value.city,
@@ -83,6 +89,11 @@ function Register({ redirectTologin, handleReg }) {
       return;
     }
   }, [RegStatus, UserRegStatus]);
+
+  const role = [
+    { label: "Publisher", value: "Pub" },
+    { label: "School , College and Institution", value: "Institude" },
+  ];
 
   return (
     <>
@@ -228,6 +239,41 @@ function Register({ redirectTologin, handleReg }) {
               <p className="invalid-feedback m-0">{formik.errors.city}</p>
             )}
           </div>
+          {location.pathname.startsWith("/auth/publisher") && (
+            <div className="my-2" style={{ width: "100%" }}>
+              <Autocomplete
+                fullWidth
+                options={role}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    name="Role"
+                    label="Role"
+                    className={`input mb-0 ${
+                      formik.errors.role && formik.touched.role
+                        ? "is-invalid"
+                        : formik.touched.role && !formik.errors.role
+                        ? "is-valid"
+                        : ""
+                    }`}
+                  />
+                )}
+                value={
+                  role?.find((option) => option.value === formik.values.role) ||
+                  null
+                }
+                onChange={(event, newValue) => {
+                  formik.setFieldValue("role", newValue ? newValue.value : "");
+                }}
+                onBlur={formik.handleBlur}
+                size="small"
+              />
+              {formik.errors.role && formik.touched.role && (
+                <p className="invalid-feedback m-0">{formik.errors.role}</p>
+              )}
+            </div>
+          )}
           <div className="my-2" style={{ width: "100%" }}>
             <TextField
               fullWidth

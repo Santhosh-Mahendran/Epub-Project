@@ -17,7 +17,7 @@ function* UserLoginSaga({ payload }) {
   } catch (error) {
     toast.error(error?.response?.data?.error);
 
-    yield put(User_Login_Failure(error));
+    yield put(User_Login_Failure(error?.response?.data?.error));
   }
 }
 

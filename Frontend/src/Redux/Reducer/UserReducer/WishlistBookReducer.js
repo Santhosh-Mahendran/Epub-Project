@@ -3,6 +3,7 @@ import * as Type from "../../ActionType";
 const initialState = {
   loading: false,
   wishlistItems: [],
+  ActionLoad: false,
   error: null,
 };
 function WishlistBookReducer(state = initialState, action) {
@@ -10,18 +11,18 @@ function WishlistBookReducer(state = initialState, action) {
     case Type.ADD_WISHLISTBOOK_REQUEST:
       return {
         ...state,
-        loading: true,
+        ActionLoad: true,
       };
     case Type.ADD_WISHLISTBOOK_SUCCESS:
       return {
         ...state,
-        loading: false,
+        ActionLoad: false,
         // wishlistItems: action.payload,
       };
     case Type.ADD_WISHLISTBOOK_FAILURE:
       return {
         ...state,
-        loading: false,
+        ActionLoad: false,
         error: action.payload,
       };
     case Type.GET_WISHLISTBOOK_REQUEST:
@@ -30,7 +31,6 @@ function WishlistBookReducer(state = initialState, action) {
         loading: true,
       };
     case Type.GET_WISHLISTBOOK_SUCCESS:
-        
       return {
         ...state,
         loading: false,
@@ -45,18 +45,18 @@ function WishlistBookReducer(state = initialState, action) {
     case Type.DEL_WISHLISTBOOK_REQUEST:
       return {
         ...state,
-        loading: true,
+        ActionLoad: true,
       };
     case Type.DEL_WISHLISTBOOK_SUCCESS:
       return {
         ...state,
-        loading: false,
+        ActionLoad: false,
         // wishlistItems: action.payload,
       };
     case Type.DEL_WISHLISTBOOK_FAILURE:
       return {
         ...state,
-        loading: false,
+        ActionLoad: false,
         error: action.payload,
       };
     default:

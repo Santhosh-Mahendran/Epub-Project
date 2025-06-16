@@ -24,7 +24,7 @@ function* AddItemToCart({ payload }) {
     yield put(GetCartItem_Request());
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(AddtoCart_Failure(error));
+    yield put(AddtoCart_Failure(error?.response?.data?.error));
   }
 }
 
@@ -35,7 +35,7 @@ function* GetCartItem() {
     yield put(GetCartItem_Success(Response.data));
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(GetCartItem_Failure(error));
+    yield put(GetCartItem_Failure(error?.response?.data?.error));
   }
 }
 
@@ -47,7 +47,7 @@ function* RemoveCartItem({ payload }) {
     yield put(GetCartItem_Request());
   } catch (error) {
     toast.error(error?.response?.data?.error);
-    yield put(RemoveCartitem_Failure(error));
+    yield put(RemoveCartitem_Failure(error?.response?.data?.error));
   }
 }
 

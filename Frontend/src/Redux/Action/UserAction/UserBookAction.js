@@ -1,7 +1,8 @@
 import * as Type from "../../ActionType";
 
-export const GetUserBook_Request = () => ({
+export const GetUserBook_Request = (payload) => ({
   type: Type.GET_USERBOOKSUG_REQUEST,
+  payload: payload && payload,
 });
 
 export const GetUserBook_Success = (payload) => ({

@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LuIndianRupee } from "react-icons/lu";
-import { FiEye } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa6";
 import "../Dashboard/UserDash.css";
 import CustomButton from "../../../Core-Components/Button";
@@ -16,7 +14,6 @@ import {
   AddtoCart_Request,
   RemoveCartitem_Request,
 } from "../../../../Redux/Action/UserAction/CartBookAction";
-import coverImg from "../../../Assets/book_cover4.jpg";
 import { BookDetailPubLoading } from "../../../Core-Components/Loading";
 import { Base_Url } from "../../../../Environment/Base_Url";
 

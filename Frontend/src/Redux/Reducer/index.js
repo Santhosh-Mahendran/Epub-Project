@@ -13,6 +13,7 @@ import PreviewBookReducer from "./UserReducer/PreviewBookReducer";
 import SubscribeBookReducer from "./UserReducer/SubscriptionReducer";
 import SubscriberReducer from "./PublisherReducer/SubscriberReducer";
 import ChatReducer from "./UserReducer/ChatReducer";
+import PubDetailReducer from "./PublisherReducer/PubDetailReducer";
 
 const RootReducer = combineReducers({
   PublisherLogin: PublisherLoginReducer,
@@ -20,6 +21,7 @@ const RootReducer = combineReducers({
   BookData: BookReducer,
   category: CategoryReducer,
   SubscriberData: SubscriberReducer,
+  PubDetail: PubDetailReducer,
 
   UserLogin: UserLoginReducer,
   ReaderReg: UserRegReducer,
