@@ -286,6 +286,32 @@ function UserHeader() {
               />
               <span>My Library</span>
             </div>
+                <div
+              className="cart"
+              style={{ cursor: "pointer", userSelect: "none" }}
+              onClick={() => navigate("/reader/dashboard/detail/order")}
+            >
+              <Badge
+                badgeContent={cart_Count}
+                color="primary"
+                size="small"
+                sx={{
+                  "& .MuiBadge-badge": {
+                    fontSize: "0.7rem", // Change text size inside the badge
+                    height: "16px", // Adjust badge height
+                    minWidth: "15px",
+                  },
+                }}
+              >
+                <IoCartOutline
+                  className="mb-1"
+                  size={18}
+                  style={{ color: "#f6f6f6" }}
+                />
+              </Badge>
+
+              <span className="ms-2">Cart</span>
+            </div>
             <div
               className="profile"
               style={{ cursor: "pointer", userSelect: "none" }}
@@ -312,32 +338,7 @@ function UserHeader() {
                 { label: "Logout", handleClick: handleLogout },
               ]}
             />
-            <div
-              className="cart"
-              style={{ cursor: "pointer", userSelect: "none" }}
-              onClick={() => navigate("/reader/dashboard/detail/order")}
-            >
-              <Badge
-                badgeContent={cart_Count}
-                color="primary"
-                size="small"
-                sx={{
-                  "& .MuiBadge-badge": {
-                    fontSize: "0.7rem", // Change text size inside the badge
-                    height: "16px", // Adjust badge height
-                    minWidth: "15px",
-                  },
-                }}
-              >
-                <IoCartOutline
-                  className="mb-1"
-                  size={18}
-                  style={{ color: "#f6f6f6" }}
-                />
-              </Badge>
-
-              <span className="ms-2">Cart</span>
-            </div>
+        
           </div>
         </div>
       </div>

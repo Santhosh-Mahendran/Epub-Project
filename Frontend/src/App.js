@@ -29,6 +29,7 @@ import Cart from "./Components/Layout/User/Library/Cart";
 import PublishDashboard from "./Components/Layout/User/PublisherProfile/PublishDashboard";
 import ReaderAuth from "./Components/Authentication/UserAuth";
 import PublisherAuth from "./Components/Authentication/PublisherAuth";
+import PubProfile from "./Components/Layout/Publisher/PubProfile/PubProfile";
 
 function App() {
   const { PubLoginStatus } = useSelector((state) => state.PublisherLogin);
@@ -60,6 +61,7 @@ function App() {
                 path="/publisher/dashboard/library/book"
                 element={<BookDetail />}
               />
+              <Route path="/publisher/profile" element={<PubProfile />} />
             </Route>
           ) : (
             <Route path="*" element={<Navigate to="/" replace />} />
@@ -75,7 +77,10 @@ function App() {
           {UserLoginStatus ? (
             <Route element={<UserLayout />}>
               <Route path="/reader/dashboard/" element={<UserDashboard />} />
-              <Route path="/reader/dashboard/explore" element={<ExploreBook />} />
+              <Route
+                path="/reader/dashboard/explore"
+                element={<ExploreBook />}
+              />
               <Route
                 path="/reader/dashboard/explore/book"
                 element={<ExploreBookDetail />}

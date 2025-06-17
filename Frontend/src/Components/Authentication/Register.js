@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
-import { FormControlLabel, Switch } from "@mui/material";
+import { FormControlLabel, Switch, Tooltip } from "@mui/material";
 import { FcGoogle } from "react-icons/fc";
 import InputAdornment from "@mui/material/InputAdornment";
 import { FaEye } from "react-icons/fa";
@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import CustomButton from "../Core-Components/Button";
 import { Autocomplete } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import { FaInfoCircle } from "react-icons/fa";
 
 function Register({ redirectTologin, handleReg }) {
   const location = useLocation();
@@ -325,7 +326,14 @@ function Register({ redirectTologin, handleReg }) {
             )}
           </div>
           {location.pathname.startsWith("/auth/publisher") && (
-            <div style={{width:"100%"}}>
+          <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+                marginBottom: "8px",
+              }}
+            >
               <FormControlLabel
                 value="end"
                 control={
@@ -335,9 +343,33 @@ function Register({ redirectTologin, handleReg }) {
                     onChange={handleToggle}
                   />
                 }
-                label="Institude"
+                label="Educational Institution *"
                 labelPlacement="end"
+                style={{ marginRight: 8 }}
               />
+              <Tooltip
+                title={
+                  <span style={{ fontSize: "14px", lineHeight: "1.5" }}>
+                    Enable this option if you are a school, college, or other
+                    educational institution. Your books will not appear on the
+                    public marketplace and will be accessible only to selected
+                    readers you specify.
+                  </span>
+                }
+                placement="right"
+                arrow
+              >
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    color: "#1976d2",
+                  }}
+                >
+                  <FaInfoCircle size={16} />
+                </span>
+              </Tooltip>
             </div>
           )}
 

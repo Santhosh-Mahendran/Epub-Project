@@ -30,6 +30,7 @@ function Wishlist() {
   };
   const handleDeleteItem = () => {
     dispatch(RemoveWishlistitem_Request(bookId));
+    handleDialogClose();
   };
   useEffect(() => {
     dispatch(GetWishlistItem_Request());

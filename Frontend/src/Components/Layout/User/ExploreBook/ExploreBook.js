@@ -59,7 +59,7 @@ function ExploreBook() {
     } else {
       dispatch(GetUserBookbyId_Request(bookData.book_id));
       navigate(`/reader/dashboard/explore/book`, {
-        state: bookData?.already_purchased,
+        state: bookData,
       });
     }
   };

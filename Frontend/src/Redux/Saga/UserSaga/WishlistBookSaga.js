@@ -22,6 +22,7 @@ function* AddItemToWishlist({ payload }) {
     const Response = yield call(Add_to_Wishlist, payload);
     toast.success(Response?.data?.message);
     yield put(AddtoWishlist_Success(Response.data));
+    yield put(GetWishlistItem_Request());
     yield put(GetUserBook_Request({ silent: true }));
   } catch (error) {
     toast.error(error?.response?.data?.error);

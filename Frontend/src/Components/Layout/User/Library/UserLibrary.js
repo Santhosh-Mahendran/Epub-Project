@@ -56,7 +56,7 @@ function UserLibrary() {
                 }}
                 onClick={() => handlePreviewOpen(Book)}
               >
-                Continue Reading
+               { Book?.percentage > 0 ? "Continue Reading" : "Start Reading"}
               </CustomButton>
             </div>
           </div>
