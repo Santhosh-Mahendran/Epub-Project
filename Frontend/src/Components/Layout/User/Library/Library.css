@@ -73,3 +73,19 @@
     width: 90%;
   }
 }
+
+.strike {
+  display: inline-block;
+  position: relative;
+}
+
+.strike::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background: #000;
+  transform: translateY(-50%);
+}

@@ -10,10 +10,9 @@ import {
   RemoveWishlistitem_Request,
 } from "../../Redux/Action/UserAction/WishlistBookAction.js";
 import { BookListLoading } from "./Loading.js";
-import CustomButton from "./Button.js";
 import { Base_Url } from "../../Environment/Base_Url.js";
 
-function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
+function BookList({ FilteredBook, handleBookOpen, BookLoading }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,6 +23,7 @@ function BookList({ FilteredBook, handleBookOpen, BookLoading, SubBook }) {
       const RemoveLikedItem = wishlistItems?.find(
         (item) => item.book_id === Book.book_id
       );
+
       dispatch(RemoveWishlistitem_Request(RemoveLikedItem?.wishlist_id));
     } else {
       dispatch(AddtoWishlist_Request({ book_id: Book.book_id }));

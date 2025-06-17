@@ -17,20 +17,17 @@ function PublisherHeader() {
   const navigate = useNavigate();
   const location = useLocation();
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
-  const [openProfileDetails, setProfileDetails] = useState(false);
   const [OpenSideNav, setOpenSideNav] = useState(false);
   const dispatch = useDispatch();
-  const handleProfileDetailClose = () => {
-    setProfileDetails(false);
-  };
-
   const handleAccountMenuOpen = (event) => {
     setOpenProfileMenu(event.currentTarget);
   };
+
   const handleProfileOpen = () => {
-    // setProfileDetails(true);
+    navigate("/publisher/profile");
     setOpenProfileMenu(null);
   };
+
   const handleLogout = () => {
     setOpenProfileMenu(null);
     dispatch(Publisher_Logout());
@@ -116,10 +113,6 @@ function PublisherHeader() {
           ]}
         />
       </div>
-      <Profile
-        openProfileDetails={openProfileDetails}
-        handleClose={handleProfileDetailClose}
-      />
       {OpenSideNav && (
         <SideNavBar
           setOpenSideNav={setOpenSideNav}

@@ -8,7 +8,10 @@ import { Review } from "../../../Core-Components/Highlight";
 import { ImCross } from "react-icons/im";
 import { IoChevronBack } from "react-icons/io5";
 import { CiShop } from "react-icons/ci";
-import { AddtoWishlist_Request } from "../../../../Redux/Action/UserAction/WishlistBookAction";
+import {
+  AddtoWishlist_Request,
+  RemoveWishlistitem_Request,
+} from "../../../../Redux/Action/UserAction/WishlistBookAction";
 import { useDispatch, useSelector } from "react-redux";
 import {
   AddtoCart_Request,
@@ -16,10 +19,12 @@ import {
 } from "../../../../Redux/Action/UserAction/CartBookAction";
 import { BookDetailPubLoading } from "../../../Core-Components/Loading";
 import { Base_Url } from "../../../../Environment/Base_Url";
+import { useEffect, useState } from "react";
 
 function ExploreBookDetail() {
   const location = useLocation();
-  const IsPurchased = location?.state;
+  const { already_purchased, wishlist } = location?.state || {};
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { BookDetails, loading: BookDetailLoading } = useSelector(
@@ -29,24 +34,39 @@ function ExploreBookDetail() {
   const AlreadyInCart = cartItems?.find(
     (cartItem) => cartItem?.book_id === BookDetails?.book_id
   );
-  console.log(AlreadyInCart);
+  const { wishlistItems } = useSelector((state) => state?.WishlistBook);
 
-
+  const [likedBook, setLikedBook] = useState(false);
   const hanldePublisherDetailsOpen = () => {
-    // navigate("/reader/publisherDetails");
     navigate("/reader/publisher/profile");
   };
-
-  const handlePreviewOpen = () => {
-    navigate("/reader/bookpreview");
-  };
+  useEffect(() => {
+    if (wishlist) {
+      setLikedBook(true);
+    }
+  }, [wishlist]);
 
   const handleAddWishlist = (BookId) => {
-    dispatch(AddtoWishlist_Request({ book_id: BookId }));
+    if (likedBook) {
+      console.log("remove");
+      const RemoveLikedItem = wishlistItems?.find(
+        (item) => item.book_id === BookId
+      );
+      if (likedBook) {
+        setLikedBook(false);
+      }
+      dispatch(RemoveWishlistitem_Request(RemoveLikedItem?.wishlist_id));
+    } else {
+      if (!likedBook) {
+        setLikedBook(true);
+      }
+      console.log("Add");
+      dispatch(AddtoWishlist_Request({ book_id: BookId }));
+    }
   };
 
   const handleAddItemToCart = (BookId) => {
-    if (AlreadyInCart) {      
+    if (AlreadyInCart) {
       dispatch(RemoveCartitem_Request(AlreadyInCart?.cart_id));
     } else {
       dispatch(AddtoCart_Request({ book_id: BookId }));
@@ -62,18 +82,14 @@ function ExploreBookDetail() {
           <Link
             className="mb-2"
             style={{ textDecoration: "none", fontSize: "19px" }}
-            onClick={()=>window.history.back()}
+            onClick={() => window.history.back()}
           >
             <IoChevronBack className="mb-1" />
             Back
           </Link>
           <Tooltip title="cancel">
-            <IconButton>
-              <ImCross
-                size={"10px"}
-                style={{ color: "rgb(149 149 149)" }}
-                onClick={() => navigate("")}
-              />
+            <IconButton onClick={() => navigate("/reader/dashboard/explore")}>
+              <ImCross size={"10px"} style={{ color: "rgb(149 149 149)" }} />
             </IconButton>
           </Tooltip>
         </div>
@@ -83,34 +99,20 @@ function ExploreBookDetail() {
             alt="image"
           />
           <div
-            style={{ width: "70%", marginLeft: "auto", marginRight: "auto" }}
+            style={{ width: "90%", marginLeft: "auto", marginRight: "auto" }}
           >
-            {/* <div className="icons my-2">
-              <div
-                role="button"
-                onClick={handlePreviewOpen}
-                // href="/Headword Flipbook Sample/index.html"
-                style={{ textDecoration: "none", color: "#5e5e5e" }}
-              >
-                <FiEye
-                  size={20}
-                  style={{ color: "#5e5e5e" }}
-                  className="mb-1"
-                />
-                <span className="ms-1" style={{ fontSize: "17px" }}>
-                  Preview
-                </span>
-              </div>
-            </div> */}
-            <div className="action-btn mt-2 ms-auto" style={{ zIndex: 0 }}>
-              {IsPurchased ? (
+            <div
+              className=" mt-2  d-flex flex-sm-column justify-content-center gap-1"
+              style={{ zIndex: 0 }}
+            >
+              {already_purchased ? (
                 <div>
                   <CustomButton
                     sx={{
                       backgroundColor: "rgb(34 177 106)",
                       padding: "0.5rem 1rem",
                     }}
-                    className="my-1"
+                    className="my-1 me-2"
                     disable
                   >
                     PURCHASED
@@ -134,9 +136,7 @@ function ExploreBookDetail() {
                     }}
                     onClick={() => handleAddItemToCart(BookDetails.book_id)}
                   >
-                    {AlreadyInCart
-                      ? "Remove from Cart"
-                      : " ADD TO CART"}
+                    {AlreadyInCart ? "Remove from Cart" : " ADD TO CART"}
                   </CustomButton>
                   <CustomButton
                     className="m-1"
@@ -180,8 +180,8 @@ function ExploreBookDetail() {
             <span>
               <FaHeart
                 size={18}
-                style={{ color: "grey" }}
-                className="like-icon"
+                style={{ color: "grey", cursor: "pointer" }}
+                className={`like-icon ${likedBook ? "active" : ""}`}
                 onClick={() => handleAddWishlist(BookDetails.book_id)}
               />
             </span>
@@ -232,8 +232,8 @@ function ExploreBookDetail() {
             </span>
           </p>
           <p className="mb-0">
-            <span className="sub-title"> Discription</span> -{" "}
-            <span className="value-dis">{BookDetails?.discription}</span>
+            <span className="sub-title"> Description</span> -{" "}
+            <span className="value-dis">{BookDetails?.description}</span>
           </p>
           <div className="publisher-Details cardBox p-3 d-flex flex-column justify-content-center gap-3">
             <h6

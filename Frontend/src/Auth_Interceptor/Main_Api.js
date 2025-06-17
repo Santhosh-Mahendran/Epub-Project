@@ -26,7 +26,6 @@ Main_Api.interceptors.request.use(AuthHeader);
 Main_Api.interceptors.response.use(
   (response) => response,
   (error) => {
-    debugger;
     if (error.response.status === 401 || error.response.status === 422) {
       // Clear tokens if needed
       localStorage.removeItem("User_Auth_Token");

@@ -6,11 +6,13 @@ import "./Library.css";
 import { UserLibraryLoading } from "../../../Core-Components/Loading";
 import { useSelector } from "react-redux";
 import { Base_Url } from "../../../../Environment/Base_Url";
+import { useLocation } from "react-router-dom";
 
 function ProductList({ title, Book_list, children, Footer }) {
   const { loading: WishlistLoading } = useSelector(
     (state) => state.WishlistBook
   );
+  const { pathname } = useLocation();
   const { loading: CartLoading } = useSelector((state) => state.CartBook);
   const { loading: ParchaseLoading } = useSelector(
     (state) => state.PurchasedBook
@@ -56,15 +58,56 @@ function ProductList({ title, Book_list, children, Footer }) {
                     </div>
                   )}
                   <Review />
-                  {book?.price && (
-                    <h5 className="mb-0">
-                      <LuIndianRupee
-                        size={16}
-                        className="mb-1"
-                        style={{ fontWeight: "bold" }}
-                      />
-                      {book?.price}
-                    </h5>
+                  {pathname !== "/reader/dashboard/detail/library" && (
+                    <>
+                      {" "}
+                      <p className="mb-0">
+                        <span className="sub-title">Price</span> -
+                        {book?.offer_price ? (
+                          <span className="value">
+                            {" "}
+                            <LuIndianRupee
+                              size={16}
+                              className="mb-1"
+                              style={{ fontWeight: "bold" }}
+                            />
+                            {book?.offer_price} &nbsp;
+                            <span className="strike">
+                              <LuIndianRupee
+                                size={16}
+                                className="mb-1"
+                                style={{ fontWeight: "bold" }}
+                              />
+                              {book?.price}
+                            </span>
+                          </span>
+                        ) : (
+                          <span className="value">
+                            {" "}
+                            <LuIndianRupee
+                              size={16}
+                              className="mb-1"
+                              style={{ fontWeight: "bold" }}
+                            />
+                            {book?.price}
+                          </span>
+                        )}
+                      </p>
+                      {book?.rental_price && (
+                        <p className="mb-0">
+                          <span className="sub-title">Rental Price</span> -
+                          <span className="value">
+                            {" "}
+                            <LuIndianRupee
+                              size={16}
+                              className="mb-1"
+                              style={{ fontWeight: "bold" }}
+                            />
+                            {book?.price}
+                          </span>
+                        </p>
+                      )}
+                    </>
                   )}
                 </div>
                 <div className="col-lg-5 col-md-5  col-sm-12">

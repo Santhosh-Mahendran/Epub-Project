@@ -35,7 +35,6 @@ function UploadFile() {
 
   const location = useLocation();
   const bookData = location.state?.BookData;
-  console.log(bookData);
 
   const [aiChatbotEnabled, setAiChatbotEnabled] = useState(false);
   const handleToggle = (event) => {
