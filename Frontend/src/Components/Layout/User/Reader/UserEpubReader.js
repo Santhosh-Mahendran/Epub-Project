@@ -21,6 +21,7 @@ import BookHighlights from "./BookHighlight";
 import BookNotes from "./BookNotes";
 import "./Reader.css";
 import { Base_Url } from "../../../../Environment/Base_Url";
+import Review from "./Review";
 
 function UserEpubReader() {
   const [rendition, setRendition] = useState(null);
@@ -38,6 +39,7 @@ function UserEpubReader() {
   const [allHighlight, setAllHighLights] = useState([]);
   const [addNotesVis, setAddNotesVis] = useState(false);
   const [NotesContent, setNotesContent] = useState("");
+  const [reviewOpen, setReviewOpen] = useState(false);
   const [epubUrl, setEpubUrl] = useState(null);
   const token = localStorage.getItem("User_Auth_Token");
   const GetLoactionState = useLocation();
@@ -46,6 +48,14 @@ function UserEpubReader() {
   const { Highlights, Notes, Progress } = useSelector(
     (state) => state.PreViewData
   );
+
+  const handleReviewOpen = () => {
+    setReviewOpen(true);
+  };
+
+  const handleReviewClose = () => {
+    setReviewOpen(false);
+  };
 
   useEffect(() => {
     dispatch(Get_highlight_Request(File?.book_id));
@@ -442,6 +452,8 @@ function UserEpubReader() {
       setIsReading={setIsReading}
       setAnchorEl={setAnchorEl}
       handleNav={handleNav}
+      handleReviewOpen={handleReviewOpen}
+      handleReviewClose={handleReviewClose}
     />
   );
 
@@ -532,29 +544,32 @@ function UserEpubReader() {
   );
 
   return (
-    <ReactEpubReader
-      epubFile={epubUrl}
-      location={location}
-      locationChanged={handlelocationChange}
-      getRendition={(rendition) => getRendition(rendition)}
-      epubInitOptions={{
-        openAs: "epub",
-        requestHeaders: {
-          Authorization: ` Bearer ${token}`,
-        },
-      }}
-      hLSlideOpen={hLSlideOpen}
-      notesSlideOpen={notesSlideOpen}
-      header={header}
-      handleNav={handleNav}
-      BookId={File?.book_id}
-      Highlights={Highlights}
-      Notes={Notes}
-      CustomMenu={CustomMenu}
-      HighlightDrawer={HighlightDrawer}
-      NotesDrawer={NotesDrawer}
-      Chatbot={<ChatBot bookId={File?.book_id} />}
-    />
+    <>
+      <ReactEpubReader
+        epubFile={epubUrl}
+        location={location}
+        locationChanged={handlelocationChange}
+        getRendition={(rendition) => getRendition(rendition)}
+        epubInitOptions={{
+          openAs: "epub",
+          requestHeaders: {
+            Authorization: ` Bearer ${token}`,
+          },
+        }}
+        hLSlideOpen={hLSlideOpen}
+        notesSlideOpen={notesSlideOpen}
+        header={header}
+        handleNav={handleNav}
+        BookId={File?.book_id}
+        Highlights={Highlights}
+        Notes={Notes}
+        CustomMenu={CustomMenu}
+        HighlightDrawer={HighlightDrawer}
+        NotesDrawer={NotesDrawer}
+        Chatbot={<ChatBot bookId={File?.book_id} />}
+      />
+      <Review open={reviewOpen} handleClose={handleReviewClose} />
+    </>
   );
 }
 

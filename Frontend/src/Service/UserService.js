@@ -85,10 +85,5 @@ export const Get_progress = (request) => {
 };
 
 export const Chat_with_Ai = (request) => {
-  return Main_Api.post("files/ask2", request);
-  // return axios.post(
-  //   "https://65602acf83aba11d99d05511.mockapi.io/user",
-  //   // request
-  //   { text: "Response Given by Ai For Given Question", sender: "bot" }
-  // );
+  return Main_Api.post("files/ask", request);
 };

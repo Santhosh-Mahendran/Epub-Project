@@ -102,7 +102,7 @@ function ExploreBookDetail() {
             style={{ width: "90%", marginLeft: "auto", marginRight: "auto" }}
           >
             <div
-              className=" mt-2  d-flex flex-sm-column justify-content-center gap-1"
+              className=" mt-2 d-flex flex-lg-row flex-sm-column justify-content-center gap-1"
               style={{ zIndex: 0 }}
             >
               {already_purchased ? (
