@@ -16,8 +16,8 @@ function ReactEpubReader({
   NotesDrawer,
   epubInitOptions,
   Chatbot,
+  reviewOpen,
 }) {
-  
   // RestrictScreenshot();
   return (
     <>
@@ -44,6 +44,7 @@ function ReactEpubReader({
           }}
         />
         {Chatbot && Chatbot}
+        {reviewOpen && reviewOpen}
         {CustomMenu && CustomMenu}
         {HighlightDrawer && HighlightDrawer}
         {NotesDrawer && NotesDrawer}

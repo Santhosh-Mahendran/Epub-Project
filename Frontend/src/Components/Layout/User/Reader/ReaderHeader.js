@@ -1,11 +1,11 @@
 import { IconButton, Tooltip } from "@mui/material";
-import React from "react";
 import { BsJournalBookmark } from "react-icons/bs";
 import { LuNotebookPen } from "react-icons/lu";
 import { PiSpeakerHighLight } from "react-icons/pi";
 import { BsHighlighter } from "react-icons/bs";
 import { VscMute } from "react-icons/vsc";
 import { IoExitOutline } from "react-icons/io5";
+import { CiStar } from "react-icons/ci";
 
 function ReaderHeader({
   BookMarkActive,
@@ -17,16 +17,16 @@ function ReaderHeader({
   hLSlideOpen,
   setNotesSlideOpen,
   notesSlideOpen,
-  rendition,
-  setRendition,
-  setSelectedText,
-  setSelectedCFI,
-  setIsReading,
-  setAnchorEl,
   handleNav,
+  handleReviewOpen,
 }) {
   return (
     <div className="header-content">
+      <Tooltip title="Leave a Rating">
+        <IconButton onClick={handleReviewOpen}>
+          <CiStar size={25} />
+        </IconButton>
+      </Tooltip>
       <Tooltip title={BookMarkActive ? "Remove BookMark" : "Add BookMark"}>
         <IconButton
           onClick={handleBookmark}

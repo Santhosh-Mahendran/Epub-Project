@@ -19,7 +19,7 @@ function PubEpubReader() {
   useEffect(() => {
     const fetchEpubUrl = async () => {
       try {
-        const streamUrl = `${Base_Url}/book/stream/${FileName}`;
+        const streamUrl = `${Base_Url}/book/pub/stream/${FileName}`;
         setEpubUrl(streamUrl);
       } catch (error) {
         console.error("Error fetching EPUB URL:", error);
