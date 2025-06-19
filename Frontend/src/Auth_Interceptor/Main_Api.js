@@ -27,12 +27,9 @@ Main_Api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 401 || error.response.status === 422) {
-      // Clear tokens if needed
       localStorage.removeItem("User_Auth_Token");
       localStorage.removeItem("Publisher_Auth_Token");
-
-      // Redirect to login
-      window.location.href = "/"; // Change this path to your login route
+      window.location.href = "/"; 
     }
     return Promise.reject(error);
   }

@@ -29,12 +29,11 @@ function ReactEpubReader({
         {header && header}
         <ReactReader
           url={epubFile}
-          // url="/alice.epub"
           location={location}
           locationChanged={locationChanged}
           epubOptions={{
-            allowPopups: true, // Adds `allow-popups` to sandbox-attribute
-            allowScriptedContent: true, // Adds `allow-scripts` to sandbox-attribute
+            allowPopups: true, 
+            allowScriptedContent: true, 
             allowLocalStorage: true,
             allowSameOrigin: true,
           }}

@@ -953,6 +953,7 @@ def get_purchased_books():
                     "cover_image": book.cover_image,
                     "file_path": book.epub_file,
                     "purchase_date": purchase.purchase_date,
+                    "isAiAdded" : book.has_ai_module,
                     "bookmark": purchase.bookmark,
                     "percentage": purchase.percentage
                 })
