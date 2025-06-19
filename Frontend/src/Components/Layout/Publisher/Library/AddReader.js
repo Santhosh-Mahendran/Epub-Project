@@ -43,6 +43,7 @@ function AddReader({ handleAddReaderClose, addReaderOpen, selectedCategory }) {
         reader_email: readerEmail,
       })
     );
+    setReaderEmail("");
     handleAddReaderClose();
   };
   return (

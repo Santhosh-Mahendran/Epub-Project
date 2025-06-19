@@ -15,6 +15,8 @@ import {
 import CustomButton from "../../../Core-Components/Button.js";
 import AddReader from "./AddReader.js";
 import { Get_Cat_Request } from "../../../../Redux/Action/PublisherAction/CategoryAction.js";
+import { Get_Subsciber_Request } from "../../../../Redux/Action/PublisherAction/SubscriberAction.js";
+import SubscriberSlide from "./SubscriberSlide.js";
 
 function Library() {
   const [searchBook, setSearchBook] = useState("");
@@ -28,8 +30,10 @@ function Library() {
     loading: BookLoading,
   } = useSelector((state) => state.BookData);
   const [addReaderOpen, setAddReadOpen] = useState(false);
+  const [SubscriberOpen, setSubscriberOpen] = useState(false);
   const { Category } = useSelector((state) => state.category);
   const { LoginData } = useSelector((state) => state?.PublisherLogin);
+  const { SubScriberData } = useSelector((state) => state?.SubscriberData);
 
   useEffect(() => {
     dispatch(Get_book_Request());
@@ -76,12 +80,16 @@ function Library() {
 
   const handleAddReaderOpen = () => {
     setAddReadOpen(true);
+    setSubscriberOpen(false);
   };
   const handleAddReaderClose = () => {
     setAddReadOpen(false);
   };
 
-  const handleManageReaderOpen = () => {};
+  const handleManageReaderOpen = () => {
+    dispatch(Get_Subsciber_Request(selectedCategory));
+    setSubscriberOpen(true);
+  };
   const Catoptions = Category?.map((cat) => ({
     id: cat.category_id,
     value: cat.category_id,
@@ -205,6 +213,12 @@ function Library() {
       <AddReader
         addReaderOpen={addReaderOpen}
         handleAddReaderClose={handleAddReaderClose}
+        selectedCategory={selectedCategory}
+      />
+      <SubscriberSlide
+        open={SubscriberOpen}
+        setOpen={setSubscriberOpen}
+        data={SubScriberData}
         selectedCategory={selectedCategory}
       />
     </>
