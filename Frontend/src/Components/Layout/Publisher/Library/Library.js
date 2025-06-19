@@ -28,7 +28,8 @@ function Library() {
     loading: BookLoading,
   } = useSelector((state) => state.BookData);
   const [addReaderOpen, setAddReadOpen] = useState(false);
-  const { Category, loading: catLoad } = useSelector((state) => state.category);
+  const { Category } = useSelector((state) => state.category);
+  const { LoginData } = useSelector((state) => state?.PublisherLogin);
 
   useEffect(() => {
     dispatch(Get_book_Request());
@@ -81,6 +82,11 @@ function Library() {
   };
 
   const handleManageReaderOpen = () => {};
+  const Catoptions = Category?.map((cat) => ({
+    id: cat.category_id,
+    value: cat.category_id,
+    label: cat.category_name,
+  }));
 
   return (
     <>
@@ -100,28 +106,33 @@ function Library() {
           <div className="d-flex align-items-center gap-3">
             {selectedCategory && filterBook ? (
               <>
-                {/* <div>
-                  <CustomButton
-                    sx={{
-                      padding: "5px 10px",
-                      fontSize: "14px",
-                    }}
-                    onClick={handleAddReaderOpen}
-                  >
-                    Add reader
-                  </CustomButton>
-                </div> */}
-                {/* <div>
-                  <CustomButton
-                    sx={{
-                      padding: "5px 10px",
-                      fontSize: "14px",
-                    }}
-                    onClick={handleManageReaderOpen}
-                  >
-                    Manage Reader
-                  </CustomButton>
-                </div> */}
+                {LoginData?.is_institution && (
+                  <>
+                    {" "}
+                    <div>
+                      <CustomButton
+                        sx={{
+                          padding: "5px 10px",
+                          fontSize: "14px",
+                        }}
+                        onClick={handleAddReaderOpen}
+                      >
+                        Add reader
+                      </CustomButton>
+                    </div>
+                    <div>
+                      <CustomButton
+                        sx={{
+                          padding: "5px 10px",
+                          fontSize: "14px",
+                        }}
+                        onClick={handleManageReaderOpen}
+                      >
+                        Manage Reader
+                      </CustomButton>
+                    </div>
+                  </>
+                )}
               </>
             ) : (
               ""
@@ -151,14 +162,16 @@ function Library() {
         </div>
         <div className="d-block d-lg-none" style={{ maxWidth: "200px" }}>
           <Autocomplete
-            options={Category?.map((cat) => ({
-              id: cat.category_id,
-              value: cat.category_id,
-              label: cat.category_name,
-            }))}
-            getOptionLabel={(option) => option?.label}
-            value={selectedCategory}
-            onChange={(event, newValue) => setSelectedCategory(newValue?.value)}
+            options={Catoptions}
+            getOptionLabel={(option) =>
+              typeof option === "string" ? option : option?.label || ""
+            }
+            value={
+              Catoptions.find((opt) => opt.value === selectedCategory) || null
+            }
+            onChange={(event, newValue) =>
+              setSelectedCategory(newValue?.value ?? null)
+            }
             renderInput={(params) => (
               <TextField
                 {...params}
