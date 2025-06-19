@@ -24,7 +24,7 @@ function UserLibrary() {
         {(Book) => (
           <div
             className="mt-1 d-flex flex-column justify-content-between"
-            style={{ height: "100%" }}
+            style={{ height: "100%", width: "fit-content" }}
           >
             <div className="float-right">
               <Box sx={{ position: "relative", zIndex: "0" }}>
@@ -56,7 +56,7 @@ function UserLibrary() {
                 }}
                 onClick={() => handlePreviewOpen(Book)}
               >
-               { Book?.percentage > 0 ? "Continue Reading" : "Start Reading"}
+                {Book?.percentage > 0 ? "Continue Reading" : "Start Reading"}
               </CustomButton>
             </div>
           </div>

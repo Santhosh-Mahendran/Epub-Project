@@ -41,7 +41,7 @@ function ProductList({ title, Book_list, children, Footer }) {
                   />
                 </div>
                 <div
-                  className="col-lg-5 col-md-5 col-sm-12 d-flex flex-column"
+                  className="col-lg-6 col-md-6 col-sm-12 d-flex flex-column p-0"
                   style={{ rowGap: "10px" }}
                 >
                   <div className="d-flex align-items-center">
@@ -110,7 +110,10 @@ function ProductList({ title, Book_list, children, Footer }) {
                     </>
                   )}
                 </div>
-                <div className="col-lg-5 col-md-5  col-sm-12">
+                <div
+                  className="col-lg-4 col-md-4 col-sm-12 p-0 "
+                  style={{ justifyItems: "end" }}
+                >
                   {children && children(book)}
                 </div>
               </div>

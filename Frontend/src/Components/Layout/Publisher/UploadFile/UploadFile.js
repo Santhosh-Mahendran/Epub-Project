@@ -576,20 +576,22 @@ function UploadFile() {
                 }
                 helperText={formik.touched.epubFile && formik.errors.epubFile}
               />
-              <div>
-                <FormControlLabel
-                  value="end"
-                  control={
-                    <Switch
-                      color="primary"
-                      checked={aiChatbotEnabled}
-                      onChange={handleToggle}
-                    />
-                  }
-                  label="Add AI Chatbot"
-                  labelPlacement="end"
-                />
-              </div>
+              {formik.values.selectedLang === "English" && (
+                <div>
+                  <FormControlLabel
+                    value="end"
+                    control={
+                      <Switch
+                        color="primary"
+                        checked={aiChatbotEnabled}
+                        onChange={handleToggle}
+                      />
+                    }
+                    label="Add AI Chatbot"
+                    labelPlacement="end"
+                  />
+                </div>
+              )}
             </div>
             <div className="col-12">
               <TextField

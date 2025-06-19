@@ -566,7 +566,7 @@ function UserEpubReader() {
         CustomMenu={CustomMenu}
         HighlightDrawer={HighlightDrawer}
         NotesDrawer={NotesDrawer}
-        Chatbot={<ChatBot bookId={File?.book_id} />}
+        Chatbot={File?.isAiAdded && <ChatBot bookId={File?.book_id} />}
       />
       <Review open={reviewOpen} handleClose={handleReviewClose} />
     </>
