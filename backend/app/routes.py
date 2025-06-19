@@ -651,28 +651,6 @@ def edit_subscriber(sub_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@subscriber_bp.route('/publisher/delete_subscriber/<int:sub_id>', methods=['DELETE'])
-@jwt_required()
-def delete_subscriber(sub_id):
-    try:
-        publisher_id = get_jwt_identity()
-
-        # Check if the subscriber exists and belongs to the publisher
-        subscriber = Subscriber.query.join(Category).filter(
-            Subscriber.sub_id == sub_id,
-            Category.publisher_id == publisher_id
-        ).first()
-
-        if not subscriber:
-            return jsonify({"error": "Subscriber not found or unauthorized"}), 404
-
-        # Delete subscriber
-        db.session.delete(subscriber)
-        db.session.commit()
-
-        return jsonify({"message": "Subscriber deleted successfully"})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 
 @book_bp.route('/reader/get_all_books', methods=['GET'])
@@ -1416,6 +1394,8 @@ def get_subscribed_books():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+
 @files_bp.route('/cover_image/<filename>')
 def serve_cover_image(filename):
     image_folder = current_app.config['IMAGE_UPLOAD_FOLDER']
@@ -1679,4 +1659,61 @@ def upload_book_simple():
 
     except Exception as e:
         db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@subscriber_bp.route('/pub/get_subscribers/<int:category_id>', methods=['GET'])
+@jwt_required()
+def get_subscribers(category_id):
+    try:
+        # Get publisher_id from JWT token
+        publisher_id = get_jwt_identity()
+
+        # Check if the publisher exists
+        publisher = Publisher.query.get(publisher_id)
+        if not publisher:
+            return jsonify({"error": "Publisher not found"}), 404
+
+        # Query the subscribers table for matching category and publisher
+        subscribers = Subscriber.query.filter_by(
+            category_id=category_id,
+            publisher_id=publisher_id
+        ).all()
+
+        # Prepare response with sub_id and reader_email
+        subscriber_data = [
+            {
+                "sub_id": subscriber.sub_id,  # or subscriber.sub_id depending on your column name
+                "reader_email": subscriber.reader_email
+            }
+            for subscriber in subscribers
+        ]
+
+        return jsonify({"subscribers": subscriber_data}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@subscriber_bp.route('/pub/delete_subscriber/<int:sub_id>', methods=['DELETE'])
+@jwt_required()
+def delete_subscriber(sub_id):
+    try:
+        publisher_id = get_jwt_identity()
+
+        # Check if the subscriber exists and belongs to the publisher
+        subscriber = Subscriber.query.join(Category).filter(
+            Subscriber.sub_id == sub_id,
+            Category.publisher_id == publisher_id
+        ).first()
+
+        if not subscriber:
+            return jsonify({"error": "Subscriber not found or unauthorized"}), 404
+
+        # Delete subscriber
+        db.session.delete(subscriber)
+        db.session.commit()
+
+        return jsonify({"message": "Subscriber deleted successfully"})
+    except Exception as e:
         return jsonify({"error": str(e)}), 500
