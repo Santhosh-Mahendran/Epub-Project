@@ -69,7 +69,7 @@ def login():
     try:
         if ph.verify(publisher.password, data['password']):
             access_token = create_access_token(identity=str(publisher.publisher_id))
-            return jsonify({"access_token": access_token, "message": "Login successful"}), 200
+            return jsonify({"access_token": access_token, "is_institution": publisher.is_institution, "message": "Login successful"}), 200
     except VerifyMismatchError:
         return jsonify({"error": "Invalid email or password"}), 401
 
