@@ -19,48 +19,62 @@ import { ProgressSpinner } from "primereact/progressspinner";
 function Report() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { LoginData } = useSelector((state) => state?.PublisherLogin);
 
   const { loading, Details } = useSelector((state) => state?.PubDetail);
 
   useEffect(() => {
     dispatch(getPubDetailRequest());
-  }, []);
+  }, []);  
 
-  const BookReport_List = [
-    {
-      title: "Book published",
-      count: loading ? (
-        <ProgressSpinner style={{ width: "20px", height: "20px" }} />
-      ) : (
-        Details?.Book_published || 0
-      ),
-      image: publish,
-      Des: "Number of Book Published",
-    },
-    {
-      title: "Book Sold",
-      count: loading ? (
-        <ProgressSpinner style={{ width: "20px", height: "20px" }} />
-      ) : (
-        Details?.purchased_book_count || 0
-      ),
-      image: soldBook,
-      Des: "Number of Book Sold",
-    },
-    {
-      title: "Book Rented",
-      count: "500",
-      image: soldRent,
-      width: "50px",
-      Des: "Number of Book Rented",
-    },
-    {
-      title: "Total Revenue",
-      count: "50000",
-      image: Renevue,
-      Des: "Revenue on sell",
-    },
-  ];
+  const BookReport_List = LoginData?.is_institution
+    ? [
+        {
+          title: "Book published",
+          count: loading ? (
+            <ProgressSpinner style={{ width: "20px", height: "20px" }} />
+          ) : (
+            Details?.Book_published || 0
+          ),
+          image: publish,
+          Des: "Number of Book Published",
+        },
+      ]
+    : [
+        {
+          title: "Book published",
+          count: loading ? (
+            <ProgressSpinner style={{ width: "20px", height: "20px" }} />
+          ) : (
+            Details?.Book_published || 0
+          ),
+          image: publish,
+          Des: "Number of Book Published",
+        },
+        {
+          title: "Book Sold",
+          count: loading ? (
+            <ProgressSpinner style={{ width: "20px", height: "20px" }} />
+          ) : (
+            Details?.purchased_book_count || 0
+          ),
+          image: soldBook,
+          Des: "Number of Book Sold",
+        },
+        {
+          title: "Book Rented",
+          count: "500",
+          image: soldRent,
+          width: "50px",
+          Des: "Number of Book Rented",
+        },
+        {
+          title: "Total Revenue",
+          count: "50000",
+          image: Renevue,
+          Des: "Revenue on sell",
+        },
+      ];
 
   return (
     <div className="publisher-report">

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../Core-Components/Button";
 import { useNavigate } from "react-router-dom";
 import logo from "../Assets/logo.jpg";
-import "./Auth.css"
+import "./Auth.css";
 
 function Login({ title, registerNav, handleLogin }) {
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ function Login({ title, registerNav, handleLogin }) {
   const {
     loading: PublisherLoad,
     PubLoginStatus: PublisherLogin,
+    LoginData,
   } = useSelector((state) => state?.PublisherLogin);
   const { loading: UserLoad, UserLoginStatus } = useSelector(
     (state) => state?.UserLogin
@@ -29,7 +30,6 @@ function Login({ title, registerNav, handleLogin }) {
 
   const handleSubmit = () => {
     handleLogin(payload);
-   
   };
 
   useEffect(() => {
