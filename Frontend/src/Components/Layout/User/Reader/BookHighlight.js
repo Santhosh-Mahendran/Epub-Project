@@ -1,5 +1,5 @@
 import React from "react";
-import CustomDrawer from "../../ReactReader/CustomDrawer";
+import CustomDrawer from "../../../Core-Components/CustomDrawer";
 import { Card, Typography } from "@mui/material";
 
 function BookHighlights({

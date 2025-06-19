@@ -12,7 +12,7 @@ export const GetPubDetail = () => {
   return Main_Api.get("files/pub/details");
 };
 
-export const Upload_book = (request) => {  
+export const Upload_book = (request) => {
   if (request?.aiChat) {
     return Main_Api.post("files/pub/upload_book", request, {
       headers: { "Content-Type": "multipart/form-data" },
@@ -55,4 +55,12 @@ export const deleteBook = (id) => {
 
 export const Add_Subscriber = (request) => {
   return Main_Api.post("subscribe/publisher/add_subscriber", request);
+};
+
+export const Get_Subscriber = (request) => {
+  return Main_Api.get("subscribe/pub/get_subscribers/" + request);
+};
+
+export const Del_Subscriber = (request) => {
+  return Main_Api.delete("subscribe/pub/delete_subscriber/" + request?.sub_id);
 };
