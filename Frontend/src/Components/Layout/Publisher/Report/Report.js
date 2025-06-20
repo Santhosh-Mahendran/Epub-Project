@@ -19,15 +19,16 @@ import { ProgressSpinner } from "primereact/progressspinner";
 function Report() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { LoginData } = useSelector((state) => state?.PublisherLogin);
+  const is_institution =
+    localStorage.getItem("is_institution") === "true" ? true : false;
 
   const { loading, Details } = useSelector((state) => state?.PubDetail);
 
   useEffect(() => {
     dispatch(getPubDetailRequest());
-  }, []);  
+  }, []);
 
-  const BookReport_List = LoginData?.is_institution
+  const BookReport_List = is_institution
     ? [
         {
           title: "Book published",

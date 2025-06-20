@@ -20,7 +20,6 @@ function Login({ title, registerNav, handleLogin }) {
   const {
     loading: PublisherLoad,
     PubLoginStatus: PublisherLogin,
-    LoginData,
   } = useSelector((state) => state?.PublisherLogin);
   const { loading: UserLoad, UserLoginStatus } = useSelector(
     (state) => state?.UserLogin

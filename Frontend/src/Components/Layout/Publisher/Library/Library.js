@@ -32,8 +32,8 @@ function Library() {
   const [addReaderOpen, setAddReadOpen] = useState(false);
   const [SubscriberOpen, setSubscriberOpen] = useState(false);
   const { Category } = useSelector((state) => state.category);
-  const { LoginData } = useSelector((state) => state?.PublisherLogin);
-  const { SubScriberData } = useSelector((state) => state?.SubscriberData);
+  const is_institution =
+    localStorage.getItem("is_institution") === "true" ? true : false;
 
   useEffect(() => {
     dispatch(Get_book_Request());
@@ -114,7 +114,7 @@ function Library() {
           <div className="d-flex align-items-center gap-3">
             {selectedCategory && filterBook ? (
               <>
-                {LoginData?.is_institution && (
+                {is_institution && (
                   <>
                     {" "}
                     <div>
@@ -218,7 +218,6 @@ function Library() {
       <SubscriberSlide
         open={SubscriberOpen}
         setOpen={setSubscriberOpen}
-        data={SubScriberData}
         selectedCategory={selectedCategory}
       />
     </>
