@@ -3,7 +3,7 @@ import { Skeleton, Typography } from "@mui/material";
 import "./Library.css";
 import { Get_book_Request } from "../../../../Redux/Action/PublisherAction/BookAction";
 
-function CategoryDrawer({ setSelectedCategory }) {
+function CategoryDrawer({ setSelectedCategory, selectedCategory }) {
   const { Category, loading: catLoad } = useSelector((state) => state.category);
   const dispatch = useDispatch();
   const handleCatSelect = (id) => {
@@ -44,37 +44,23 @@ function CategoryDrawer({ setSelectedCategory }) {
           <>
             <div
               role="button"
-              className="category p-1"
+              className={`category p-1 ${selectedCategory == null && "active"}`}
               style={{ borderBottom: "1px solid #f0e9e9" }}
               onClick={handleAllBooks}
             >
-              <Typography
-                className="ps-2"
-                sx={{
-                  fontSize: "18px",
-                  fontWeight: "500",
-                  color: "#545252",
-                }}
-              >
-                All Books
-              </Typography>
+              <Typography className="ps-2 text">All Books</Typography>
             </div>
             {Category?.map((cat, index) => (
               <div
                 key={index}
                 role="button"
-                className="category p-1"
+                className={`category p-1 ${
+                  selectedCategory === cat?.category_id && "active"
+                }`}
                 style={{ borderBottom: "1px solid #f0e9e9" }}
                 onClick={() => handleCatSelect(cat.category_id)}
               >
-                <Typography
-                  className="ps-2"
-                  sx={{
-                    fontSize: "18px",
-                    fontWeight: "500",
-                    color: "#545252",
-                  }}
-                >
+                <Typography className="ps-2 text">
                   {cat.category_name}
                 </Typography>
               </div>

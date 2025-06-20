@@ -29,6 +29,9 @@ function* UploadBookSaga({ payload }) {
     const Response = yield call(Upload_book, payload);
     yield put(Upload_book_Success(Response.data));
     toast.success(Response.data.message);
+    if (payload?.onSuccess) {
+      payload?.onSuccess();
+    }
   } catch (error) {
     yield put(Upload_book_Failure(error?.response?.data?.error));
     toast.error(error?.response?.data?.error);
@@ -86,7 +89,7 @@ function* DeleteBook({ payload }) {
 function* watchPubBook() {
   yield takeLatest(Type.UPLOAD_FILE_REQUEST, UploadBookSaga);
   yield takeLatest(Type.GET_BOOK_REQUEST, GetAllBook);
-   yield takeLatest(Type.UPDATE_BOOK_REQUEST, UpdateBookSaga);
+  yield takeLatest(Type.UPDATE_BOOK_REQUEST, UpdateBookSaga);
   yield takeLatest(Type.GET_BOOK_ID_REQUEST, GetBookByidSaga);
   yield takeLatest(Type.GET_BOOK_CAT_REQUEST, GetBookBycatSaga);
   yield takeLatest(Type.DEL_BOOK_REQUEST, DeleteBook);

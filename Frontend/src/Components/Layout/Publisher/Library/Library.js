@@ -196,7 +196,7 @@ function Library() {
             className="col-lg-2 d-none d-lg-block category-container p-0"
             style={{ height: "75vh", overflow: "auto" }}
           >
-            <CategoryDrawer setSelectedCategory={setSelectedCategory} />
+            <CategoryDrawer selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
           </div>
           <div
             className="col-lg-10 mt-2 book-list-container"
