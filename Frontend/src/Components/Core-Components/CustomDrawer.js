@@ -1,7 +1,7 @@
 import { Drawer } from "@mui/material";
 import { RxCross2 } from "react-icons/rx";
 
-function CustomDrawer({ open, handleClose, children, title, titleColor }) {
+function CustomDrawer({ open, handleClose, children, title }) {
   return (
     <Drawer
       anchor="right"
@@ -21,7 +21,7 @@ function CustomDrawer({ open, handleClose, children, title, titleColor }) {
         <h4
           className="m-0"
           style={{
-            color: titleColor ? titleColor : "#0382ff",
+            color: "#4b4363",
             fontSize: "24px",
           }}
         >
@@ -29,7 +29,7 @@ function CustomDrawer({ open, handleClose, children, title, titleColor }) {
         </h4>
         <div role="button" onClick={handleClose}>
           {" "}
-          <RxCross2 size={20} className="me-1" style={{ color: titleColor ? titleColor : "#0382ff"}} />
+          <RxCross2 size={20} className="me-1" style={{ color: "#4b4363" }} />
         </div>
       </div>
       {children}

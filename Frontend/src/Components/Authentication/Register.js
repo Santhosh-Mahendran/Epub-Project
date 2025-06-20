@@ -64,25 +64,24 @@ function Register({ redirectTologin, handleReg }) {
     city: Yup.string().required("*this field is required"),
   });
 
-  const handleRegister = (value) => {
+  const handleRegister = ({ values, resetForm }) => {
     const payload = {
-      name: value.userName,
-      email: value.email,
-      password: value.password,
-      phone: Number(value.phoneNum),
-      address: value.city,
+      name: values.userName,
+      email: values.email,
+      password: values.password,
+      phone: Number(values.phoneNum),
+      address: values.city,
       geo_location: "Thanjavur",
       is_institution: is_Institution,
     };
-    handleReg(payload);
+    handleReg({ ...payload, onSuccess: resetForm });
   };
 
   const formik = useFormik({
     initialValues: initialState,
     validationSchema: validation,
     onSubmit: (values, { resetForm }) => {
-      handleRegister(values);
-      resetForm();
+      handleRegister({values, resetForm});
     },
   });
 
@@ -93,11 +92,6 @@ function Register({ redirectTologin, handleReg }) {
       return;
     }
   }, [RegStatus, UserRegStatus]);
-
-  const role = [
-    { label: "Publisher", value: "Pub" },
-    { label: "School , College and Institution", value: "Institude" },
-  ];
 
   return (
     <>
@@ -326,7 +320,7 @@ function Register({ redirectTologin, handleReg }) {
             )}
           </div>
           {location.pathname.startsWith("/auth/publisher") && (
-          <div
+            <div
               style={{
                 display: "flex",
                 alignItems: "center",

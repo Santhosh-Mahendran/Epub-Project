@@ -11,10 +11,13 @@ function* PublisherRegisterSaga({ payload }) {
   try {
     const Response = yield call(PublisherRegister, payload);
     toast.success(Response?.data?.message);
+    if (payload?.onSuccess) {
+      payload?.onSuccess();
+    }
     yield put(Publisher_Register_Success(Response.data));
   } catch (error) {
-    yield put(Publisher_Register_Failure(error?.response?.data?.error));   
-    toast.error(error?.response?.data?.error)
+    yield put(Publisher_Register_Failure(error?.response?.data?.error));
+    toast.error(error?.response?.data?.error);
   }
 }
 

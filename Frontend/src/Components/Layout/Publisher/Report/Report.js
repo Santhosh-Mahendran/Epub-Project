@@ -95,23 +95,10 @@ function Report() {
             <IoAddOutline className="me-1" style={{ fontSize: "18px" }} />
             Add Book
           </CustomButton>
-          {/* <CustomButton
-            type="button"
-            className="addnew-btn"
-            style={{
-              backgroundColor: "gray",
-              fontSize: "14px",
-              padding: "2px 10px",
-            }}
-            onClick={() => navigate("/publisher/dashboard/library")}
-          >
-            <MdModeEdit className="me-1" style={{ fontSize: "14px" }} />
-            Edit Book
-          </CustomButton> */}
         </div>
       </div>
       <div className="report-card row mt-4">
-        {BookReport_List?.map((book) => (
+        {BookReport_List?.map((book, index) => (
           <CardComponent
             className="col-sm-12 col-lg-3 col-md-3"
             style={{
@@ -119,6 +106,7 @@ function Report() {
               height: "150px",
               padding: "10px 0",
             }}
+            key={index}
           >
             <div
               className="report-count row align-items-center"

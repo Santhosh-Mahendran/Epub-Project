@@ -6,8 +6,6 @@ import { MdDelete } from "react-icons/md";
 import { del_Subsciber_Request } from "../../../../Redux/Action/PublisherAction/SubscriberAction";
 
 function SubscriberSlide({ open, setOpen, selectedCategory }) {
-  console.log(selectedCategory);
-
   const { SubScriberData, loading } = useSelector(
     (state) => state?.SubscriberData
   );
@@ -22,7 +20,6 @@ function SubscriberSlide({ open, setOpen, selectedCategory }) {
       open={open}
       handleClose={() => setOpen(false)}
       title="Subscribers"
-      titleColor="#4b4363"
     >
       {loading ? (
         <div>Getting Subscribers...</div>
@@ -31,11 +28,7 @@ function SubscriberSlide({ open, setOpen, selectedCategory }) {
           {SubScriberData.length > 0 ? (
             SubScriberData?.map((sub) => (
               <>
-                <Card
-                  key={sub.id}
-                  className="px-3 py-2"
-                  style={{ backgroundColor: "#ececec", color: "black" }}
-                >
+                <Card key={sub.id} className="px-3 py-2">
                   <div className="d-flex justify-content-between align-items-center">
                     <Typography>{sub?.reader_email}</Typography>
                     <Tooltip title="delete">

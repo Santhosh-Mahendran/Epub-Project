@@ -10,7 +10,10 @@ import {
 function* UserRegisterSaga({ payload }) {
   try {
     const Response = yield call(UserRegister, payload);
-    toast.success(Response?.data?.message)
+    toast.success(Response?.data?.message);
+    if (payload?.onSuccess) {
+      payload?.onSuccess();
+    }
     yield put(User_Register_Success(Response.data));
   } catch (error) {
     toast.error(error?.response?.data?.error);

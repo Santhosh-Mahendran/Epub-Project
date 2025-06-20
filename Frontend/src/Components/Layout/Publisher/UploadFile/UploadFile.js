@@ -101,7 +101,7 @@ function UploadFile() {
   const handleCategoryClose = () => {
     setOpenAddCategory(false);
   };
-  const handleUploadFile = (value) => {
+  const handleUploadFile = (value, resetForm) => {
     const payload = {
       title: value.title,
       author: value.author,
@@ -122,7 +122,7 @@ function UploadFile() {
     if (bookData) {
       dispatch(Update_book_Request({ ...payload, book_id: bookData.book_id }));
     } else {
-      dispatch(Upload_book_Request(payload));
+      dispatch(Upload_book_Request({ ...payload, onSuccess: resetForm }));
     }
   };
 
@@ -134,8 +134,7 @@ function UploadFile() {
     initialValues: initialValues,
     validationSchema: validation,
     onSubmit: (values, { resetForm }) => {
-      handleUploadFile(values);
-      resetForm();
+      handleUploadFile(values, resetForm);
     },
   });
 
@@ -564,6 +563,7 @@ function UploadFile() {
                             type="file"
                             hidden
                             onChange={handleFileUpload}
+                            accept=".epub"
                             multiple
                           />
                         </CustomButton>
@@ -671,14 +671,6 @@ function UploadFile() {
               >
                 Cancel
               </CustomButton>
-              {/* <CustomButton
-              type="submit"
-              className="shadow"
-              style={{ backgroundColor: "green", color: "#fff" }}
-              loading={loading ? "true" : "false"}
-            >
-              {bookData ? "Update" : "Submit"}
-            </CustomButton> */}
               <CustomButton
                 type="submit"
                 className="shadow"

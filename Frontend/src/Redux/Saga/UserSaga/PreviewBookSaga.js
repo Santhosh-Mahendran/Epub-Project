@@ -14,6 +14,7 @@ import {
   Add_highlight_Success,
   Add_Notes_Success,
   Get_highlight_Failure,
+  Get_highlight_Request,
   Get_highlight_Success,
   Get_Notes_Failure,
   Get_Notes_Request,
@@ -29,6 +30,7 @@ function* AddHighlight({ payload }) {
     const Response = yield call(Add_hightlight, payload);
     toast.success(Response?.data?.message);
     yield put(Add_highlight_Success(Response.data));
+    yield put(Get_highlight_Request(payload?.book_id));
   } catch (error) {
     toast.error(error?.response?.data?.error);
 
