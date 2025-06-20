@@ -31,6 +31,7 @@ function PublisherLoginReducer(state = initialState, action) {
       };
     case Type.PUBLISHER_LOGOUT:
       localStorage.removeItem("Publisher_Auth_Token");
+      localStorage.removeItem("is_institution");
 
       return { ...state, PubLoginStatus: false };
     default:

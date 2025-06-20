@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Base_Url } from "../Environment/Base_Url";
+import { useNavigate } from "react-router-dom";
 
 const Main_Api = axios.create({
   baseURL: Base_Url,
@@ -26,10 +27,12 @@ Main_Api.interceptors.request.use(AuthHeader);
 Main_Api.interceptors.response.use(
   (response) => response,
   (error) => {
+    const navigate = useNavigate();
     if (error.response.status === 401 || error.response.status === 422) {
+      toast.error(error?.response?.data?.error);
       localStorage.removeItem("User_Auth_Token");
       localStorage.removeItem("Publisher_Auth_Token");
-      window.location.href = "/"; 
+      navigate("/");
     }
     return Promise.reject(error);
   }

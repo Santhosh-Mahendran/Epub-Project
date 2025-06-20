@@ -12,6 +12,7 @@ function* PublisherLoginSaga({ payload }) {
     const Response = yield call(PublisherLogin, payload);
     const AuthToken = Response?.data?.access_token;
     localStorage.setItem("Publisher_Auth_Token", AuthToken);
+    localStorage.setItem("is_institution", Response?.data?.is_institution);
     toast.success(Response?.data?.message);
     yield put(Publisher_Login_Success(Response.data));
   } catch (error) {
