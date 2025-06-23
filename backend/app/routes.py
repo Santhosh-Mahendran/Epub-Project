@@ -618,9 +618,20 @@ def reader_login():
     try:
         if ph.verify(reader.password, data['password']):
             access_token = create_access_token(identity=str(reader.reader_id))
-            return jsonify({"access_token": access_token, "message": "Login successful"}), 200
+
+            # Check subscription status
+            subscription_exists = db.session.query(
+                db.session.query(Subscriber).filter_by(reader_email=reader.email).exists()
+            ).scalar()
+
+            return jsonify({
+                "access_token": access_token,
+                "message": "Login successful",
+                "has_subscription": subscription_exists
+            }), 200
     except VerifyMismatchError:
         return jsonify({"error": "Invalid email or password"}), 401
+
 
 
 @subscriber_bp.route('/publisher/edit_subscriber/<int:sub_id>', methods=['PUT'])
