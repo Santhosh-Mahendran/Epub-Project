@@ -1277,7 +1277,6 @@ def get_progress(book_id):
 @jwt_required()
 def get_reader_subscriptions():
     try:
-        # Get the reader's ID from the JWT token
         reader_id = get_jwt_identity()
 
         # Get the reader's email from the Reader table
@@ -1404,6 +1403,32 @@ def get_subscribed_books():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@auth.route('/reader/subscribed_categories', methods=['GET'])
+@jwt_required()  # Optional, if you want to protect the route
+def get_categories_by_email(reader_email):
+    reader_email = get_jwt_identity()
+    subscriptions = Subscriber.query.filter_by(reader_email=reader_email).all()
+
+    if not subscriptions:
+        return jsonify({"message": "No subscriptions found", "categories": []}), 200
+
+    # Collect associated categories
+    categories = []
+    for sub in subscriptions:
+        category = sub.category
+        categories.append({
+            "category_id": category.category_id,
+            "category_name": category.category_name,
+            "description": category.description,
+            "created_at": category.created_at.strftime('%Y-%m-%d') if category.created_at else None,
+            "updated_time": category.updated_time.strftime('%Y-%m-%d') if category.updated_time else None,
+            "publisher_id": category.publisher_id
+        })
+
+    return jsonify({"categories": categories}), 200
+
 
 
 
