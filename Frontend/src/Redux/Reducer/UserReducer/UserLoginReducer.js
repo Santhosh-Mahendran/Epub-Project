@@ -9,7 +9,6 @@ const initialState = {
   error: null,
 };
 function UserLoginReducer(state = initialState, action) {
-  
   switch (action.type) {
     case Type.USER_LOGIN_REQUEST:
       return {
@@ -32,6 +31,7 @@ function UserLoginReducer(state = initialState, action) {
       };
     case Type.USER_LOGOUT:
       localStorage.removeItem("User_Auth_Token");
+      localStorage.removeItem("has_subscription");
 
       return { ...state, UserLoginStatus: false };
     default:

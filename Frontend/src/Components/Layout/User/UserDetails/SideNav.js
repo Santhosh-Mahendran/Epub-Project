@@ -14,9 +14,16 @@ function SideNav() {
   const hanldeStaffOpen = () => {
     setToggleStaff(!toggleStaff);
   };
+
+  const has_subscription =
+    localStorage.getItem("has_subscription") === "true" ? true : false;
+
   return (
     <>
-      <div className="cardBox shadow p-3 ">
+      <div
+        className="cardBox shadow p-3"
+        style={{ position: "sticky", top: "120px" }}
+      >
         <div
           className="d-flex justify-content-between align-items-center"
           role="button"
@@ -64,11 +71,23 @@ function SideNav() {
             >
               My Library
             </Link>
+            {has_subscription && (
+              <Link
+                to="/reader/dashboard/detail/library"
+                className={`${
+                  location.pathname === "/reader/dashboard/detail/"
+                    ? "Linkactive"
+                    : ""
+                }`}
+              >
+                My Subscription
+              </Link>
+            )}
             <Link>Notifications</Link>
           </div>
         )}
       </div>
-      <div className="cardBox shadow p-3 mt-2">
+      {/* <div className="cardBox shadow p-3 mt-2">
         <div
           className="d-flex justify-content-between align-items-center"
           role="button"
@@ -96,7 +115,7 @@ function SideNav() {
             <Link>Account Security</Link>
           </div>
         )}
-      </div>
+      </div> */}
     </>
   );
 }

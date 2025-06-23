@@ -36,7 +36,7 @@
 }
 
 .acc-link.open {
-  max-height: 200px; /* Adjust based on content */
+  max-height: 100%; /* Adjust based on content */
   opacity: 1;
 }
 .acc-link a {
@@ -57,14 +57,10 @@
 }
 
 @media screen and (max-width: 430px) {
-  .user-details{
-    padding:10px;
+  .user-details {
+    padding: 10px;
   }
   .outlet {
     padding: 10px;
-
   }
- 
- }
-
-
+}

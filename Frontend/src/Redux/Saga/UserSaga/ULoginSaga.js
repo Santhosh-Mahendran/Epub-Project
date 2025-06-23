@@ -12,6 +12,7 @@ function* UserLoginSaga({ payload }) {
     const Response = yield call(UserLogin, payload);
     const AuthToken = Response?.data?.access_token;
     localStorage.setItem("User_Auth_Token", AuthToken);
+    localStorage.setItem("has_subscription", Response?.data?.has_subscription);
     toast.success(Response?.data?.message);
     yield put(User_Login_Success(Response.data));
   } catch (error) {
