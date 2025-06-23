@@ -1319,6 +1319,38 @@ def get_reader_subscriptions():
         return jsonify({"error": str(e)}), 500
 
 
+@subscriber_bp.route('/reader/category/books/<int:category_id>', methods=['GET'])
+@jwt_required()  # Optional, based on your app's access policy
+def get_books_by_category(category_id):
+    books = Book.query.filter_by(category_id=category_id).all()
+
+    if not books:
+        return jsonify({"message": "No books found in this category", "books": []}), 200
+
+    result = []
+    for book in books:
+        result.append({
+            "book_id": book.book_id,
+            "title": book.title,
+            "author": book.author,
+            "isbn": book.isbn,
+            "language": book.language,
+            "genre": book.genre,
+            "e_book_type": book.e_book_type,
+            "price": float(book.price) if book.price else None,
+            "rental_price": float(book.rental_price) if book.rental_price else None,
+            "offer_price": float(book.offer_price) if book.offer_price else None,
+            "description": book.description,
+            "status": book.status,
+            "has_ai_module": book.has_ai_module,
+            "cover_image": book.cover_image,
+            "epub_file": book.epub_file,
+            "created_at": book.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            "updated_at": book.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+        })
+
+    return jsonify({"books": result}), 200
+
 
 @subscriber_bp.route('/reader/add_sub_book', methods=['POST'])
 @jwt_required()
