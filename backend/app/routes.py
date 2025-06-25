@@ -940,6 +940,7 @@ def get_purchased_books():
                     "author": book.author,
                     "isbn": book.isbn,
                     "cover_image": book.cover_image,
+                     "genre":book.genre,
                     "file_path": book.epub_file,
                     "purchase_date": purchase.purchase_date,
                     "isAiAdded" : book.has_ai_module,

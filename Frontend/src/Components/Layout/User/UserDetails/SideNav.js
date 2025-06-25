@@ -3,11 +3,14 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { Link, useLocation } from "react-router-dom";
 import "./UserDetail.css";
+import { useDispatch } from "react-redux";
+import { Get_readerSub_Request } from "../../../../Redux/Action/UserAction/SubscriptionAction";
 
 function SideNav() {
   const [toggleAccountSetting, setToggleAccountSetting] = useState(true);
   const [toggleStaff, setToggleStaff] = useState(true);
   const location = useLocation();
+  const dispatch = useDispatch();
   const hanldeAccountSetOpen = () => {
     setToggleAccountSetting(!toggleAccountSetting);
   };
@@ -18,6 +21,9 @@ function SideNav() {
   const has_subscription =
     localStorage.getItem("has_subscription") === "true" ? true : false;
 
+  const handleSubscripeBook = () => {
+    dispatch(Get_readerSub_Request());
+  };
   return (
     <>
       <div
@@ -73,12 +79,13 @@ function SideNav() {
             </Link>
             {has_subscription && (
               <Link
-                to="/reader/dashboard/detail/library"
+                to="/reader/dashboard/detail/subscribe"
                 className={`${
-                  location.pathname === "/reader/dashboard/detail/"
+                  location.pathname === "/reader/dashboard/detail/subscribe"
                     ? "Linkactive"
                     : ""
                 }`}
+                onClick={handleSubscripeBook}
               >
                 My Subscription
               </Link>

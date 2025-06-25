@@ -20,7 +20,7 @@ export const Get_user_BookbyId = (request) => {
 };
 
 export const Get_bookby_Cat = (request) => {
-  return Main_Api.get("book/reader/get_books_by_cat/" + request);
+  return Main_Api.get("/subscribe/reader/category/books/" + request);
 };
 
 export const Get_Purchasedbook = () => {

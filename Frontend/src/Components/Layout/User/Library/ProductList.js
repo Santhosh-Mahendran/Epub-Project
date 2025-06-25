@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { Base_Url } from "../../../../Environment/Base_Url";
 import { useLocation } from "react-router-dom";
 
-function ProductList({ title, Book_list, children, Footer }) {
+function ProductList({ title, Book_list, children, Footer, dropdown }) {
   const { loading: WishlistLoading } = useSelector(
     (state) => state.WishlistBook
   );
@@ -24,7 +24,15 @@ function ProductList({ title, Book_list, children, Footer }) {
 
   return (
     <div className="user-wishlist cardBox" style={{ height: "100%" }}>
-      <h4>{title}</h4>
+      {dropdown ? (
+        <div className="d-flex align-items-center justify-content-between">
+          <h4>{title}</h4>
+          <div>{dropdown}</div>
+        </div>
+      ) : (
+        <h4>{title}</h4>
+      )}
+
       <div className="wishbook-list card-body p-0">
         {Book_list && Book_list.length > 0 ? (
           Book_list?.map((book, index) => (
@@ -58,21 +66,33 @@ function ProductList({ title, Book_list, children, Footer }) {
                     </div>
                   )}
                   <Review />
-                  {pathname !== "/reader/dashboard/detail/library" && (
-                    <>
-                      {" "}
-                      <p className="mb-0">
-                        <span className="sub-title">Price</span> -
-                        {book?.offer_price ? (
-                          <span className="value">
-                            {" "}
-                            <LuIndianRupee
-                              size={16}
-                              className="mb-1"
-                              style={{ fontWeight: "bold" }}
-                            />
-                            {book?.offer_price} &nbsp;
-                            <span className="strike">
+                  {pathname !== "/reader/dashboard/detail/library" &&
+                    pathname !== "/reader/dashboard/detail/subscribe" && (
+                      <>
+                        {console.log("teur")}{" "}
+                        <p className="mb-0">
+                          <span className="sub-title">Price</span> -
+                          {book?.offer_price ? (
+                            <span className="value">
+                              {" "}
+                              <LuIndianRupee
+                                size={16}
+                                className="mb-1"
+                                style={{ fontWeight: "bold" }}
+                              />
+                              {book?.offer_price} &nbsp;
+                              <span className="strike">
+                                <LuIndianRupee
+                                  size={16}
+                                  className="mb-1"
+                                  style={{ fontWeight: "bold" }}
+                                />
+                                {book?.price}
+                              </span>
+                            </span>
+                          ) : (
+                            <span className="value">
+                              {" "}
                               <LuIndianRupee
                                 size={16}
                                 className="mb-1"
@@ -80,35 +100,24 @@ function ProductList({ title, Book_list, children, Footer }) {
                               />
                               {book?.price}
                             </span>
-                          </span>
-                        ) : (
-                          <span className="value">
-                            {" "}
-                            <LuIndianRupee
-                              size={16}
-                              className="mb-1"
-                              style={{ fontWeight: "bold" }}
-                            />
-                            {book?.price}
-                          </span>
-                        )}
-                      </p>
-                      {book?.rental_price && (
-                        <p className="mb-0">
-                          <span className="sub-title">Rental Price</span> -
-                          <span className="value">
-                            {" "}
-                            <LuIndianRupee
-                              size={16}
-                              className="mb-1"
-                              style={{ fontWeight: "bold" }}
-                            />
-                            {book?.price}
-                          </span>
+                          )}
                         </p>
-                      )}
-                    </>
-                  )}
+                        {book?.rental_price && (
+                          <p className="mb-0">
+                            <span className="sub-title">Rental Price</span> -
+                            <span className="value">
+                              {" "}
+                              <LuIndianRupee
+                                size={16}
+                                className="mb-1"
+                                style={{ fontWeight: "bold" }}
+                              />
+                              {book?.price}
+                            </span>
+                          </p>
+                        )}
+                      </>
+                    )}
                 </div>
                 <div
                   className="col-lg-4 col-md-4 col-sm-12 p-0 "

@@ -12,8 +12,6 @@ import { User_Logout } from "../../../Redux/Action/UserAction/UserAuthAction";
 import { MdLibraryBooks } from "react-icons/md";
 import UserFilterMenu from "./UserFilterMenu";
 import Profile from "../Profile/Profile";
-import { Get_readerSub_Request } from "../../../Redux/Action/UserAction/SubscriptionAction";
-import { GetUserBookbyCat_Request } from "../../../Redux/Action/UserAction/UserBookAction";
 import { IoMdMenu } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
 import { RiBookShelfFill } from "react-icons/ri";
@@ -22,11 +20,10 @@ import SideNavBar from "./SideNavBar";
 function UserHeader() {
   const { BookDataList } = useSelector((state) => state.BookData);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedSub, setSelectedSub] = useState();
+
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
   const [showSearchOption, setShowSearchOption] = useState(false);
   const [cart_Count, setCart_Count] = useState(0);
-  const [subscribed, setSubScribed] = useState([]);
   const [OpenSideNav, setOpenSideNav] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,11 +33,7 @@ function UserHeader() {
 
   const [openProfileDetails, setProfileDetails] = useState(false);
   const { cartCount } = useSelector((state) => state.CartBook);
-  const { SubScribedBooks } = useSelector((state) => state.SubscribeBook);
-
-  // useEffect(() => {
-  //   dispatch(Get_readerSub_Request());
-  // }, []);
+ 
 
   const handleProfileDetailClose = () => {
     setProfileDetails(false);
@@ -48,31 +41,6 @@ function UserHeader() {
   useEffect(() => {
     setCart_Count(cartCount);
   }, [cartCount]);
-
-  useEffect(() => {
-    setSubScribed(SubScribedBooks);
-  }, [SubScribedBooks]);
-
-  const SubOption = [
-    {
-      id: "all",
-      value: "all",
-      label: "General",
-    },
-    ...subscribed?.map((sub) => ({
-      id: sub.category_id,
-      value: sub.category_id,
-      label: `${
-        sub.category_name?.length > 10
-          ? sub.category_name?.split(" ").slice(0, 12).join(" ") + "..."
-          : sub.category_name
-      } - ${
-        sub.publisher_name?.length > 10
-          ? sub.publisher_name?.split(" ").slice(0, 12).join(" ") + "..."
-          : sub.publisher_name
-      }`,
-    })),
-  ];
 
   const uniqueOptions = [
     ...new Set(
@@ -110,15 +78,6 @@ function UserHeader() {
     }
   };
 
-  const handleSubChange = (event, newValue) => {
-    if (newValue?.value === "all") {
-      setSelectedSub(newValue?.id);
-    } else if (newValue !== "all") {
-      setSelectedSub(newValue?.id);
-      dispatch(GetUserBookbyCat_Request(newValue?.id));
-    }
-    navigate("/reader/dashboard/explore", { state: newValue });
-  };
 
   const handleMenuOpen = () => {
     setOpenSideNav(!OpenSideNav);
@@ -205,50 +164,6 @@ function UserHeader() {
             className="d-flex justify-content-center align-items-center"
             style={{ columnGap: "50px" }}
           >
-            {/* {subscribed?.length > 0 ? (
-              <div className="subscribe-field d-none d-lg-block">
-                <Autocomplete
-                  options={SubOption}
-                  disableClearable
-                  value={selectedSub}
-                  onChange={handleSubChange}
-                  defaultValue={SubOption[0]}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="General" />
-                  )}
-                  sx={{
-                    padding: "0px",
-                    borderRadius: "5px",
-                    width: "250px",
-                    height: "38px",
-                    "& .MuiTextField-root": {
-                      padding: "0px",
-                      width: "250px",
-                      height: "38px",
-                    },
-                    "& .MuiOutlinedInput-root": {
-                      width: "250px",
-                      height: "38px",
-                      color: "#f6f6f6",
-                      "& fieldset": {
-                        border: "0.5px solid #f6f6f6",
-                      },
-                      "&:hover fieldset": {
-                        borderColor: "#f6f6f6",
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: "#f6f6f6",
-                      },
-                    },
-                    "& .MuiSvgIcon-root": {
-                      color: "#f6f6f6",
-                    },
-                  }}
-                />
-              </div>
-            ) : (
-              ""
-            )} */}
             <div
               className="explore"
               style={{ cursor: "pointer", userSelect: "none" }}
