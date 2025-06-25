@@ -51,7 +51,7 @@
   white-space: normal;
 }
 .typing-text::after {
-  content: '';
+  content: "";
   display: inline-block;
   width: 1em;
   animation: dots 1s steps(3, end) infinite;
@@ -59,16 +59,16 @@
 
 @keyframes dots {
   0% {
-    content: '';
+    content: "";
   }
   33% {
-    content: '.';
+    content: ".";
   }
   66% {
-    content: '..';
+    content: "..";
   }
   100% {
-    content: '...';
+    content: "...";
   }
 }
 
@@ -136,12 +136,7 @@
   padding-bottom: 0 !important;
 }
 
-
-
 @media screen and (max-width: 376px) {
-  .header-content {
-    column-gap: 15px;
-  }
   .chat-icon {
     position: fixed;
     bottom: 2px !important;
@@ -158,7 +153,16 @@
   }
 }
 
+@media screen and (max-width: 330px) {
+  .header-content {
+    column-gap: 5px !important;
+  }
+}
+
 @media screen and (max-width: 430px) {
+  .header-content {
+    column-gap: 15px;
+  }
   .chat-icon {
     position: fixed;
     bottom: 10px !important;

@@ -30,6 +30,7 @@ import PublishDashboard from "./Components/Layout/User/PublisherProfile/PublishD
 import ReaderAuth from "./Components/Authentication/UserAuth";
 import PublisherAuth from "./Components/Authentication/PublisherAuth";
 import PubProfile from "./Components/Layout/Publisher/PubProfile/PubProfile";
+import SubscribedBook from "./Components/Layout/User/Library/SubscribedBook";
 
 function App() {
   const { PubLoginStatus } = useSelector((state) => state.PublisherLogin);
@@ -88,6 +89,7 @@ function App() {
               <Route path="/reader/dashboard/detail/*" element={<UserDetail />}>
                 <Route path="wishlist" element={<Wishlist />} />
                 <Route path="library" element={<UserLibrary />} />
+                <Route path="subscribe" element={<SubscribedBook />} />
                 <Route path="order" element={<Cart />} />
               </Route>
               <Route
